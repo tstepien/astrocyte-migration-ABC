@@ -1,9 +1,9 @@
 function k_new = cellpops_sum_withgrowthfactors(j,c1_old,c2_old,q1,PO2,...
     dt,r,Pm,kappa,mu,alpha11,alpha12,alpha21,alpha22,gamma1,gamma2,...
-    cmin,rbar,ce,cmax,hyaloid)
+    ce,cmax,hyaloid)
 % k_new = cellpops_sum_withgrowthfactors(j,c1_old,c2_old,q1,PO2,...
 %     dt,r,Pm,kappa,mu,alpha11,alpha12,alpha21,alpha22,gamma1,gamma2,...
-%     cmin,rbar,ce,cmax,hyaloid)
+%     ce,cmax,hyaloid)
 %
 % inputs:
 %   j      = node that moving boundary is located at
@@ -32,7 +32,7 @@ rhalf = (r(1:R-1)+r(2:R))/2;
 %%% initialize
 k_old = c1_old + c2_old;
 khalf = (k_old(1:R-1)+k_old(2:R))/2;
-Tp = Tderivative(khalf,kappa,cmin,rbar);
+Tp = Tderivative(khalf,kappa);
 Psi = rhalf.*Tp.*khalf;
 
 %%% extrapolate Psi to get node j+1/2
@@ -42,7 +42,7 @@ Psi(j) = interp1(rhalf(j-2:j-1),Psi(j-2:j-1),rhalf(j),'pchip','extrap');
 % rinterp = linspace(0,r(j),j+1);
 % rinterp_half = (rinterp(1:end-1)+rinterp(2:end))/2;
 % kinterp = [interp1(r(1:j),k_old(1:j),rinterp_half,'pchip') , zeros(1,R-j-1)];
-% Tp = Tderivative(kinterp,kappa,cmin,rbar);
+% Tp = Tderivative(kinterp,kappa);
 % Psi = rhalf.*Tp.*kinterp;
 
 omega = 1./(mu*r(2:j)) * dt/dr^2;
@@ -79,7 +79,7 @@ for m=1:5
 
     %%%%%%%%%%%%%%%%%%%%%% update for next iteration %%%%%%%%%%%%%%%%%%%%%%
     khalf = (k_new(1:R-1)+k_new(2:R))/2;
-    Tp = Tderivative(khalf,kappa,cmin,rbar);
+    Tp = Tderivative(khalf,kappa);
     Psi = rhalf.*Tp.*khalf;
 
 %     if tcurr>3.22*24
@@ -100,8 +100,8 @@ end
 % end
 
 % -1/(mu*r(j)*dr^2) * ...
-% ( rhalf(j)*(k_new(j)+k_new(j+1))/2*Tderivative((k_new(j)+k_new(j+1))/2,kappa,cmin,rbar)*(k_new(j+1)-k_new(j)) ...
-% - rhalf(j-1)*(k_new(j-1)+k_new(j))/2*Tderivative((k_new(j-1)+k_new(j))/2,kappa,cmin,rbar)*(k_new(j)-k_new(j-1)) ) ...
+% ( rhalf(j)*(k_new(j)+k_new(j+1))/2*Tderivative((k_new(j)+k_new(j+1))/2,kappa)*(k_new(j+1)-k_new(j)) ...
+% - rhalf(j-1)*(k_new(j-1)+k_new(j))/2*Tderivative((k_new(j-1)+k_new(j))/2,kappa)*(k_new(j)-k_new(j-1)) ) ...
 % +g(j)
 % 
 % (k_new(j)-k_old(j))/dt

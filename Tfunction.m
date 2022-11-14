@@ -1,5 +1,5 @@
-function T = Tfunction(c,kappa,cmin,rbar)
-% T = Tfunction(c,kappa,cmin,rbar)
+function T = Tfunction(c,kappa,rbar)
+% T = Tfunction(c,kappa,rbar)
 %
 % Tension function evaluated at c: T(c)
 

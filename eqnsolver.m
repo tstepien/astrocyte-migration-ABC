@@ -1,5 +1,5 @@
 function [t,r,c1,c2,q1,q2,mvgbdy,vel_cir,vel_rad] = eqnsolver(mu,alpha11,...
-    alpha12,alpha21,alpha22,beta1,beta2,beta3,gamma1,gamma2,Te,P_hy,r_hy,m)
+    alpha12,alpha21,alpha22,beta1,beta2,beta3,gamma1,gamma2,P_hy,r_hy,m)
 % [c1,c2] = ............
 %
 % this is the solver
@@ -31,8 +31,7 @@ parameters_fixed
 xi1 = xibar_PDGFA / phi;
 xi2 = xibar_LIF / phi;
 
-ce = densityatbdy(Te,kappa,cmin,rbar); % c1+c2 on boundary
-Tprimeatce = Tderivative(ce,kappa,cmin,rbar); % T'(ce)
+Tprimeatce = Tderivative(ce,kappa); % T'(ce)
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% mesh set up %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -90,7 +89,7 @@ j_init = s0/dr+1;
 j = j_init;
 
 %%% velocity
-[vel_cir,vel_rad] = velocity(j,c1,c2,r,kappa,cmin,rbar,mu);
+[vel_cir,vel_rad] = velocity(j,c1,c2,r,kappa,mu);
 
 mvgbdy_vel = [];
 
@@ -136,7 +135,7 @@ while tcurr < tmax && j<R-1
         %%% cell sum
         k_hat = cellpops_sum_withgrowthfactors(j,c1_old,c2_old,q1_hat,...
             PO2,dt_p,r,Pm,kappa,mu,alpha11,alpha12,alpha21,alpha22,...
-            gamma1,gamma2,cmin,rbar,ce,cmax,hy);
+            gamma1,gamma2,ce,cmax,hy);
         
         %%%%%%%%%%%%%%%%%%%%%%%%% corrector step %%%%%%%%%%%%%%%%%%%%%%%%%%
         
@@ -190,12 +189,12 @@ while tcurr < tmax && j<R-1
     %%% cell sum
     k_new = cellpops_sum_withgrowthfactors(j,c1_old,c2_old,q1_new,PO2,...
         dt_c,r,Pm,kappa,mu,alpha11,alpha12,alpha21,alpha22,gamma1,...
-        gamma2,cmin,rbar,ce,cmax,hy);
+        gamma2,ce,cmax,hy);
     
     %%% cells separate
     [c1_new,c2_new] = cellpops_separate_withgrowthfactors(j,c1_old,...
         c2_old,k_new,q1_new,q2_new,PO2,dt_c,r,Pm,kappa,mu,alpha11,...
-        alpha12,alpha21,alpha22,beta1,beta2,beta3,gamma1,gamma2,cmin,rbar,...
+        alpha12,alpha21,alpha22,beta1,beta2,beta3,gamma1,gamma2,...
         ce,cmax,hy);
 
     %%%%%%%%%%%%%%%%%%%%%% reset for next time step %%%%%%%%%%%%%%%%%%%%%%%
@@ -223,7 +222,7 @@ while tcurr < tmax && j<R-1
     c2mb = [c2mb ; c2_new(j)];
     
     %%% velocity calculation
-    [vel_cir_new,vel_rad_new] = velocity(j,c1_new,c2_new,r,kappa,cmin,rbar,mu);
+    [vel_cir_new,vel_rad_new] = velocity(j,c1_new,c2_new,r,kappa,mu);
     vel_cir = [vel_cir ; vel_cir_new];
     vel_rad = [vel_rad ; vel_rad_new];
     

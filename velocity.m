@@ -1,4 +1,6 @@
-function [vel_cir,vel_rad] = velocity(j,c1,c2,r,kappa,cmin,rbar,mu)
+function [vel_cir,vel_rad] = velocity(j,c1,c2,r,kappa,mu)
+% [vel_cir,vel_rad] = velocity(j,c1,c2,r,kappa,mu)
+%
 % vel_cir : circumferential spreading (v/r)
 % vel_rad : radial spreading (partial v/partial r)
 
@@ -11,8 +13,8 @@ dr = r(2)-r(1);
 %%% initialize
 k = c1 + c2;
 khalf = (k(1:R-1)+k(2:R))/2;
-Tp = Tderivative(k,kappa,cmin,rbar);
-Tphalf = Tderivative(khalf,kappa,cmin,rbar);
+Tp = Tderivative(k,kappa);
+Tphalf = Tderivative(khalf,kappa);
 
 vel_cir = zeros(1,R);
 vel_rad = zeros(1,R);

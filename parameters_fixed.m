@@ -34,7 +34,9 @@ cmin = 1/(pi*rproc^2); %%% reference cell density that includes processes
                        %%% (cells/mm^2)
 cmax = 1/(pi*rbar^2); %%% reference cell density that includes only the 
                       %%% cell body (cells/mm^2)
-kappa = 1; %%% tension function scaling (mN/mm^2)
+kappa = 300; %%% tension function spring constant (mN/mm^2/Pa)
+Te = 3.10; %%% tension at leading edge (Pa mm)
+ce = 1000; %%% cell density at leading edge (cells/mm^2)
 
 
 %%%%%%%%%%%%%%%%%%%% moving boundary initial location %%%%%%%%%%%%%%%%%%%%%
