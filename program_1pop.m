@@ -9,16 +9,18 @@ addpath plot_simulations
 %%%%%%%%%%%%%%%%%%%%%%%%%% astrocyte parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% only APCs
 mu = 2.5017;%0.1; %%% adhesion constant
+alpha10 = 0; %%% (/hr) basal proliferation rate APC
 alpha11 = 0.4456;%0.03; %%% (/hr) proliferation rate APC wrt oxygen
 alpha12 = 0.0299;%0.22; %%% (/hr) proliferation rate APC wrt PDGFA
-gamma1 = 0.8259;%0.01; %%% (/hr) apoptosis rate APC
+eta1 = 0.8259;%0.01; %%% (/hr) apoptosis rate APC
 
 %%% set all IPA stuff = 0
+alpha20 = 0; %%% (/hr) basal proliferation rate IPA
 alpha21 = 0; %%% (/hr) proliferation rate IPA wrt oxygen
 alpha22 = 0; %%% (/hr) proliferation rate IPA wrt PDGFA
 beta = 0; %%% (/hr) differentiation rate
 beta_hat = 0; %%% (/hr) mass action rate
-gamma2 = 0; %%% (/hr) apoptosis rate IPA
+eta2 = 0; %%% (/hr) apoptosis rate IPA
 
 %%%%%%%%%%%%%%%%%% moving boundary condition parameters %%%%%%%%%%%%%%%%%%%
 Te = 0.0035; %%% tension on boundary
@@ -34,8 +36,8 @@ m.tmax = 7*24; %%% max time (hr) (7 days = 168 hr)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% solve equation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 tic
-[t,r,c1,c2,q1,q2,mvgbdy,vel_cir,vel_rad] = eqnsolver(mu,alpha11,alpha12,...
-    alpha21,alpha22,beta,beta_hat,gamma1,gamma2,Te,P_hy,r_hy,m);
+[t,r,c1,c2,q1,q2,mvgbdy,vel_cir,vel_rad] = eqnsolver(mu,alpha10,alpha11,...
+    alpha12,alpha21,alpha20,alpha22,beta,beta_hat,eta1,eta2,Te,P_hy,r_hy,m);
 toc
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% error calculation %%%%%%%%%%%%%%%%%%%%%%%%%%%%

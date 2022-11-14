@@ -4,7 +4,7 @@ clc;
 load('parameter_analysis/1pop/latin_hypercube/latinhypercube_10000pts.mat')
 
 param_names = {'$\mu$','$\alpha_{11}$','$\alpha_{12}$',...
-    '$\gamma_1$','$T_e$','$P_\mathrm{hy}$','$r_\mathrm{hy}$'};
+    '$\eta_1$','$T_e$','$P_\mathrm{hy}$','$r_\mathrm{hy}$'};
 
 
 error_threshold = 0.5;
@@ -14,9 +14,9 @@ ind_good = ind(err_time < error_threshold);
 ind_bad = ind(err_time >= error_threshold);
 
 param_good = [mu(ind_good) alpha11(ind_good) alpha12(ind_good) ...
-    gamma1(ind_good) Te(ind_good) P_hy(ind_good) r_hy(ind_good)];
+    eta1(ind_good) Te(ind_good) P_hy(ind_good) r_hy(ind_good)];
 param_bad = [mu(ind_bad) alpha11(ind_bad) alpha12(ind_bad) ...
-    gamma1(ind_bad) Te(ind_bad) P_hy(ind_bad) r_hy(ind_bad)];
+    eta1(ind_bad) Te(ind_bad) P_hy(ind_bad) r_hy(ind_bad)];
 
 figure
 for i=1:length(param_names)

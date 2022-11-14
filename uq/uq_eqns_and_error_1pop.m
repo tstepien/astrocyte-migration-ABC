@@ -5,7 +5,7 @@ function Y = uq_eqns_and_error_1pop(X)
 % single population of cells, described by 7 variables
 %
 % inputs:
-%   X = [mu, alpha11, alpha12, gamma1, Te, P_hy, r_hy]
+%   X = [mu, alpha11, alpha12, eta1, Te, P_hy, r_hy]
 %
 % output:
 %   Y = total error
@@ -15,7 +15,7 @@ function Y = uq_eqns_and_error_1pop(X)
 mu = X(:,1);
 alpha11 = X(:,2);
 alpha12 = X(:,3);
-gamma1 = X(:,4);
+eta1 = X(:,4);
 
 %%% moving boundary tension
 Te = X(:,5);
@@ -30,7 +30,7 @@ alpha21 = 0;
 alpha22 = 0;
 beta = 0;
 beta_hat = 0;
-gamma2 = 0;
+eta2 = 0;
 
 %%% mesh parameters
 m.dr = 0.01;
@@ -44,7 +44,7 @@ Y = zeros(N,1);
 
 parfor i=1:N
     [t,~,~,~,~,~,mvgbdy,~,~] = eqnsolver(mu(i),alpha11(i),alpha12(i),...
-        alpha21,alpha22,beta,beta_hat,gamma1(i),gamma2,Te(i),P_hy(i),r_hy(i),m);
+        alpha21,alpha22,beta,beta_hat,eta1(i),eta2,Te(i),P_hy(i),r_hy(i),m);
     
     [Y(i),~,~] = errorfunction_1pop(t,mvgbdy);
 end

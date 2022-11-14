@@ -37,7 +37,7 @@ InputOpts.Marginals(3).Type = 'Uniform';
 InputOpts.Marginals(3).Parameters = [0 1];  % (/hr)
 InputOpts.Marginals(3).Bounds = [0 1];  % (/hr)
 
-InputOpts.Marginals(4).Name = '$\gamma_1$';  % apoptosis rate APC
+InputOpts.Marginals(4).Name = '$\eta_1$';  % apoptosis rate APC
 InputOpts.Marginals(4).Type = 'Exponential';
 InputOpts.Marginals(4).Parameters = 0.1076;  % (/hr)
 InputOpts.Marginals(4).Bounds = [0 1];  % (/hr)

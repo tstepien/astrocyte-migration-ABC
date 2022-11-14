@@ -1,9 +1,9 @@
 function [q1_new,q2_new] = growthfactors_implicit(q1_old,q2_old,dt,tcurr,...
     r,dr,R,thickness_RGC,radius_endo,maxRGCthick,thickness_ret,D1,D2,xi1,...
-    xi2,gamma3,gamma4)
+    xi2,gamma1,gamma2)
 % [q1_new,q2_new] = growthfactors_implicit(q1_old,q2_old,dt,tcurr,...
 %     r,dr,R,thickness_RGC,radius_endo,maxRGCthick,thickness_ret,D1,D2,xi1,...
-%     xi2,gamma3,gamma4)
+%     xi2,gamma1,gamma2)
 %
 % Uses Dirichlet boundary condition q1=q2=0 at Rmax
 %
@@ -71,12 +71,12 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% q1 - PDGFA %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 theta3_1 = -D1 * dt/dr^2 * (1 + dr./(2*r(2:R-1)));
-theta2_1 = 1 + 2*D1*dt/dr^2*ones(1,R-1) + dt*gamma3;%*thickness_RGC(2:R)/maxRGCthick;
+theta2_1 = 1 + 2*D1*dt/dr^2*ones(1,R-1) + dt*gamma1;%*thickness_RGC(2:R)/maxRGCthick;
 theta1_1 = -D1 * dt/dr^2 * (1 - dr./(2*r(2:R-1)));
 
 % origin
 theta5_1 = -4*D1 * dt/dr^2;
-theta4_1 = 1 + 4*D1 * dt/dr^2 + dt*gamma3;%*thickness_RGC(1)/maxRGCthick;
+theta4_1 = 1 + 4*D1 * dt/dr^2 + dt*gamma1;%*thickness_RGC(1)/maxRGCthick;
 
 % rmax
 theta6_1 = 0;%-2*D1 * dt/dr^2;
@@ -97,12 +97,12 @@ q1_new = ( thetamatrix1 \ bvector1 )';
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% q2 - LIF %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 theta3_2 = -D2 * dt/dr^2 * (1 + dr./(2*r(2:R-1)));
-theta2_2 = 1 + 2*D2*dt/dr^2*ones(1,R-1) + dt*gamma4;
+theta2_2 = 1 + 2*D2*dt/dr^2*ones(1,R-1) + dt*gamma2;
 theta1_2 = -D2 * dt/dr^2 * (1 - dr./(2*r(2:R-1)));
 
 % origin
 theta5_2 = -4*D2 * dt/dr^2;
-theta4_2 = 1 + 4*D2 * dt/dr^2 + dt*gamma4;
+theta4_2 = 1 + 4*D2 * dt/dr^2 + dt*gamma2;
 
 % rmax
 theta6_2 = 0;

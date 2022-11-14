@@ -1,16 +1,26 @@
-function [t,r,c1,c2,q1,q2,mvgbdy,vel_cir,vel_rad] = eqnsolver(mu,alpha11,...
-    alpha12,alpha21,alpha22,beta1,beta2,beta3,gamma1,gamma2,P_hy,r_hy,m)
-% [c1,c2] = ............
+function [t,r,c1,c2,q1,q2,mvgbdy,vel_cir,vel_rad] = eqnsolver(mu,alpha10,...
+    alpha11,alpha12,alpha20,alpha21,alpha22,beta0,beta1,beta2,beta3,...
+    eta1,eta2,P_hy,r_hy,m)
+% [c1,c2] = [t,r,c1,c2,q1,q2,mvgbdy,vel_cir,vel_rad] = eqnsolver(mu,alpha10,...
+%     alpha11,alpha12,alpha20,alpha21,alpha22,beta0,beta1,beta2,beta3,...
+%     eta1,eta2,P_hy,r_hy,m)
 %
 % this is the solver
 %
 % Inputs:
 %   [...] = parameter values
-%   m  = structure of mesh values
+%   m     = structure of mesh values
 %
 % Outputs:
-%   c1 = density of APCs
-%   c2 = density of IPAs
+%   t       = time
+%   r       = spatial mesh
+%   c1      = density of APCs
+%   c2      = density of IPAs
+%   q1      = concentration of PDGFA
+%   q2      = concentration of LIF
+%   mvgbdy  = location of moving boundary
+%   vel_cir = circumferential spreading (v/r)
+%   vel_rad = radial spreading (partial v/partial r)
 
 global whatstep tcurr;
 
@@ -127,12 +137,12 @@ while tcurr < tmax && j<R-1
         %%% growth factors
         [q1_hat,~] = growthfactors_implicit(q1_old,q2_old,dt_p,tcurr,...
             r,dr,R,thickness_RGC,radius_endo,maxRGCthick,thickness_ret,D1,D2,...
-            xi1,xi2,gamma3,gamma4);
+            xi1,xi2,gamma1,gamma2);
         
         %%% cell sum
         k_hat = cellpops_sum_withgrowthfactors(j,c1_old,c2_old,q1_hat,...
-            PO2,dt_p,r,Pm,kappa,mu,alpha11,alpha12,alpha21,alpha22,...
-            gamma1,gamma2,ce,cmax,hy);
+            PO2,dt_p,r,Pm,kappa,mu,alpha10,alpha11,alpha12,alpha20,...
+            alpha21,alpha22,eta1,eta2,ce,cmax,hy);
         
         %%%%%%%%%%%%%%%%%%%%%%%%% corrector step %%%%%%%%%%%%%%%%%%%%%%%%%%
         
@@ -181,18 +191,18 @@ while tcurr < tmax && j<R-1
     %%% growth factors
     [q1_new,q2_new] = growthfactors_implicit(q1_old,q2_old,dt_c,tcurr,...
         r,dr,R,thickness_RGC,radius_endo,maxRGCthick,thickness_ret,D1,D2,...
-        xi1,xi2,gamma3,gamma4);
+        xi1,xi2,gamma1,gamma2);
     
     %%% cell sum
     k_new = cellpops_sum_withgrowthfactors(j,c1_old,c2_old,q1_new,PO2,...
-        dt_c,r,Pm,kappa,mu,alpha11,alpha12,alpha21,alpha22,gamma1,...
-        gamma2,ce,cmax,hy);
+        dt_c,r,Pm,kappa,mu,alpha10,alpha11,alpha12,alpha20,alpha21,...
+        alpha22,eta1,eta2,ce,cmax,hy);
     
     %%% cells separate
     [c1_new,c2_new] = cellpops_separate_withgrowthfactors(j,c1_old,...
-        c2_old,k_new,q1_new,q2_new,PO2,dt_c,r,Pm,kappa,mu,alpha11,...
-        alpha12,alpha21,alpha22,beta1,beta2,beta3,gamma1,gamma2,...
-        ce,cmax,hy);
+        c2_old,k_new,q1_new,q2_new,PO2,dt_c,r,Pm,kappa,mu,alpha10,...
+        alpha11,alpha12,alpha20,alpha21,alpha22,beta0,beta1,beta2,beta3,...
+        eta1,eta2,ce,cmax,hy);
 
     %%%%%%%%%%%%%%%%%%%%%% reset for next time step %%%%%%%%%%%%%%%%%%%%%%%
     j = j+1;

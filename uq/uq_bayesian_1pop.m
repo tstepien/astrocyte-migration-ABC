@@ -53,7 +53,7 @@ PriorOpts.Marginals(3).Type = 'Uniform';
 PriorOpts.Marginals(3).Parameters = [0 1];  % (/hr)
 PriorOpts.Marginals(3).Bounds = [0 1];  % (/hr)
 
-PriorOpts.Marginals(4).Name = '$\gamma_1$';  % apoptosis rate APC
+PriorOpts.Marginals(4).Name = '$\eta_1$';  % apoptosis rate APC
 % PriorOpts.Marginals(4).Type = 'Exponential';
 % PriorOpts.Marginals(4).Parameters = 0.1076;  % (/hr)
 PriorOpts.Marginals(4).Type = 'Gaussian';

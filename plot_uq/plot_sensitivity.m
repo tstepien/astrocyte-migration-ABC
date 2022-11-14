@@ -4,7 +4,7 @@ clc;
 load('parameter_analysis/sensitivity_analysis_0207.mat')
 
 param_names = {'$\mu$','$\alpha_1$','$\alpha_2$','$\beta$','$\hat{\beta}$',...
-    '$\gamma_1$','$\gamma_2$','$T_e$','$P_\mathrm{hy}$','$r_\mathrm{hy}$'};
+    '$\eta_1$','$\eta_2$','$T_e$','$P_\mathrm{hy}$','$r_\mathrm{hy}$'};
 
 [rownan,colnan] = find(isnan(err));
 
@@ -39,9 +39,9 @@ for i=1:10
     elseif i==5
         paramofinterest = p.beta_hat;
     elseif i==6
-        paramofinterest = p.gamma1;
+        paramofinterest = p.eta1;
     elseif i==7
-        paramofinterest = p.gamma2;
+        paramofinterest = p.eta2;
     elseif i==8
         paramofinterest = p.Te;
     elseif i==9

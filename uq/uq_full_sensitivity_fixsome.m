@@ -51,7 +51,7 @@ InputOpts.Marginals(6).Type = 'Uniform';
 InputOpts.Marginals(6).Parameters = [0 1];  % (/hr)
 InputOpts.Marginals(6).Bounds = [0 1];  % (/hr)
 
-InputOpts.Marginals(7).Name = '$\gamma_2$';  % apoptosis rate IPA
+InputOpts.Marginals(7).Name = '$\eta_2$';  % apoptosis rate IPA
 InputOpts.Marginals(7).Type = 'Uniform';
 InputOpts.Marginals(7).Parameters = [0 1];  % (/hr)
 InputOpts.Marginals(7).Bounds = [0 1];  % (/hr)

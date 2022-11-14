@@ -19,13 +19,13 @@ err_names = {'Density Error','Radius Error','Time Error','Total Error'};
 % errTotal.original = err_tot;
 
 param_original = [mu , alpha11 , alpha12 , alpha22 , beta1 , beta3 , ...
-    gamma2 , P_hy , r_hy];
+    eta2 , P_hy , r_hy];
 
 clear err_dens err_rad err_time err_tot mu alpha11 alpha12 alpha22 ...
-    beta1 beta3 gamma2 P_hy r_hy;
+    beta1 beta3 eta2 P_hy r_hy;
 
 param_names = {'$\mu$','$\alpha_{11}$','$\alpha_{12}$','$\alpha_{22}$',...
-    '$\beta_1$','$\beta_3$','$\gamma_2$','$P_\mathrm{hy}$','$r_\mathrm{hy}$'};
+    '$\beta_1$','$\beta_3$','$\eta_2$','$P_\mathrm{hy}$','$r_\mathrm{hy}$'};
 num_param = length(param_names);
 param_names_words = {'Adhesion constant','APC prolif rate wrt O_2',...
     'APC prolif rate wrt PDGFA','IPA prolif rate wrt O_2',...

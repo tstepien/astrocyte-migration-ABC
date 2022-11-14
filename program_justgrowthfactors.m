@@ -59,7 +59,7 @@ for i = 2:length(t)
 %         q2_exp(i-1,:),dt,r,D1,D2,xi1,xi2);
     [q1_imp(i,:),q2_imp(i,:)] = growthfactors_implicit(q1_imp(i-1,:),...
         q2_imp(i-1,:),dt,tcurr,r,dr,R,thickness_RGC,radius_endo(i),...
-        maxRGCthick,thickness_ret,D1,D2,xi1,xi2,gamma3,gamma4);
+        maxRGCthick,thickness_ret,D1,D2,xi1,xi2,gamma1,gamma2);
     
     tcurr = tcurr + dt;
 end

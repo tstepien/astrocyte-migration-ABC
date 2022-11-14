@@ -7,7 +7,7 @@ function Y = uq_eqns_and_error(X)
 %
 % inputs:
 %   X = [mu, alpha11, alpha12, alpha21, alpha22, beta1, beta2, beta3, ...
-%           gamma1, gamma2, Te, P_hy, r_hy]
+%           eta1, eta2, Te, P_hy, r_hy]
 %
 % output:
 %   Y = total error
@@ -22,8 +22,8 @@ alpha22 = X(:,5);
 beta1 = X(:,6);
 beta2 = X(:,7);
 beta3 = X(:,8);
-gamma1 = X(:,9);
-gamma2 = X(:,10);
+eta1 = X(:,9);
+eta2 = X(:,10);
 
 %%% moving boundary tension
 Te = X(:,11);
@@ -45,8 +45,8 @@ Y = zeros(N,1);
 
 for i=1:N
     [t,r,c1,c2,~,~,mvgbdy,~,~] = eqnsolver(mu(i),alpha11(i),alpha12(i),...
-        alpha21(i),alpha22(i),beta1(i),beta2(i),beta3(i),gamma1(i),...
-        gamma2(i),Te(i),P_hy(i),r_hy(i),m);
+        alpha21(i),alpha22(i),beta1(i),beta2(i),beta3(i),eta1(i),...
+        eta2(i),Te(i),P_hy(i),r_hy(i),m);
     
     [Y(i),~,~,~] = errorfunction(t,r,mvgbdy,c1,c2);
 end

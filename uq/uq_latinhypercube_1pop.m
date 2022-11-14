@@ -31,13 +31,13 @@ alpha21 = 0; %%% (/hr) proliferation rate IPA wrt oxygen
 alpha22 = 0; %%% (/hr) proliferation rate IPA wrt PDGFA
 beta = 0; %%% (/hr) differentiation rate
 beta_hat = 0; %%% (/hr) mass action rate
-gamma2 = 0; %%% (/hr) apoptosis rate IPA
+eta2 = 0; %%% (/hr) apoptosis rate IPA
 
 %%% parameters to investigate
 bound = [0.01 5; %mu - adhesion constant
     0.01 1; %alpha11 - (/hr) proliferation rate APC wrt oxygen
     0 1; %alpha12 - (/hr) proliferation rate APC wrt PDGFA
-    0 1; %gamma1 - (/hr) apoptosis rate APC
+    0 1; %eta1 - (/hr) apoptosis rate APC
     0.0001 0.0038; %Te - tension on boundary
     0 20; %P_hy - partial pressure of oxygen due to hyaloid artery
     0.001 1]; %r_hy - radius at half-maximum of Hill function for hyaloid
@@ -46,7 +46,7 @@ numpar = length(bound);
 mu      = (bound(1,2) - bound(1,1))*LHpts(:,1) + bound(1,1);
 alpha11 = (bound(2,2) - bound(2,1))*LHpts(:,2) + bound(2,1);
 alpha12 = (bound(3,2) - bound(3,1))*LHpts(:,3) + bound(3,1);
-gamma1  = (bound(4,2) - bound(4,1))*LHpts(:,4) + bound(4,1);
+eta1  = (bound(4,2) - bound(4,1))*LHpts(:,4) + bound(4,1);
 Te      = (bound(5,2) - bound(5,1))*LHpts(:,5) + bound(5,1);
 P_hy    = (bound(6,2) - bound(6,1))*LHpts(:,6) + bound(6,1);
 r_hy    = (bound(7,2) - bound(7,1))*LHpts(:,7) + bound(7,1);
@@ -59,7 +59,7 @@ err_rad = zeros(N,1);
 parfor i=1745:N
     %%% solve equation
     [t,~,~,~,~,~,mvgbdy,~,~] = eqnsolver(mu(i),alpha11(i),alpha12(i),...
-        alpha21,alpha22,beta,beta_hat,gamma1(i),gamma2,Te(i),P_hy(i),...
+        alpha21,alpha22,beta,beta_hat,eta1(i),eta2,Te(i),P_hy(i),...
         r_hy(i),m);
     
     %%% error calculation

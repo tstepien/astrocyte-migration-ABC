@@ -20,8 +20,8 @@ base_alpha21 = 0.15; %%% (/hr) proliferation rate IPA wrt oxygen
 base_alpha22 = 0; %%% (/hr) proliferation rate IPA wrt PDGFA
 base_beta = 0.01;%0.003; %%% (/hr) differentiation rate
 base_beta_hat = 0.005; %%% (/hr) mass action rate
-base_gamma1 = 0.0001; %%% (/hr) apoptosis rate APC
-base_gamma2 = 0.0001; %%% (/hr) apoptosis rate IPA
+base_eta1 = 0.0001; %%% (/hr) apoptosis rate APC
+base_eta2 = 0.0001; %%% (/hr) apoptosis rate IPA
 base_Te = 0.0035; %%% tension on boundary
 base_P_hy = 0.01; %%% partial pressure of oxygen due to hyaloid artery
 base_r_hy = 0.1; %%% radius at half-maximum of Hill function for hyaloid
@@ -34,8 +34,8 @@ bound = [0.01 5; %mu
     0 1; %alpha22
     0 0.15; %beta
     0 0.5; %beta_hat
-    0 0.005; %gamma1
-    0 0.005; %gamma2
+    0 0.005; %eta1
+    0 0.005; %eta2
     0 0.0038; %Te
     0 1; %P_hy
     1/1000 1]; %r_hy
@@ -62,8 +62,8 @@ for j = 1:numpar %%% parameter
         alpha22 = base_alpha22;
         beta = base_beta;
         beta_hat = base_beta_hat;
-        gamma1 = base_gamma1;
-        gamma2 = base_gamma2;
+        eta1 = base_eta1;
+        eta2 = base_eta2;
         Te = base_Te;
         P_hy = base_P_hy;
         r_hy = base_r_hy;
@@ -83,9 +83,9 @@ for j = 1:numpar %%% parameter
         elseif j==7
             beta_hat = intrange(j,i);
         elseif j==8
-            gamma1 = intrange(j,i);
+            eta1 = intrange(j,i);
         elseif j==9
-            gamma2 = intrange(j,i);
+            eta2 = intrange(j,i);
         elseif j==10
             Te = intrange(j,i);
         elseif j==11
@@ -97,7 +97,7 @@ for j = 1:numpar %%% parameter
         %%% solve equation
         tic
         [t,r,c1,c2,q1,q2,mvgbdy,vel_cir,vel_rad] = eqnsolver(mu,alpha11,...
-            alpha12,alpha21,alpha22,beta,beta_hat,gamma1,gamma2,Te,P_hy,r_hy,m);
+            alpha12,alpha21,alpha22,beta,beta_hat,eta1,eta2,Te,P_hy,r_hy,m);
         toc
 
         %%% error calculation

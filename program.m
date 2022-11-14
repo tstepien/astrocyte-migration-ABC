@@ -8,15 +8,18 @@ addpath plot_simulations
 
 %%%%%%%%%%%%%%%%%%%%%%%%%% astrocyte parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%
 mu = 10; %%% adhesion constant
+alpha10 = 0.005; %%% (/hr) basal proliferation rate APC
 alpha11 = 0.005; %%% (/hr) proliferation rate APC wrt oxygen
 alpha12 = 0.005; %%% (/hr) proliferation rate APC wrt PDGFA
+alpha20 = 0.005; %%% (/hr) basal proliferation rate IPA
 alpha21 = 0.005; %%% (/hr) proliferation rate IPA wrt oxygen
 alpha22 = 0.005; %%% (/hr) proliferation rate IPA wrt PDGFA
+beta0 = 0.005; %%% (/hr) basal differentiation rate
 beta1 = 0.005; %%% (/hr) mass action rate
 beta2 = 0.005; %%% (/hr) differentiation rate wrt oxygen
 beta3 = 0.005; %%% (/hr) differentiation rate wrt LIF
-gamma1 = 0.0005; %%% (/hr) apoptosis rate APC
-gamma2 = 0.0005; %%% (/hr) apoptosis rate IPA
+eta1 = 0.0005; %%% (/hr) apoptosis rate APC
+eta2 = 0.0005; %%% (/hr) apoptosis rate IPA
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% hyaloid artery %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 P_hy = 4.6343; %%% partial pressure of oxygen due to hyaloid artery
@@ -29,8 +32,9 @@ m.tmax = 7*24; %%% max time (hr) (7 days = 168 hr)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% solve equation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 tic
-[t,r,c1,c2,q1,q2,mvgbdy,vel_cir,vel_rad] = eqnsolver(mu,alpha11,alpha12,...
-    alpha21,alpha22,beta1,beta2,beta3,gamma1,gamma2,P_hy,r_hy,m);
+[t,r,c1,c2,q1,q2,mvgbdy,vel_cir,vel_rad] = eqnsolver(mu,alpha10,alpha11,...
+    alpha12,alpha20,alpha21,alpha22,beta0,beta1,beta2,beta3,eta1,eta2,...
+    P_hy,r_hy,m);
 toc
 
 

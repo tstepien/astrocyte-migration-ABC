@@ -61,12 +61,12 @@ InputOpts.Marginals(8).Type = 'Uniform';
 InputOpts.Marginals(8).Parameters = [0 1];  % (/hr)
 InputOpts.Marginals(8).Bounds = [0 1];  % (/hr)
 
-InputOpts.Marginals(9).Name = '$\gamma_1$';  % apoptosis rate APC
+InputOpts.Marginals(9).Name = '$\eta_1$';  % apoptosis rate APC
 InputOpts.Marginals(9).Type = 'Exponential';
 InputOpts.Marginals(9).Parameters = 0.4429;  % (/hr)
 InputOpts.Marginals(9).Bounds = [0 1];  % (/hr)
 
-InputOpts.Marginals(10).Name = '$\gamma_2$';  % apoptosis rate IPA
+InputOpts.Marginals(10).Name = '$\eta_2$';  % apoptosis rate IPA
 InputOpts.Marginals(10).Type = 'Gaussian';
 InputOpts.Marginals(10).Parameters = [0.5339 0.2463];  % (/hr)
 InputOpts.Marginals(10).Bounds = [0 1];  % (/hr)
