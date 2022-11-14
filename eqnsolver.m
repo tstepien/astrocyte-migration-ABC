@@ -54,13 +54,10 @@ tcurr = 0;
 
 %%% astrocytes
 c1_init = zeros(1,R);
-xval = s0;
-yval = 1.05*ce;
+ce_prime = 1.021*ce;
 for i=1:R
-    if r(i)<=xval %fitted parabola
-        c1_init(i) = (ce-yval)/s0^2*r(i)^2 + yval;
-    else
-        c1_init(i) = 0;
+    if r(i)<=s0 %fitted parabola, c1_init=0 for r(i)>s0
+        c1_init(i) = ce + (ce_prime - ce)*(1 - r(i)^2/s0^2);
     end
 end
 c2_init = zeros(1,R);
