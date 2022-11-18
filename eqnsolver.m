@@ -187,7 +187,7 @@ while tcurr < tmax && j<R-1
     
     %%% oxygen
     PO2 = oxygen(r,thickness_ret,P0,Dalpha,M0);
-        
+    
     %%% growth factors
     [q1_new,q2_new] = growthfactors_implicit(q1_old,q2_old,dt_c,tcurr,...
         r,dr,R,thickness_RGC,radius_endo,maxRGCthick,thickness_ret,D1,D2,...

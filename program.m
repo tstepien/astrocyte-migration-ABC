@@ -8,10 +8,10 @@ addpath plot_simulations
 
 %%%%%%%%%%%%%%%%%%%%%%%%%% astrocyte parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%
 mu = 10; %%% adhesion constant
-alpha10 = 0.005; %%% (/hr) basal proliferation rate APC
+alpha10 = 0.05; %%% (/hr) basal proliferation rate APC
 alpha11 = 0.005; %%% (/hr) proliferation rate APC wrt oxygen
 alpha12 = 0.005; %%% (/hr) proliferation rate APC wrt PDGFA
-alpha20 = 0.005; %%% (/hr) basal proliferation rate IPA
+alpha20 = 0.05; %%% (/hr) basal proliferation rate IPA
 alpha21 = 0.005; %%% (/hr) proliferation rate IPA wrt oxygen
 alpha22 = 0.005; %%% (/hr) proliferation rate IPA wrt PDGFA
 beta0 = 0.005; %%% (/hr) basal differentiation rate
