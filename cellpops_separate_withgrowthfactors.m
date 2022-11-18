@@ -54,10 +54,10 @@ omega = 1./(2*mu*r(2:j)) * dt/dr^2;
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% growth function %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-g1 = growthterms_c1_withgrowthfactors(c1_old(1:j),c2_old(1:j),q1(1:j),...
-    q2(1:j),PO2(1:j),Pm,alpha10,alpha11,alpha12,beta0,beta1,beta2,beta3,eta1,cmax,hyaloid);
-g2 = growthterms_c2_withgrowthfactors(c1_old(1:j),c2_old(1:j),q1(1:j),...
-    q2(1:j),PO2(1:j),Pm,alpha20,alpha21,alpha22,beta0,beta1,beta2,beta3,eta2,cmax,hyaloid);
+g1 = growthterms_APC(c1_old(1:j),c2_old(1:j),q1(1:j),q2(1:j),PO2(1:j),...
+    Pm,alpha10,alpha11,alpha12,beta0,beta1,beta2,beta3,eta1,cmax,hyaloid);
+g2 = growthterms_IPA(c1_old(1:j),c2_old(1:j),q1(1:j),q2(1:j),PO2(1:j),...
+    Pm,alpha20,alpha21,alpha22,beta0,beta1,beta2,beta3,eta2,cmax,hyaloid);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% construct matrix %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% c1 - APC %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

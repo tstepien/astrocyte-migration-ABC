@@ -1,0 +1,13 @@
+function g1plusg2 = growthterms_sum(c1,c2,q1,PO2,Pm,alpha10,alpha11,alpha12,...
+    alpha20,alpha21,alpha22,eta1,eta2,cmax,hyaloid)
+% g = growthterms_sum(c1,c2,q1,PO2,Pm,alpha10,alpha11,alpha12,...
+%     alpha20,alpha21,alpha22,eta1,eta2,cmax,hyaloid)
+%
+% growth terms summed: g=g1+g2
+
+hyaloid = hyaloid(1:length(c1));
+choroid = PO2./(Pm+PO2);
+
+g1plusg2 = ( (alpha10 + alpha11*(hyaloid + choroid) + alpha12*q1).*c1 ...
+    + (alpha20 + alpha21*(hyaloid + choroid) + alpha22*q1).*c2 ).*(1 - (c1+c2)/cmax) ...
+    - (eta1*c1 + eta2*c2);

@@ -48,9 +48,8 @@ Psi(j) = interp1(rhalf(j-2:j-1),Psi(j-2:j-1),rhalf(j),'pchip','extrap');
 omega = 1./(mu*r(2:j)) * dt/dr^2;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% growth function %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-g = growthterms_sum_withgrowthfactors(c1_old(1:j),c2_old(1:j),q1(1:j),...
-    PO2(1:j),Pm,alpha10,alpha11,alpha12,alpha20,alpha21,alpha22,eta1,...
-    eta2,cmax,hyaloid);
+g = growthterms_sum(c1_old(1:j),c2_old(1:j),q1(1:j),PO2(1:j),Pm,alpha10,...
+    alpha11,alpha12,alpha20,alpha21,alpha22,eta1,eta2,cmax,hyaloid);
 
 %%%%%%%%%%%%%%%%%%%%%%%%% iterate for convergence %%%%%%%%%%%%%%%%%%%%%%%%%
 for m=1:5

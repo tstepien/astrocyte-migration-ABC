@@ -1,0 +1,13 @@
+function g1 = growthterms_APC(c1,c2,q1,q2,PO2,Pm,alpha10,alpha11,alpha12,...
+    beta0,beta1,beta2,beta3,eta1,cmax,hyaloid)
+% g1 = growthterms_APC(c1,c2,q1,q2,PO2,Pm,alpha10,alpha11,alpha12,...
+%     beta0,beta1,beta2,beta3,eta1,cmax,hyaloid)
+%
+% growth terms just APCs (c1): g1
+
+hyaloid = hyaloid(1:length(c1));
+choroid = PO2./(Pm+PO2);
+
+g1 = ( alpha10 + alpha11*(hyaloid + choroid) + alpha12*q1 ).*c1.*(1 - (c1+c2)/cmax) ...
+    - ( beta0 + beta1*c2 + beta2*(hyaloid + choroid) + beta3*q2 ).*c1 ...
+    - eta1*c1;
