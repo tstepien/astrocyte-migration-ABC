@@ -7,19 +7,19 @@ addpath plot_simulations
 %%% space unit: mm
 
 %%%%%%%%%%%%%%%%%%%%%%%%%% astrocyte parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%
-mu = 10; %%% adhesion constant
-alpha10 = 0.05; %%% (/hr) basal proliferation rate APC
-alpha11 = 0.005; %%% (/hr) proliferation rate APC wrt oxygen
-alpha12 = 0.005; %%% (/hr) proliferation rate APC wrt PDGFA
-alpha20 = 0.05; %%% (/hr) basal proliferation rate IPA
-alpha21 = 0.005; %%% (/hr) proliferation rate IPA wrt oxygen
-alpha22 = 0.005; %%% (/hr) proliferation rate IPA wrt PDGFA
-beta0 = 0.005; %%% (/hr) basal differentiation rate
+mu = 0.01; %%% adhesion constant
+alpha10 = 0; %%% (/hr) basal proliferation rate APC
+alpha11 = 0.1; %%% (/hr) proliferation rate APC wrt oxygen
+alpha12 = 0.2; %%% (/hr) proliferation rate APC wrt PDGFA
+alpha20 = 0; %%% (/hr) basal proliferation rate IPA
+alpha21 = 0.15; %%% (/hr) proliferation rate IPA wrt oxygen
+alpha22 = 0.15; %%% (/hr) proliferation rate IPA wrt PDGFA
+beta0 = 0; %%% (/hr) basal differentiation rate
 beta1 = 0.005; %%% (/hr) mass action rate
-beta2 = 0.005; %%% (/hr) differentiation rate wrt oxygen
-beta3 = 0.005; %%% (/hr) differentiation rate wrt LIF
-eta1 = 0.0005; %%% (/hr) apoptosis rate APC
-eta2 = 0.0005; %%% (/hr) apoptosis rate IPA
+beta2 = 0.01; %%% (/hr) differentiation rate wrt oxygen
+beta3 = 0.01; %%% (/hr) differentiation rate wrt LIF
+eta1 = 0.0001; %%% (/hr) apoptosis rate APC
+eta2 = 0.0001; %%% (/hr) apoptosis rate IPA
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% hyaloid artery %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 P_hy = 4.6343; %%% partial pressure of oxygen due to hyaloid artery

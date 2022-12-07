@@ -7,7 +7,7 @@ addpath plot_simulations
 %%% space unit: mm
 
 %%%%%%%%%%%%%%%%%%%%%%%%%% astrocyte parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%
-mu = 10; %%% adhesion constant
+mu = 0.01; %%% adhesion constant
 alpha10 = [0,1]; %%% (/hr) basal proliferation rate APC
 alpha11 = [0,1]; %%% (/hr) proliferation rate APC wrt oxygen
 alpha12 = [0,1]; %%% (/hr) proliferation rate APC wrt PDGFA
