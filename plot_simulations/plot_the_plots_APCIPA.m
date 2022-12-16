@@ -24,7 +24,7 @@ j_init = s0/dr+1;
 numcurvesplot = 8;
 plotind = zeros(1,numcurvesplot);
 for i=0:numcurvesplot-1
-    plotind(i+1) = find(abs((t/24-i))==min(abs(t/24-i)));
+    plotind(i+1) = find(abs((t/24-i))==min(abs(t/24-i)),1);
 end
 
 %%% color order - MATLAB
