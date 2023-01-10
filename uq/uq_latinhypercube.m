@@ -4,7 +4,7 @@ addpath ..
 
 savefiles = 'yes';
 
-N = 1000;
+N = 100000;
 
 %%%%%%%%%%%%%%%%%%%%%% create Latin Hypercube points %%%%%%%%%%%%%%%%%%%%%%
 % %%% MATLAB function (painstakenly slow for large N)
