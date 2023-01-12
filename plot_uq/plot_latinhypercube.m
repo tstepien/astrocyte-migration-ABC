@@ -8,7 +8,7 @@ what_set = 'maxthreshold'; %'maxthreshold' or 'maxmode'
 fit_dist_plot = 'no'; % using percentholdon = 0.01 for distribution fits
 titles_on = 'yes';
 
-load('../uq/parameter_analysis/latinhypercube_10000pts.mat')
+load('../uq/parameter_analysis/latinhypercube_100pts.mat')
 
 err_original = [err_dens err_rad err_time err_tot];
 err_names = {'Density Error','Radius Error','Time Error','Total Error'};
@@ -18,24 +18,26 @@ err_names = {'Density Error','Radius Error','Time Error','Total Error'};
 % errTime.original = err_time;
 % errTotal.original = err_tot;
 
-param_original = [mu , alpha10, alpha11 , alpha12 , alpha20, alpha21 , ...
-    alpha22 , beta0, beta1 , beta2 , beta3 , eta1 , eta2 , P_hy , r_hy];
+param_original = [mu, alpha10, alpha11, alpha12, alpha13, alpha20, alpha21, ...
+    alpha22, alpha23, beta0, beta1, beta2, beta3, beta4, eta1 , eta2 , P_hy , r_hy];
 
-clear err_dens err_rad err_time err_tot mu alpha11 alpha12 alpha21 alpha22 ...
-    beta1 beta2 beta3 eta1 eta2 Te P_hy r_hy;
+clear err_dens err_rad err_time err_tot mu alpha11 alpha12 alpha13 ...
+    alpha21 alpha22 alpha23 beta1 beta2 beta3 beta4 eta1 eta2 Te P_hy r_hy;
 
 param_names = {'$\mu$','$\alpha_{10}$','$\alpha_{11}$','$\alpha_{12}$',...
-    '$\alpha_{20}$','$\alpha_{21}$','$\alpha_{22}$','$\beta_0$',...
-    '$\beta_1$','$\beta_2$','$\beta_3$','$\eta_1$','$\eta_2$',...
-    '$P_\mathrm{hy}$','$r_\mathrm{hy}$'};
+    '$\alpha_{13}$','$\alpha_{20}$','$\alpha_{21}$','$\alpha_{22}$',...
+    '$\alpha_{23}$','$\beta_0$','$\beta_1$','$\beta_2$','$\beta_3$',...
+    '$\beta_4$','$\eta_1$','$\eta_2$','$P_\mathrm{hy}$','$r_\mathrm{hy}$'};
 num_param = length(param_names);
 param_names_words = {'Adhesion constant','APC base prolif rate',...
-    'APC prolif rate wrt O_2','APC prolif rate wrt PDGFA',...
-    'IPA base prolif rate','IPA prolif rate wrt O_2',...
-    'IPA prolif rate wrt PDGFA','Mass action rate',...
-    'Base differentiation rate','Differentiation rate wrt O_2',...
-    'Differentiation rate wrt LIF','APC apoptosis rate',...
-    'IPA apoptosis rate','Hyaloid artery maximum','Hyaloid artery half-max value'};
+    'APC prolif wrt PDGFA','APC prolif wrt choroid O_2',...
+    'APC prolif wrt hyaloid O_2','IPA base prolif rate',...
+    'IPA prolif wrt PDGFA','APC prolif wrt choroid O_2',...
+    'IPA prolif wrt hyaloid O_2','Base diff rate',...
+    'Mass action rate','Diff rate wrt LIF',...
+    'Diff rate wrt choroid O_2','Diff rate wrt hyaloid O_2',...
+    'APC apoptosis rate','IPA apoptosis rate','Hyaloid max',...
+    'Hyaloid half-max value'};
 
 %% remove errors that were set to 10^4
 maxthreshold = 10^4;
@@ -66,9 +68,9 @@ end
 
 %% look at errors that are smaller than the mode errors for density, radius, and time
 
-ind_maxmode = ind( err_original(:,1) < modes_error(1) ...
-    & err_original(:,2) < modes_error(2) ...
-    & err_original(:,3) < modes_error(3) );
+ind_maxmode = ind( err_original(:,1) <= modes_error(1) ...
+    & err_original(:,2) <= modes_error(2) ...
+    & err_original(:,3) <= modes_error(3) );
 num_maxmode = length(ind_maxmode);
 
 err_maxmode = err_original(ind_maxmode,:);
@@ -108,9 +110,10 @@ for i = 1:num_param
 end
 
 fig3 = figure;
-tiledlayout(3,5,'TileSpacing','compact','Padding','compact')
+tiledlayout(4,5,'TileSpacing','compact','Padding','compact')
+tiledpos = [1:5,7:19];
 for i=1:num_param
-    nexttile
+    nexttile(tiledpos(i))
     
     if strcmp(fit_dist_plot,'no')==1
         histogram(param_sort_hold(:,i),'Normalization','probability',...
@@ -141,7 +144,7 @@ for i=1:num_param
     if strcmp(titles_on,'yes')==1
         title(param_names_words{i},'FontWeight','normal')
     end
-    if i==1 || i==6 || i==11
+    if i==1 || i==6 || i==10 || i==15
         ylabel('Percentage','Interpreter','latex')
     end
     xlim([0,bound(i,2)])
@@ -153,7 +156,7 @@ if strcmp(titles_on,'yes')==1
     sgtitle(strcat(['Smallest ',num2str(percentholdon*100),'% Error (',num2str(num_hold),' parameter sets)']))
 end
 
-set(fig3,'Units','inches','Position',[2,2,16,7],'PaperPositionMode','auto')
+set(fig3,'Units','inches','Position',[2,2,15,8],'PaperPositionMode','auto')
 
 %% determine type of distribution
 
@@ -176,19 +179,19 @@ end
 
 %% corner plot
 
-num_keepscatter = 3; %number to keep for scatter plot
-param_min = param_sort_hold(1:num_keepscatter,:);
-
-param_mean = zeros(1,num_param);
-param_mode = zeros(1,num_param);
-for i=1:num_param
-    param_mean(i) = mean(param_sort_hold(:,i));
-    param_mode(i) = mode(param_sort_hold(:,i));
-end
-
-fig4 = figure;
-ecornerplot(param_sort_hold,param_min,param_mean,bound,'names',param_names,'ks',true);
-set(fig4,'Units','inches','Position',[2,2,10,8],'PaperPositionMode','auto')
+% num_keepscatter = 3; %number to keep for scatter plot
+% param_min = param_sort_hold(1:num_keepscatter,:);
+% 
+% param_mean = zeros(1,num_param);
+% param_mode = zeros(1,num_param);
+% for i=1:num_param
+%     param_mean(i) = mean(param_sort_hold(:,i));
+%     param_mode(i) = mode(param_sort_hold(:,i));
+% end
+% 
+% fig4 = figure;
+% ecornerplot(param_sort_hold,param_min,param_mean,bound,'names',param_names,'ks',true);
+% set(fig4,'Units','inches','Position',[2,2,10,8],'PaperPositionMode','auto')
 
 %% correlation
 

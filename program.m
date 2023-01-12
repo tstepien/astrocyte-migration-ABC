@@ -9,21 +9,45 @@ addpath plot_simulations
 %%%%%%%%%%%%%%%%%%%%%%%%%% astrocyte parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%
 mu = 0.001; %%% adhesion constant
 alpha10 = 0; %%% (/hr) basal proliferation rate APC
-alpha11 = 0.4491; %%% (/hr) proliferation rate APC wrt oxygen
-alpha12 = 0.9004; %%% (/hr) proliferation rate APC wrt PDGFA
+alpha11 = 0.9004; %%% (/hr) proliferation rate APC wrt PDGFA
+alpha12 = 0.4491; %%% (/hr) proliferation rate APC wrt choroid oxygen
+alpha13 = 0.4491; %%% (/hr) proliferation rate APC wrt hylaoid oxygen
 alpha20 = 0; %%% (/hr) basal proliferation rate IPA
-alpha21 = 0.3199; %%% (/hr) proliferation rate IPA wrt oxygen
-alpha22 = 0.5114; %%% (/hr) proliferation rate IPA wrt PDGFA
+alpha21 = 0.5114; %%% (/hr) proliferation rate IPA wrt PDGFA
+alpha22 = 0.3199; %%% (/hr) proliferation rate IPA wrt choroid oxygen
+alpha23 = 0.3199; %%% (/hr) proliferation rate IPA wrt hyaloid oxygen
 beta0 = 0; %%% (/hr) basal differentiation rate
-beta1 = 0.0094; %%% (/hr) mass action rate
-beta2 = 0.0462; %%% (/hr) differentiation rate wrt oxygen
-beta3 = 0.5908; %%% (/hr) differentiation rate wrt LIF
+beta1 = 0.5908; %%% (/hr) differentiation rate wrt LIF
+beta2 = 0.0462; %%% (/hr) differentiation rate wrt choroid oxygen
+beta3 = 0.0462; %%% (/hr) differentiation rate wrt hyaloid oxygen
+beta4 = 0.0094; %%% (/hr) mass action rate
 eta1 = 0.0091; %%% (/hr) apoptosis rate APC
 eta2 = 0.4670; %%% (/hr) apoptosis rate IPA
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% hyaloid artery %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 P_hy = 4.6343; %%% partial pressure of oxygen due to hyaloid artery
 r_hy = 0.6963; %%% radius at half-maximum of Hill function for hyaloid
+
+%%%%%%%%%%%%%%%%%%%%%% loading a parameter set file %%%%%%%%%%%%%%%%%%%%%%%
+% load('uq/parameter_analysis/problem_parameter_set12726.mat');
+% mu = param_ind(1);
+% alpha10 = param_ind(2);
+% alpha11 = param_ind(3);
+% alpha12 = param_ind(4);
+% alpha13 = param_ind(5);
+% alpha20 = param_ind(6);
+% alpha21 = param_ind(7);
+% alpha22 = param_ind(8);
+% alpha23 = param_ind(9);
+% beta0 = param_ind(10);
+% beta1 = param_ind(11);
+% beta2 = param_ind(12);
+% beta3 = param_ind(13);
+% beta4 = param_ind(14);
+% eta1 = param_ind(15);
+% eta2 = param_ind(16);
+% P_hy = param_ind(17);
+% r_hy = param_ind(18);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% mesh parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 m.dr = 0.01;
@@ -33,8 +57,8 @@ m.tmax = 7*24; %%% max time (hr) (7 days = 168 hr)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% solve equation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 tic
 [t,r,c1,c2,q1,q2,mvgbdy,vel_cir,vel_rad] = eqnsolver(mu,alpha10,alpha11,...
-    alpha12,alpha20,alpha21,alpha22,beta0,beta1,beta2,beta3,eta1,eta2,...
-    P_hy,r_hy,m);
+    alpha12,alpha13,alpha20,alpha21,alpha22,alpha23,beta0,beta1,beta2,...
+    beta3,beta4,eta1,eta2,P_hy,r_hy,m);
 toc
 
 
