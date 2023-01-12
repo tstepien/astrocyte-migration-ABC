@@ -202,6 +202,11 @@ while tcurr < tmax && j<R-1
         q2_new,PO2,dt_c,r,Pm,kappa,mu,alpha10,alpha11,alpha12,alpha20,...
         alpha21,alpha22,beta0,beta1,beta2,beta3,eta1,eta2,ce,cmax,hy);
 
+    if sum(c1_new>0)>=1 || sum(c2_new>0)>=1
+        disp('***stopping simulation since one of the cell densities went negative***')
+        return;
+    end
+
     %%%%%%%%%%%%%%%%%%%%%% reset for next time step %%%%%%%%%%%%%%%%%%%%%%%
     j = j+1;
     s = s + dr;
