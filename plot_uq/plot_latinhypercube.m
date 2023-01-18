@@ -3,12 +3,16 @@ clc;
 
 addpath emcee_mymod
 
+N = 100000;
+
 percentholdon = 0.1;
 what_set = 'maxthreshold'; %'maxthreshold' or 'maxmode'
 fit_dist_plot = 'no'; % using percentholdon = 0.01 for distribution fits
 titles_on = 'yes';
 
-load('../uq/parameter_analysis/latinhypercube_100pts.mat')
+load(strcat('../uq/parameter_analysis/abc_',num2str(N),'pts.mat'))
+%load(strcat('../uq/parameter_analysis/18 parameters range smaller/abc_',num2str(N),'pts.mat'))
+
 
 err_original = [err_dens err_rad err_time err_tot];
 err_names = {'Density Error','Radius Error','Time Error','Total Error'};
