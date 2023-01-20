@@ -4,15 +4,14 @@ clc;
 addpath emcee_mymod
 
 N = 500000;
+num_param = 18;
 
 percentholdon = 0.1;
 what_set = 'maxthreshold'; %'maxthreshold' or 'maxmode'
 fit_dist_plot = 'no'; % using percentholdon = 0.01 for distribution fits
 titles_on = 'yes';
 
-load(strcat('../uq/parameter_analysis/abc_',num2str(N),'pts.mat'))
-%load(strcat('../uq/parameter_analysis/18 parameters range smaller/abc_',num2str(N),'pts.mat'))
-
+load(strcat('../uq/parameter_analysis/abc',num2str(num_param),'_',num2str(N),'pts.mat'))
 
 err_original = [err_dens err_rad err_time err_tot];
 err_names = {'Density Error','Radius Error','Time Error','Total Error'};
