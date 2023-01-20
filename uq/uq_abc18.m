@@ -5,24 +5,25 @@ addpath ..
 savefiles = 'yes';
 
 N = 500000;
+num_param = 18;
 
 %%%%%%%%%%%%%%%%%%%%%% create Latin Hypercube points %%%%%%%%%%%%%%%%%%%%%%
 % %%% MATLAB function (painstakenly slow for large N)
 % % LHpts = lhsdesign(N,13);
 % %%% LATIN_RANDOM function
 % % https://people.sc.fsu.edu/~jburkardt/m_src/latin_random/latin_random.html
-% LHpts = latin_random(18, N)';
-% save(strcat('parameter_analysis/LHpts_',num2str(N),'.mat'),'LHpts')
+% LHpts = latin_random(num_param, N)';
+% save(strcat('parameter_analysis/LHpts',num2str(num_param),'_',num2str(N),'.mat'),'LHpts')
 % stop
 
 
 %%%%%%%%%%%%%%%%%%%%%%% load Latin Hypercube points %%%%%%%%%%%%%%%%%%%%%%%
-load(strcat('parameter_analysis/LHpts_',num2str(N),'.mat'))
+load(strcat('parameter_analysis/LHpts',num2str(num_param),'_',num2str(N),'.mat'))
 
 if strcmp(savefiles,'yes')==1
     doublecheck = input('Are you sure you would like to save the output files? (it may overwrite): ');
     if strcmp(doublecheck,'y')==1
-        diary(strcat('parameter_analysis/abc_',num2str(N),'.txt'));
+        diary(strcat('parameter_analysis/abc',num2str(num_param),'_',num2str(N),'.txt'));
     else
         return;
     end
@@ -45,8 +46,8 @@ bound = [0.01 10; %mu - adhesion constant
     0 2; %alpha23 - (/hr) proliferation rate IPA wrt hyaloid oxygen
     0 2; %beta0 - (/hr) base differentiation rate
     0 2; %beta1 - (/hr) mass action rate
-    0 2; %beta1 -  (/hr) differentiation rate wrt LIF
-    0 2; %beta2 -  (/hr) differentiation rate wrt choroid oxygen
+    0 2; %beta2 -  (/hr) differentiation rate wrt LIF
+    0 2; %beta3 -  (/hr) differentiation rate wrt choroid oxygen
     0 2; %beta4 -  (/hr) differentiation rate wrt hyaloid oxygen
     0 2; %eta1 - (/hr) apoptosis rate APC
     0 2; %eta2 - (/hr) apoptosis rate IPA
@@ -93,6 +94,6 @@ parfor i=1:N
 end
 
 if strcmp(savefiles,'yes')==1
-    save(strcat('parameter_analysis/abc_',num2str(N),'pts.mat'));
+    save(strcat('parameter_analysis/abc',num2str(num_param),'_',num2str(N),'pts.mat'));
     diary off
 end
