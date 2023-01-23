@@ -2,9 +2,11 @@ clear variables global;
 clc;
 addpath ..
 
-savefiles = 'yes';
+% savefiles = 'yes';
 
-N = 500000;
+multiplier = 1;
+power = 2;
+N = (multiplier)*10^(power);
 num_param = 18;
 
 %%%%%%%%%%%%%%%%%%%%%% create Latin Hypercube points %%%%%%%%%%%%%%%%%%%%%%
@@ -13,21 +15,24 @@ num_param = 18;
 % %%% LATIN_RANDOM function
 % % https://people.sc.fsu.edu/~jburkardt/m_src/latin_random/latin_random.html
 % LHpts = latin_random(num_param, N)';
-% save(strcat('parameter_analysis/LHpts',num2str(num_param),'_',num2str(N),'.mat'),'LHpts')
+% save(strcat('LHpts/LHpts',num2str(num_param),'_',num2str(multiplier),...
+%     'e',num2str(power),'.mat'),'LHpts')
 % stop
 
 
 %%%%%%%%%%%%%%%%%%%%%%% load Latin Hypercube points %%%%%%%%%%%%%%%%%%%%%%%
-load(strcat('parameter_analysis/LHpts',num2str(num_param),'_',num2str(N),'.mat'))
+load(strcat('LHpts/LHpts',num2str(num_param),'_',num2str(multiplier),...
+    'e',num2str(power),'.mat'))
 
-if strcmp(savefiles,'yes')==1
-    doublecheck = input('Are you sure you would like to save the output files? (it may overwrite): ');
-    if strcmp(doublecheck,'y')==1
-        diary(strcat('parameter_analysis/abc',num2str(num_param),'_',num2str(N),'.txt'));
-    else
-        return;
-    end
-end
+% if strcmp(savefiles,'yes')==1
+%     doublecheck = input('Are you sure you would like to save the output files? (it may overwrite): ');
+%     if strcmp(doublecheck,'y')==1
+        diary(strcat('parameter_analysis/diary_abc',num2str(num_param),'_',...
+            num2str(multiplier),'e',num2str(power),'.txt'));
+%     else
+%         return;
+%     end
+% end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% mesh %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 m.dr = 0.01;
@@ -93,7 +98,8 @@ parfor i=1:N
     [err_tot(i),err_time(i),err_rad(i),err_dens(i)]  = errorfunction(t,r,mvgbdy,c1,c2);
 end
 
-if strcmp(savefiles,'yes')==1
-    save(strcat('parameter_analysis/abc',num2str(num_param),'_',num2str(N),'pts.mat'));
+% if strcmp(savefiles,'yes')==1
+    save(strcat('parameter_analysis/abc',num2str(num_param),'_',...
+        num2str(multiplier),'e',num2str(power),'.mat'));
     diary off
-end
+% end
