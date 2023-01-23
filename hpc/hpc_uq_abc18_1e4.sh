@@ -12,7 +12,7 @@
 #SBATCH --output=logs/MATLAB_%j.txt    # Output and error log
 
 module load matlab
-uq/compile_abc18_1e4/uq_abc18_1e4
+../uq/compile_abc18_1e4/uq_abc18_1e4
 
 echo "job successfully submitted"
 exit
