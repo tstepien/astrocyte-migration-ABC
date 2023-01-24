@@ -1,6 +1,5 @@
 clear variables global;
 clc;
-addpath ..
 
 % savefiles = 'yes';
 
