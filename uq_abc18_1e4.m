@@ -85,7 +85,7 @@ err_rad = zeros(N,1);
 err_dens = zeros(N,1);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% run simulations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-parfor i=1:N
+for i=1:N
     disp(['iteration i: ',num2str(i)])
     %%% solve equation
     [t,r,c1,c2,~,~,mvgbdy,~,~] = eqnsolver(mu(i),alpha10(i),alpha11(i),...
