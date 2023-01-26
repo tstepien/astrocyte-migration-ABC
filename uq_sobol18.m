@@ -1,6 +1,4 @@
 %% SENSITIVITY: ASTROCYTE MIGRATION
-addpath ..
-
 %% 1 - INITIALIZE UQLAB
 % Clear all variables from the workspace, set the random number generator
 % for reproducible results, and initialize the UQLab framework:
@@ -9,7 +7,7 @@ clearvars
 rng(100,'twister')
 uqlab
 
-sampleN = 1000;
+sampleN = 10^5;
 filename = 'parameter_analysis/sobol18.mat';
 
 %% 2 - COMPUTATIONAL MODEL
@@ -19,12 +17,12 @@ ModelOpts.mFile = 'uq_eqns_and_error18';
 myModel = uq_createModel(ModelOpts);
 
 %% 3 - PROBABILISTIC INPUT MODEL
-% The probabilistic input model consists of 7 independent random variables.
+% The probabilistic input model consists of 18 independent random variables.
 % Specify the marginals as follows:
 InputOpts.Marginals(1).Name = '$\mu$';  % adhesion constant
-InputOpts.Marginals(1).Type = 'Exponential';
-InputOpts.Marginals(1).Parameters = 1.3336;  % (mN h/mm^3)
-InputOpts.Marginals(1).Bounds = [0.01 5];  % (mN h/mm^3)
+InputOpts.Marginals(1).Type = 'Uniform';
+InputOpts.Marginals(1).Parameters = [0.01 10];  % (mN h/mm^3)
+InputOpts.Marginals(1).Bounds = [0.01 10];  % (mN h/mm^3)
 
 InputOpts.Marginals(2).Name = '$\alpha_{10}$';  % base proliferation rate APC
 InputOpts.Marginals(2).Type = 'Uniform';
@@ -131,9 +129,11 @@ SobolOpts.Sobol.Order = 1;
 SobolOpts.Sobol.SampleSize = sampleN;
 
 % Note that the total cost of computation is $(M+2)\times N$,
-% where $M$ is the input dimension and $N$ is the sample size.
-% Therefore, the total cost for the current setup is
-% $(8+2)\times 10^4 = 10^5$ evaluations of the full computational model.
+% where $M$ is the input dimension (number of parameters) and $N$ is the 
+% sample size.
+% Therefore, if M=8 and N=sampleN=10^4, the total cost for the current 
+% setup is $(8+2)\times 10^4 = 10^5$ evaluations of the full computational 
+% model.
 
 % Add boostrap-based confidence intervals (0.025 and 0.975 quantiles)
 SobolSensOpts.Bootstrap.Replications = 100;
