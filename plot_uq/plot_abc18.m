@@ -3,7 +3,9 @@ clc;
 
 addpath emcee_mymod
 
-N = 500000;
+multiplier = 1;
+power = 6;
+N = (multiplier)*10^(power);
 num_param = 18;
 
 percentholdon = 0.1;
@@ -11,7 +13,8 @@ what_set = 'maxthreshold'; %'maxthreshold' or 'maxmode'
 fit_dist_plot = 'no'; % using percentholdon = 0.01 for distribution fits
 titles_on = 'yes';
 
-load(strcat('../uq/parameter_analysis/abc',num2str(num_param),'_',num2str(N),'pts.mat'))
+load(strcat('../parameter_analysis/abc',num2str(num_param),'_',...
+    num2str(multiplier),'e',num2str(power),'.mat'))
 
 err_original = [err_dens err_rad err_time err_tot];
 err_names = {'Density Error','Radius Error','Time Error','Total Error'};
@@ -173,19 +176,20 @@ num_dist = length(disttype);
 
 param_dist = cell(num_dist-1,num_param);
 GoF_dist = zeros(num_dist,num_param);
+pval = zeros(num_dist,num_param);
 
 uniform_dist = cell(1,num_param);
 
 for i=1:num_dist-1
     for j=1:num_param
         param_dist{i,j} = fitdist(param_sort_hold(:,j),disttype{i});
-        GoF_dist(i,j) = chi2gof(param_sort_hold(:,j),'CDF',param_dist{i,j}); %param_dist{i,j}
+        [GoF_dist(i,j),pval(i,j)] = chi2gof(param_sort_hold(:,j),'CDF',param_dist{i,j}); %param_dist{i,j}
     end
 end
 
 for j=1:num_param
     uniform_dist{j} = makedist('Uniform','Lower',bound(j,1),'Upper',bound(j,2));
-    GoF_dist(num_dist,j) = chi2gof(param_sort_hold(:,j),'CDF',uniform_dist{j});
+    [GoF_dist(num_dist,j),pval(num_dist,j)] = chi2gof(param_sort_hold(:,j),'CDF',uniform_dist{j});
 end
 
 %% corner plot
