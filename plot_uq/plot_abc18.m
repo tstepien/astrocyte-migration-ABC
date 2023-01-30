@@ -238,6 +238,17 @@ for i=1:num_dist
     end
 end
 
+
+% h=histogram(param_sort_hold(:,1),100);
+% h2=histogram(dist_create{1,1},100);
+% h=histogram(param_sort_hold(:,1),100);
+% counts1=h.BinCounts;
+% binLoc1=h.BinEdges;
+% h2=histogram(dist_create{1,1},100);
+% counts2=h2.BinCounts;
+% binLoc2=h2.BinEdges;
+% [f,fval]=emd(binLoc1',binLoc2',counts1'/sum(counts1),counts2'/sum(counts2),@gdf)
+
 %% corner plot
 
 % num_keepscatter = 3; %number to keep for scatter plot
