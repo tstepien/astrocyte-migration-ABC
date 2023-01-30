@@ -166,30 +166,76 @@ set(fig3,'Units','inches','Position',[2,2,15,8],'PaperPositionMode','auto')
 
 %% determine type of distribution
 
-disttype = {'normal';'lognormal';'gamma';'exponential';'weibull';...
-    'logistic';'uniform'};
+disttype = {'Normal';'Lognormal';'Gamma';'Exponential';'Weibull';...
+    'Logistic';'Uniform'};
 %%% didn't use these distributions:
 %%% 'beta';'birnbaumsaunders';'burr';'negative binomial';'extreme value';'kernel';
 %%% 'generalized extreme value';'generalized pareto';'inversegaussian';
 %%% 'nakagami';'loglogistic';'poisson';'rayleigh';'rician';'tlocationscale';
 num_dist = length(disttype);
 
-param_dist = cell(num_dist-1,num_param);
+dist_param = cell(num_dist-1,num_param);
 GoF_dist = zeros(num_dist,num_param);
 pval = zeros(num_dist,num_param);
 
-uniform_dist = cell(1,num_param);
+dist_normal = cell(1,num_param);
+dist_lognormal = cell(1,num_param);
+dist_gamma = cell(1,num_param);
+dist_exponential = cell(1,num_param);
+dist_weibull = cell(1,num_param);
+dist_logistic = cell(1,num_param);
+dist_uniform = cell(1,num_param);
+
+hist_normal = cell(1,num_param);
 
 for i=1:num_dist-1
     for j=1:num_param
-        param_dist{i,j} = fitdist(param_sort_hold(:,j),disttype{i});
-        [GoF_dist(i,j),pval(i,j)] = chi2gof(param_sort_hold(:,j),'CDF',param_dist{i,j}); %param_dist{i,j}
+        dist_param{i,j} = fitdist(param_sort_hold(:,j),disttype{i});
+%         [GoF_dist(i,j),pval(i,j)] = chi2gof(param_sort_hold(:,j),'CDF',dist_param{i,j}); %param_dist{i,j}
     end
 end
 
-for j=1:num_param
-    uniform_dist{j} = makedist('Uniform','Lower',bound(j,1),'Upper',bound(j,2));
-    [GoF_dist(num_dist,j),pval(num_dist,j)] = chi2gof(param_sort_hold(:,j),'CDF',uniform_dist{j});
+
+%% calculate difference between sample and standard distributions 
+%%% using Weisserstein metric / Earth mover's distance
+
+dist_create = cell(num_dist,num_param);
+distN = 1e5;
+
+for i=1:num_dist
+    for j=1:num_param
+        if strcmp(disttype{i},'Normal')==1 || strcmp(disttype{i},'Lognormal')==1 ...
+                || strcmp(disttype{i},'Logistic')==1
+            dist_create{i,j} = pdf(disttype{i},linspace(bound(j,1),bound(j,2),distN),...
+                dist_param{i,j}.mu,dist_param{i,j}.sigma);
+
+        elseif strcmp(disttype{i},'Gamma')==1
+            dist_create{i,j} = pdf(disttype{i},linspace(bound(j,1),bound(j,2),distN),...
+                dist_param{i,j}.a,dist_param{i,j}.b);
+
+        elseif strcmp(disttype{i},'Exponential')==1
+            dist_create{i,j} = pdf(disttype{i},linspace(bound(j,1),bound(j,2),distN),...
+                dist_param{i,j}.mu);
+
+        elseif strcmp(disttype{i},'Weibull')==1
+            dist_create{i,j} = pdf(disttype{i},linspace(bound(j,1),bound(j,2),distN),...
+                dist_param{i,j}.A,dist_param{i,j}.B);
+
+        elseif strcmp(disttype{i},'Uniform')==1
+            dist_create{i,j} = pdf(disttype{i},linspace(bound(j,1),bound(j,2),distN),...
+                bound(j,1),bound(j,2));
+        end
+    end
+end
+
+wsd1 = zeros(num_dist,num_param);
+wsd2 = zeros(num_dist,num_param);
+
+for i=1:num_dist
+    for j=1:num_param
+        wsd1(i,j) = ws_distance(dist_create{i,j},param_sort_hold(:,j),1);
+        wsd2(i,j) = ws_distance(dist_create{i,j},param_sort_hold(:,j),2);
+    end
 end
 
 %% corner plot
