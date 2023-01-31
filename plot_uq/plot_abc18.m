@@ -2,6 +2,7 @@ clear variables global;
 clc;
 
 addpath emcee_mymod
+addpath histogram_distances
 
 multiplier = 1;
 power = 6;
@@ -200,7 +201,7 @@ end
 %%% using Weisserstein metric / Earth mover's distance
 
 dist_create = cell(num_dist,num_param);
-distN = 1e5;
+distN = length(param_sort_hold);
 
 for i=1:num_dist
     for j=1:num_param
@@ -238,16 +239,34 @@ for i=1:num_dist
     end
 end
 
+% gets about the same result as wsd, but slower
+% emdval = zeros(num_dist,num_param);
+% numBins=50;
+% 
+% for i=1:num_dist
+%     for j=1:num_param
+%         h1 = histogram(param_sort_hold(:,j),numBins);
+%         counts1 = h1.BinCounts;
+%         binLoc1 = h1.BinEdges(1:end-1);
+% 
+%         h2 = histogram(dist_create{i,j},numBins);
+%         counts2 = h2.BinCounts;
+%         binLoc2 = h2.BinEdges(1:end-1);
+% 
+%         [~,emdval(i,j)]=emd(binLoc1',binLoc2',counts1'/sum(counts1),...
+%             counts2'/sum(counts2),@gdf);
+%     end
+% end
 
-% h=histogram(param_sort_hold(:,1),100);
-% h2=histogram(dist_create{1,1},100);
-% h=histogram(param_sort_hold(:,1),100);
-% counts1=h.BinCounts;
-% binLoc1=h.BinEdges;
-% h2=histogram(dist_create{1,1},100);
-% counts2=h2.BinCounts;
-% binLoc2=h2.BinEdges;
-% [f,fval]=emd(binLoc1',binLoc2',counts1'/sum(counts1),counts2'/sum(counts2),@gdf)
+%%% use other distance measures
+KLd = zeros(num_dist,num_param);
+KLdinv = zeros(num_dist,num_param);
+for i=1:num_dist
+    for j=1:num_param
+        KLd(i,j) = kullback_leibler_divergence(param_sort_hold(:,j)',dist_create{i,j});
+        KLdinv(i,j) = kullback_leibler_divergence(dist_create{i,j},param_sort_hold(:,j)');
+    end
+end
 
 %% corner plot
 
