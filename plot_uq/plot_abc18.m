@@ -118,9 +118,9 @@ end
 
 fig3 = figure;
 tiledlayout(4,5,'TileSpacing','compact','Padding','compact')
-tiledpos = [1:5,7:19];
+pos_tiled = [1:5,7:19];
 for i=1:num_param
-    nexttile(tiledpos(i))
+    nexttile(pos_tiled(i))
     
     if strcmp(fit_dist_plot,'no')==1
         histogram(param_sort_hold(:,i),'Normalization','probability',...
@@ -165,124 +165,117 @@ end
 
 set(fig3,'Units','inches','Position',[2,2,15,8],'PaperPositionMode','auto')
 
-%% determine type of distribution
+%% fit the data to different probabiltiy distributions
 
-disttype = {'Normal';'Lognormal';'Gamma';'Exponential';'Weibull';...
+dist_type = {'Normal';'Lognormal';'Gamma';'Exponential';'Weibull';...
     'Logistic';'Uniform'};
 %%% didn't use these distributions:
 %%% 'beta';'birnbaumsaunders';'burr';'negative binomial';'extreme value';'kernel';
 %%% 'generalized extreme value';'generalized pareto';'inversegaussian';
 %%% 'nakagami';'loglogistic';'poisson';'rayleigh';'rician';'tlocationscale';
-num_dist = length(disttype);
+num_dist = length(dist_type);
 
-dist_param = cell(num_dist-1,num_param);
-GoF_dist = zeros(num_dist,num_param);
-pval = zeros(num_dist,num_param);
+dist_param = cell(num_dist,num_param);
 
-dist_normal = cell(1,num_param);
-dist_lognormal = cell(1,num_param);
-dist_gamma = cell(1,num_param);
-dist_exponential = cell(1,num_param);
-dist_weibull = cell(1,num_param);
-dist_logistic = cell(1,num_param);
-dist_uniform = cell(1,num_param);
-
-hist_normal = cell(1,num_param);
-
+% all distributions but uniform
 for i=1:num_dist-1
     for j=1:num_param
-        dist_param{i,j} = fitdist(param_sort_hold(:,j),disttype{i});
-%         [GoF_dist(i,j),pval(i,j)] = chi2gof(param_sort_hold(:,j),'CDF',dist_param{i,j}); %param_dist{i,j}
+        dist_param{i,j} = fitdist(param_sort_hold(:,j),dist_type{i});
     end
 end
 
+% uniform
+for j=1:num_param
+    dist_param{num_dist,j}.Lower = bound(j,1);
+    dist_param{num_dist,j}.Upper = bound(j,2);
+end
 
-%% calculate difference between sample and standard distributions 
-%%% using Weisserstein metric / Earth mover's distance
+%% create synthetic data based on the fitted distributions
+rng(100,'twister')
 
-dist_create = cell(num_dist,num_param);
-distN = length(param_sort_hold);
+dist_synth = cell(num_dist,num_param);
 
 for i=1:num_dist
     for j=1:num_param
-        if strcmp(disttype{i},'Normal')==1 || strcmp(disttype{i},'Lognormal')==1 ...
-                || strcmp(disttype{i},'Logistic')==1
-            dist_create{i,j} = pdf(disttype{i},linspace(bound(j,1),bound(j,2),distN),...
-                dist_param{i,j}.mu,dist_param{i,j}.sigma);
+        if strcmp(dist_type{i},'Normal')==1 || strcmp(dist_type{i},'Lognormal')==1 ...
+                || strcmp(dist_type{i},'Logistic')==1
+            dist_synth{i,j} = random(dist_type{i},dist_param{i,j}.mu,...
+                dist_param{i,j}.sigma,num_hold,1);
 
-        elseif strcmp(disttype{i},'Gamma')==1
-            dist_create{i,j} = pdf(disttype{i},linspace(bound(j,1),bound(j,2),distN),...
-                dist_param{i,j}.a,dist_param{i,j}.b);
+         elseif strcmp(dist_type{i},'Gamma')==1
+            dist_synth{i,j} = random(dist_type{i},dist_param{i,j}.a,...
+                dist_param{i,j}.b,num_hold,1);
 
-        elseif strcmp(disttype{i},'Exponential')==1
-            dist_create{i,j} = pdf(disttype{i},linspace(bound(j,1),bound(j,2),distN),...
-                dist_param{i,j}.mu);
+        elseif strcmp(dist_type{i},'Exponential')==1
+            dist_synth{i,j} = random(dist_type{i},dist_param{i,j}.mu,...
+                num_hold,1);
 
-        elseif strcmp(disttype{i},'Weibull')==1
-            dist_create{i,j} = pdf(disttype{i},linspace(bound(j,1),bound(j,2),distN),...
-                dist_param{i,j}.A,dist_param{i,j}.B);
+        elseif strcmp(dist_type{i},'Weibull')==1
+            dist_synth{i,j} = random(dist_type{i},dist_param{i,j}.A,...
+                dist_param{i,j}.B,num_hold,1);
 
-        elseif strcmp(disttype{i},'Uniform')==1
-            dist_create{i,j} = pdf(disttype{i},linspace(bound(j,1),bound(j,2),distN),...
-                bound(j,1),bound(j,2));
+        elseif strcmp(dist_type{i},'Uniform')==1
+            dist_synth{i,j} = dist_param{i,j}.Lower ...
+                + (dist_param{i,j}.Upper - dist_param{i,j}.Lower).*rand(num_hold,1);
         end
     end
 end
+
+
+%% calculate difference between synthetic and data probability distributions 
+%%% using Weisserstein metric / Earth mover's distance
 
 wsd1 = zeros(num_dist,num_param);
 wsd2 = zeros(num_dist,num_param);
 
 for i=1:num_dist
     for j=1:num_param
-        wsd1(i,j) = ws_distance(dist_create{i,j},param_sort_hold(:,j),1);
-        wsd2(i,j) = ws_distance(dist_create{i,j},param_sort_hold(:,j),2);
+        wsd1(i,j) = ws_distance(dist_synth{i,j},param_sort_hold(:,j),1);
+        wsd2(i,j) = ws_distance(dist_synth{i,j},param_sort_hold(:,j),2);
     end
 end
 
-% gets about the same result as wsd, but slower
-% emdval = zeros(num_dist,num_param);
-% numBins=50;
-% 
-% for i=1:num_dist
-%     for j=1:num_param
-%         h1 = histogram(param_sort_hold(:,j),numBins);
-%         counts1 = h1.BinCounts;
-%         binLoc1 = h1.BinEdges(1:end-1);
-% 
-%         h2 = histogram(dist_create{i,j},numBins);
-%         counts2 = h2.BinCounts;
-%         binLoc2 = h2.BinEdges(1:end-1);
-% 
-%         [~,emdval(i,j)]=emd(binLoc1',binLoc2',counts1'/sum(counts1),...
-%             counts2'/sum(counts2),@gdf);
-%     end
-% end
+bestfitdist = cell(1,num_param);
 
-%%% use other distance measures
-KLd = zeros(num_dist,num_param);
-KLdinv = zeros(num_dist,num_param);
-for i=1:num_dist
-    for j=1:num_param
-        KLd(i,j) = kullback_leibler_divergence(param_sort_hold(:,j)',dist_create{i,j});
-        KLdinv(i,j) = kullback_leibler_divergence(dist_create{i,j},param_sort_hold(:,j)');
-    end
+for j=1:num_param
+    ind = min(wsd1(:,j))==wsd1(:,j);
+    bestfitdist{j} = dist_type{ind};
 end
+disp(bestfitdist);
 
 %% corner plot
 
-% num_keepscatter = 3; %number to keep for scatter plot
-% param_min = param_sort_hold(1:num_keepscatter,:);
-% 
-% param_mean = zeros(1,num_param);
-% param_mode = zeros(1,num_param);
-% for i=1:num_param
-%     param_mean(i) = mean(param_sort_hold(:,i));
-%     param_mode(i) = mode(param_sort_hold(:,i));
-% end
-% 
-% fig4 = figure;
-% ecornerplot(param_sort_hold,param_min,param_mean,bound,'names',param_names,'ks',true);
-% set(fig4,'Units','inches','Position',[2,2,10,8],'PaperPositionMode','auto')
+num_keepscatter = 3; %number of smallest errors to keep for scatter plot
+param_min = param_sort_hold(1:num_keepscatter,:);
+
+param_mean = zeros(1,num_param);
+param_mode = zeros(1,num_param);
+for i=1:num_param
+    param_mean(i) = mean(param_sort_hold(:,i));
+    param_mode(i) = mode(param_sort_hold(:,i));
+end
+
+fig4 = figure;
+%ecornerplot(param_sort_hold,param_min,param_mean,bound','names',param_names,'ks',true);
+%set(fig4,'Units','inches','Position',[2,2,10,8],'PaperPositionMode','auto')
+
+tiledlayout(num_param,num_param,'TileSpacing','compact','Padding','compact')
+pos_tiled = 1;
+for j=1:num_param
+    pos_tiled = [pos_tiled num_param*j+1:num_param*j+1+j];
+end
+
+for i=1:length(pos_tiled)
+    nexttile(pos_tiled(i))
+    [cc,rr] = ind2sub([num_param,num_param],pos_tiled(i));
+    if rr==cc % on the diagonal
+        [f,xi] = ksdensity(param_sort_hold(:,cc));
+        plot(xi,f);
+    else % below the diagonal
+        scatter(param_sort_hold(:,rr),param_sort_hold(:,cc));
+    end
+    clear cc rr
+end
 
 %% correlation
 
