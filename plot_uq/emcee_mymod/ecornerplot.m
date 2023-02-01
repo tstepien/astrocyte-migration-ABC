@@ -118,7 +118,6 @@ for r=1:M
         H(r,c)=subaxis(M,M,c,r,'sv',0.01,'sh',0.02,'mb',0.14,'mt',0.01,'ml',0.11,'mr',0.015);
         if c==r
             if p.ks
-                keyboard
                 [F,X,bw]=ksdensity(m(:,r),'support',p.support(:,r)); %TODO: use ESS 
                 if p.ess<Np
                     [F,X,bw]=ksdensity(m(:,r),'width',bw*(Np/p.ess)^.2,'support',p.support(:,r)); %(the power 1/5 comes from examining the bandwidth calculation in ksdensity)
