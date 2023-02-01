@@ -8,8 +8,8 @@ rng(100,'twister')
 uqlab
 
 sampleN = 1e5;
-filename = '../parameter_analysis/sobol18.mat';
-load('distributions18.mat');
+filename = 'parameter_analysis/sobol18.mat';
+load('plot_uq/distributions18.mat');
 
 %% 2 - COMPUTATIONAL MODEL
 % Create a MODEL object from the function file:
