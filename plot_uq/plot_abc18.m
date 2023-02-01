@@ -236,12 +236,17 @@ for i=1:num_dist
 end
 
 bestfitdist = cell(1,num_param);
+bestfitdist_param = cell(1,num_param);
 
 for j=1:num_param
     ind = min(wsd1(:,j))==wsd1(:,j);
     bestfitdist{j} = dist_type{ind};
+    bestfitdist_param(j) = dist_param(ind,j);
 end
 disp(bestfitdist);
+
+% export distribution information
+save('distributions18.mat','bestfitdist','bestfitdist_param')
 
 %% corner plot
 
@@ -256,12 +261,10 @@ for i=1:num_param
 end
 
 fig4 = figure;
-%ecornerplot(param_sort_hold,param_min,param_mean,bound','names',param_names,'ks',true);
-%set(fig4,'Units','inches','Position',[2,2,10,8],'PaperPositionMode','auto')
 
 tiledlayout(num_param,num_param,'TileSpacing','compact','Padding','compact')
 pos_tiled = 1;
-for j=1:num_param
+for j=1:num_param-1
     pos_tiled = [pos_tiled num_param*j+1:num_param*j+1+j];
 end
 
@@ -272,10 +275,22 @@ for i=1:length(pos_tiled)
         [f,xi] = ksdensity(param_sort_hold(:,cc));
         plot(xi,f);
     else % below the diagonal
-        scatter(param_sort_hold(:,rr),param_sort_hold(:,cc));
+        [pdfx,xi] = ksdensity(param_sort_hold(:,rr));
+        [pdfy,yi] = ksdensity(param_sort_hold(:,cc));
+        [xxi,yyi] = meshgrid(xi,yi);
+        [pdfxx,pdfyy] = meshgrid(pdfx,pdfy);
+        pdfxy = pdfxx.*pdfyy;
+        contourf(xxi,yyi,pdfxy,'LineColor','none');
+    end
+    if cc==1
+        ylabel(param_names{rr},'Interpreter','latex');
+    end
+    if rr==num_param
+        xlabel(param_names{cc},'Interpreter','latex');
     end
     clear cc rr
 end
+set(fig4,'Units','inches','Position',[2,2,11,9],'PaperPositionMode','auto')
 
 %% correlation
 
