@@ -7,7 +7,7 @@ clearvars
 rng(100,'twister')
 uqlab
 
-sampleN = 10;
+sampleN = 1e5;
 filename = 'parameter_analysis/sobol18.mat';
 load('plot_uq/distributions18.mat');
 

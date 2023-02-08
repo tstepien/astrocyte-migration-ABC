@@ -2,7 +2,6 @@ clear variables global;
 clc;
 
 addpath emcee_mymod
-addpath histogram_distances
 
 multiplier = 1;
 power = 6;
