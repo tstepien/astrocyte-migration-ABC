@@ -7,11 +7,23 @@ clearvars
 rng(100,'twister')
 uqlab
 
-filename = 'parameter_analysis/inversion18.mat';
+num_param = 18;
+num_steps = 1e4;
+num_chains = 500;
 
-%%
-% Load the measured population size stored in |Data|:
-load('uq_Example_BayesianPreyPred.mat')
+savefiles = 'yes';
+
+if strcmp(savefiles,'yes')==1
+    doublecheck = input('Are you sure you would like to save the output files? (it may overwrite): ');
+    if strcmp(doublecheck,'y')==1
+        diary(strcat('parameter_analysis/inversion',num2str(num_param),...
+            '_',num2str(num_chains),'chains_',num2str(num_steps),'steps.txt'));
+        filename = strcat('parameter_analysis/inversion',num2str(num_param),...
+            '_',num2str(num_chains),'chains_',num2str(num_steps),'steps.mat');
+    else
+        return;
+    end
+end
 
 %% 2 - FORWARD MODEL
 % Specify the forward model as a UQLab MODEL object:
@@ -116,48 +128,31 @@ PriorOpts.Marginals(18).Bounds = [0.001 2];  % (mm)
 myPriorDist = uq_createInput(PriorOpts);
 
 %% 4 - MEASUREMENT DATA
-%
-% Because the lynx and hare populations have different discrepancy options, 
-% the measurement data is stored in two different data structures:  
-% myData(1).y = Data.hare.'/1000; %in 1000
-% myData(1).Name = 'Hare data';
-% myData(1).MOMap = 1:21; % Output ID
-% 
-% myData(2).y = Data.lynx.'/1000; %in 1000
-% myData(2).Name = 'Lynx data';
-% myData(2).MOMap = 22:42; % Output ID
 
-% ????????????????????
+myData.y = 0;
+myData.Name = 'Minimal error is zero';
 
 %% 5 - DISCREPANCY MODEL
 % To infer the discrepancy variance, lognormal priors are put on the
 % discrepancy parameters:
 %
-% * $\sigma^2_{\mathrm{APC}} \sim \mathcal{LN}(\lambda_{\sigma^2_\mathrm{APC}} 
-%       = -1, \zeta_{\sigma^2_\mathrm{APC}} = 1)$
-% * $\sigma^2_{\mathrm{IPA}} \sim \mathcal{LN}(\lambda_{\sigma^2_\mathrm{IPA}} 
-%       = -1, \zeta_{\sigma^2_\mathrm{IPA}} = 1)$
+% * $\sigma^2_{\mathrm{error}} \sim \mathcal{LN}(\lambda_{\sigma^2_\mathrm{error}} 
+%       = -1, \zeta_{\sigma^2_\mathrm{error}} = 1)$
 %
-% Specify these distributions in UQLab separately as two INPUT objects:
-SigmaOpts.Marginals(1).Name = 'Sigma2APC';
+SigmaOpts.Marginals(1).Name = 'Sigma2Error';
 SigmaOpts.Marginals(1).Type = 'Lognormal';
 SigmaOpts.Marginals(1).Parameters = [-1 1];
 
-SigmaDist1 = uq_createInput(SigmaOpts);
-
-SigmaOpts.Marginals(1).Name = 'Sigma2IPA';
-SigmaOpts.Marginals(1).Type = 'Lognormal';
-SigmaOpts.Marginals(1).Parameters = [-1 1];
-
-SigmaDist2 = uq_createInput(SigmaOpts);
+SigmaDist = uq_createInput(SigmaOpts);
 
 % Assign these distributions to the discrepancy model options:
 DiscrepancyOpts(1).Type = 'Gaussian';
-DiscrepancyOpts(1).Prior = SigmaDist1;
-DiscrepancyOpts(2).Type = 'Gaussian';
-DiscrepancyOpts(2).Prior = SigmaDist2;
+DiscrepancyOpts(1).Prior = SigmaDist;
+
 % Save variables to file
-save(filename)
+if strcmp(savefiles,'yes')==1
+    save(filename)
+end
 
 %% 6 - BAYESIAN ANALYSIS
 %
@@ -166,8 +161,8 @@ save(filename)
 % algorithm is chosen, with $400$ iterations and $100$ parallel chains:
 Solver.Type = 'MCMC';
 Solver.MCMC.Sampler = 'AIES';
-Solver.MCMC.Steps = 400;
-Solver.MCMC.NChains = 100;
+Solver.MCMC.Steps = num_steps;
+Solver.MCMC.NChains = num_chains;
 
 % Enable progress visualization during iteration for specific parameters.
 % Update the plots every $40$ iterations:
@@ -180,7 +175,7 @@ Solver.MCMC.Visualize.Interval = 40;
 BayesOpts.Type = 'Inversion';
 BayesOpts.Name = 'Bayesian model';
 BayesOpts.Prior = myPriorDist;
-%BayesOpts.Data = myData;
+BayesOpts.Data = myData;
 BayesOpts.Discrepancy = DiscrepancyOpts;
 BayesOpts.Solver = Solver;
 
@@ -193,21 +188,23 @@ uq_print(myBayesianAnalysis)
 %% 6.3 Posterior sample post-processing
 % Diagnose the quality of the results,
 % create a trace plot of the first parameter:
-uq_display(myBayesianAnalysis, 'trace', 1)
+for i=1:18
+    uq_display(myBayesianAnalysis, 'trace', i)
+end
 
 % From the plots, one can see that several chains have not converged yet.
 % From the trace plot, the non-converged chains are all characterized by a
 % final value $x_1^{(T)}>0.8$:
-badChainsIndex = squeeze(myBayesianAnalysis.Results.Sample(end,1,:) > 0.8);
+%badChainsIndex = squeeze(myBayesianAnalysis.Results.Sample(end,1,:) > 0.8);
 
 % These chains can be removed from the sample through post-processing. 
 % Additionally, draw a sample of size $10^3$ from the prior and posterior
 % predictive distributions: 
-uq_postProcessInversionMCMC(myBayesianAnalysis,...
-                        'badChains', badChainsIndex,...
-                        'prior', 1000,...
-                        'priorPredictive', 1000,...
-                        'posteriorPredictive', 1000);
+% uq_postProcessInversionMCMC(myBayesianAnalysis,...
+%                         'badChains', badChainsIndex,...
+%                         'prior', 1000,...
+%                         'priorPredictive', 1000,...
+%                         'posteriorPredictive', 1000);
 
 % *Note*: sampling prior predictive samples requires new
 % model evaluations
@@ -216,4 +213,8 @@ uq_postProcessInversionMCMC(myBayesianAnalysis,...
 uq_display(myBayesianAnalysis)
 
 % Save variables to file
-save(filename)
+if strcmp(savefiles,'yes')==1
+    save(filename)
+    diary off
+    beep
+end
