@@ -7,8 +7,8 @@ clearvars
 rng(100,'twister')
 uqlab
 
-num_param = 18;
-num_steps = 1e4;
+num_param = 17;
+num_steps = 5e3;
 num_chains = 500;
 
 savefiles = 'yes';
@@ -27,7 +27,7 @@ end
 
 %% 2 - FORWARD MODEL
 % Specify the forward model as a UQLab MODEL object:
-ModelOpts.mFile = 'uq_eqns_and_error18';
+ModelOpts.mFile = 'uq_eqns_and_error17';
 
 myForwardModel = uq_createModel(ModelOpts);
 
@@ -95,35 +95,35 @@ PriorOpts.Marginals(12).Type = 'Uniform';
 PriorOpts.Marginals(12).Parameters = [0 2];  % (/hr)
 PriorOpts.Marginals(12).Bounds = [0 2];  % (/hr)
 
-PriorOpts.Marginals(13).Name = '$\beta_3$';  % differentiation rate wrt choroid oxygen
+% PriorOpts.Marginals(13).Name = '$\beta_3$';  % differentiation rate wrt choroid oxygen
+% PriorOpts.Marginals(13).Type = 'Uniform';
+% PriorOpts.Marginals(13).Parameters = [0 2];  % (/hr)
+% PriorOpts.Marginals(13).Bounds = [0 2];  % (/hr)
+
+PriorOpts.Marginals(13).Name = '$\beta_4$';  % differentiation rate wrt hyaloid oxygen
 PriorOpts.Marginals(13).Type = 'Uniform';
 PriorOpts.Marginals(13).Parameters = [0 2];  % (/hr)
 PriorOpts.Marginals(13).Bounds = [0 2];  % (/hr)
 
-PriorOpts.Marginals(14).Name = '$\beta_4$';  % differentiation rate wrt hyaloid oxygen
+PriorOpts.Marginals(14).Name = '$\eta_1$';  % apoptosis rate APC
 PriorOpts.Marginals(14).Type = 'Uniform';
 PriorOpts.Marginals(14).Parameters = [0 2];  % (/hr)
 PriorOpts.Marginals(14).Bounds = [0 2];  % (/hr)
 
-PriorOpts.Marginals(15).Name = '$\eta_1$';  % apoptosis rate APC
+PriorOpts.Marginals(15).Name = '$\eta_2$';  % apoptosis rate IPA
 PriorOpts.Marginals(15).Type = 'Uniform';
 PriorOpts.Marginals(15).Parameters = [0 2];  % (/hr)
 PriorOpts.Marginals(15).Bounds = [0 2];  % (/hr)
 
-PriorOpts.Marginals(16).Name = '$\eta_2$';  % apoptosis rate IPA
+PriorOpts.Marginals(16).Name = '$P_\mathrm{hy}$';  % partial pressure of oxygen due to hyaloid artery
 PriorOpts.Marginals(16).Type = 'Uniform';
-PriorOpts.Marginals(16).Parameters = [0 2];  % (/hr)
-PriorOpts.Marginals(16).Bounds = [0 2];  % (/hr)
+PriorOpts.Marginals(16).Parameters = [0 20];  % (dimensionless)
+PriorOpts.Marginals(16).Bounds = [0 20];  % (dimensionless)
 
-PriorOpts.Marginals(17).Name = '$P_\mathrm{hy}$';  % partial pressure of oxygen due to hyaloid artery
+PriorOpts.Marginals(17).Name = '$r_\mathrm{hy}$';  % radius at half-maximum of Hill function for hyaloid
 PriorOpts.Marginals(17).Type = 'Uniform';
-PriorOpts.Marginals(17).Parameters = [0 20];  % (dimensionless)
-PriorOpts.Marginals(17).Bounds = [0 20];  % (dimensionless)
-
-PriorOpts.Marginals(18).Name = '$r_\mathrm{hy}$';  % radius at half-maximum of Hill function for hyaloid
-PriorOpts.Marginals(18).Type = 'Uniform';
-PriorOpts.Marginals(18).Parameters = [0.001 2];  % (mm)
-PriorOpts.Marginals(18).Bounds = [0.001 2];  % (mm)
+PriorOpts.Marginals(17).Parameters = [0.001 2];  % (mm)
+PriorOpts.Marginals(17).Bounds = [0.001 2];  % (mm)
 
 myPriorDist = uq_createInput(PriorOpts);
 
