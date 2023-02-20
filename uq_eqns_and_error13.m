@@ -1,12 +1,12 @@
-function Y = uq_eqns_and_error14(X)
-% Y = uq_eqns_and_error14(X)
+function Y = uq_eqns_and_error13(X)
+% Y = uq_eqns_and_error13(X)
 %
 % This function returns the computed values of the moving boundary location
 % astrocyte migration for a single population of cells and the final
 % simulated time (days)
 %
 % inputs:
-%   X = [mu, alpha10, alpha11, alpha12, alpha20, alpha21, ...
+%   X = [mu, alpha10, alpha11, alpha20, alpha21, ...
 %           alpha22, alpha23, beta1, beta4, ...
 %           eta1, eta2, P_hy, r_hy]
 %
@@ -18,23 +18,23 @@ function Y = uq_eqns_and_error14(X)
 mu = X(:,1);
 alpha10 = X(:,2);
 alpha11 = X(:,3);
-alpha12 = X(:,4);
+alpha12 = 0;
 alpha13 = 0;
-alpha20 = X(:,5);
-alpha21 = X(:,6);
-alpha22 = X(:,7);
-alpha23 = X(:,8);
+alpha20 = X(:,4);
+alpha21 = X(:,5);
+alpha22 = X(:,6);
+alpha23 = X(:,7);
 beta0 = 0;
-beta1 = X(:,9);
+beta1 = X(:,8);
 beta2 = 0;
 beta3 = 0;
-beta4 = X(:,10);
-eta1 = X(:,11);
-eta2 = X(:,12);
+beta4 = X(:,9);
+eta1 = X(:,10);
+eta2 = X(:,11);
 
 %%% hyaloid artery
-P_hy = X(:,13);
-r_hy = X(:,14);
+P_hy = X(:,12);
+r_hy = X(:,13);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% fixed parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% mesh parameters
@@ -49,7 +49,7 @@ Y = zeros(N,1);
 
 for i=1:N
     [t,r,c1,c2,~,~,mvgbdy,~,~] = eqnsolver(mu(i),alpha10(i),alpha11(i),...
-        alpha12(i),alpha13,alpha20(i),alpha21(i),alpha22(i),alpha23(i),...
+        alpha12,alpha13,alpha20(i),alpha21(i),alpha22(i),alpha23(i),...
         beta0,beta1(i),beta2,beta3,beta4(i),eta1(i),eta2(i),...
         P_hy(i),r_hy(i),m);
     
