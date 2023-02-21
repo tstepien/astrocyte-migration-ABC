@@ -27,7 +27,7 @@ end
 
 %% 2 - FORWARD MODEL
 % Specify the forward model as a UQLab MODEL object:
-ModelOpts.mFile = 'uq_eqns_and_error14';
+ModelOpts.mFile = strcat('uq_eqns_and_error',num2str(num_param));
 
 myForwardModel = uq_createModel(ModelOpts);
 
