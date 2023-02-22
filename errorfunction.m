@@ -17,8 +17,8 @@ function [err_tot,err_time,err_rad,err_dens] = errorfunction(t,r,mvgbdy,c1,c2)
 %   err_tot  = total error = (err_rad + err_dens + err_time)
 
 %%% penalties
-if t(end)/24>8  || ~isreal(t(end)) || sum(c1(:)<0)>0 ...
-        || sum(c2(:)<0)>0 %|| t(end)/24 <6
+if t(end)/24>8  || ~isreal(t(end)) || sum(c1(:)<0 & abs(c1(:))>10*eps)>0 ...
+        || sum(c2(:)<0 & abs(c2(:))>10*eps)>0 %|| t(end)/24 <6
     err_tot = 10^4; %NaN;
     err_time = 10^4; %NaN;
     err_rad = 10^4; %NaN;

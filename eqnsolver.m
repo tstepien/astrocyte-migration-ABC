@@ -228,8 +228,10 @@ while tcurr < tmax && j<R-1
     c1mb = [c1mb ; c1_new(j)];
     c2mb = [c2mb ; c2_new(j)];
 
-    if sum(c1_new>0)>=1 || sum(c2_new>0)>=1
+    if sum(c1_new<0 & abs(c1_new)>10*eps )>0 ...
+            || sum(c2_new<0 & abs(c2_new)>10*eps)>0
         disp('***stopping simulation since one of the cell densities went negative***')
+        % note: but the negative value is larger than 10*machine epsilon
         return;
     end
     
