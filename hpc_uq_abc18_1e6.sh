@@ -7,8 +7,8 @@
 #SBATCH --nodes=1                  # Use one node
 #SBATCH --ntasks=1                 # Run a single task
 #SBATCH --cpus-per-task=4
-#SBATCH --mem-per-cpu=2gb          # Memory per processor
-#SBATCH --time=24:00:00             # Time limit hrs:min:sec
+#SBATCH --mem-per-cpu=1.5gb          # Memory per processor
+#SBATCH --time=48:00:00             # Time limit hrs:min:sec
 #SBATCH --output=logs/MATLAB_%j.txt    # Output and error log
 pwd; hostname; date
 
