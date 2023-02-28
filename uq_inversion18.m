@@ -8,22 +8,22 @@ rng(100,'twister')
 uqlab
 
 num_param = 18;
-num_steps = 1e4;
-num_chains = 500;
+num_steps = 2;%1e4;
+num_chains = 4;%500;
 
 savefiles = 'yes';
 
-if strcmp(savefiles,'yes')==1
-    doublecheck = input('Are you sure you would like to save the output files? (it may overwrite): ');
-    if strcmp(doublecheck,'y')==1
-        diary(strcat('parameter_analysis/inversion',num2str(num_param),...
-            '_',num2str(num_chains),'chains_',num2str(num_steps),'steps.txt'));
-        filename = strcat('parameter_analysis/inversion',num2str(num_param),...
-            '_',num2str(num_chains),'chains_',num2str(num_steps),'steps.mat');
-    else
-        return;
-    end
-end
+% if strcmp(savefiles,'yes')==1
+%     doublecheck = input('Are you sure you would like to save the output files? (it may overwrite): ');
+%     if strcmp(doublecheck,'y')==1
+%         diary(strcat('parameter_analysis/inversion',num2str(num_param),...
+%             '_',num2str(num_chains),'chains_',num2str(num_steps),'steps.txt'));
+%         filename = strcat('parameter_analysis/inversion',num2str(num_param),...
+%             '_',num2str(num_chains),'chains_',num2str(num_steps),'steps.mat');
+%     else
+%         return;
+%     end
+% end
 
 %% 2 - FORWARD MODEL
 % Specify the forward model as a UQLab MODEL object:
@@ -37,8 +37,8 @@ myForwardModel = uq_createModel(ModelOpts);
 
 PriorOpts.Marginals(1).Name = '$\mu$';  % adhesion constant
 PriorOpts.Marginals(1).Type = 'Uniform';
-PriorOpts.Marginals(1).Parameters = [0.01 10];  % (mN h/mm^3)
-PriorOpts.Marginals(1).Bounds = [0.01 10];  % (mN h/mm^3)
+PriorOpts.Marginals(1).Parameters = [0.0001 0.1];  % (mN h/mm^3)
+PriorOpts.Marginals(1).Bounds = [0.0001 0.1];  % (mN h/mm^3)
 
 PriorOpts.Marginals(2).Name = '$\alpha_{10}$';  % base proliferation rate APC
 PriorOpts.Marginals(2).Type = 'Uniform';
@@ -188,8 +188,10 @@ uq_print(myBayesianAnalysis)
 %% 6.3 Posterior sample post-processing
 % Diagnose the quality of the results,
 % create a trace plot of the first parameter:
-for i=1:num_param
-    uq_display(myBayesianAnalysis, 'trace', i)
+if ~isdeployed
+    for i=1:num_param
+        uq_display(myBayesianAnalysis, 'trace', i)
+    end
 end
 
 % From the plots, one can see that several chains have not converged yet.
@@ -210,7 +212,9 @@ end
 % model evaluations
 
 % Display the post processed results:
-uq_display(myBayesianAnalysis)
+if ~isdeployed
+    uq_display(myBayesianAnalysis)
+end
 
 % Save variables to file
 if strcmp(savefiles,'yes')==1
