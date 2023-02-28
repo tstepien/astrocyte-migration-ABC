@@ -8,8 +8,8 @@ rng(100,'twister')
 uqlab
 
 num_param = 18;
-num_steps = 2;%1e4;
-num_chains = 4;%500;
+num_steps = 1e4;
+num_chains = 500;
 
 savefiles = 'yes';
 
