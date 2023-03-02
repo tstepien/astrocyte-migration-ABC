@@ -9,7 +9,7 @@ uqlab
 
 num_param = 18;
 num_steps = 1e4;
-num_chains = 500;
+num_chains = 100;
 
 savefiles = 'yes';
 
