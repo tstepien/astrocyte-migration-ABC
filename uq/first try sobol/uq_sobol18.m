@@ -15,7 +15,7 @@ load(strcat('plot_uq/distributions',num2str(num_param),'.mat'));
 
 %% 2 - COMPUTATIONAL MODEL
 % Create a MODEL object from the function file:
-ModelOpts.mFile = strcat('uq_eqns_and_error',num2str(num_param));
+ModelOpts.mFile = 'uq_eqns_and_error18';
 
 myModel = uq_createModel(ModelOpts);
 
@@ -28,8 +28,8 @@ InputOpts.Marginals(1).Parameters = [bestfitdist_param{1}.mu bestfitdist_param{1
 InputOpts.Marginals(1).Bounds = [0.01 10];  % (mN h/mm^3)
 
 InputOpts.Marginals(2).Name = '$\alpha_{10}$';  % base proliferation rate APC
-InputOpts.Marginals(2).Type = 'Uniform';
-InputOpts.Marginals(2).Parameters = [0 2];  % (/hr)
+InputOpts.Marginals(2).Type = 'Gaussian';
+InputOpts.Marginals(2).Parameters = [bestfitdist_param{2}.mu bestfitdist_param{2}.sigma];  % (/hr)
 InputOpts.Marginals(2).Bounds = [0 2];  % (/hr)
 
 InputOpts.Marginals(3).Name = '$\alpha_{11}$';  % proliferation rate APC wrt PDGFA
@@ -38,18 +38,18 @@ InputOpts.Marginals(3).Parameters = [0 2];  % (/hr)
 InputOpts.Marginals(3).Bounds = [0 2];  % (/hr)
 
 InputOpts.Marginals(4).Name = '$\alpha_{12}$';  % proliferation rate APC wrt choroid oxygen
-InputOpts.Marginals(4).Type = 'Uniform';
-InputOpts.Marginals(4).Parameters = [0 2];  % (/hr)
-InputOpts.Marginals(4).Bounds = [0 2];  % (/hr)
+InputOpts.Marginals(4).Type = 'Gaussian';
+InputOpts.Marginals(4).Parameters = [bestfitdist_param{4}.mu bestfitdist_param{4}.sigma];  % (/hr)
+InputOpts.Marginals(4).Bounds = [0 1];  % (/hr)
 
 InputOpts.Marginals(5).Name = '$\alpha_{13}$';  % proliferation rate APC wrt hyaloid oxygen
-InputOpts.Marginals(5).Type = 'Gaussian';
-InputOpts.Marginals(5).Parameters = [bestfitdist_param{5}.mu bestfitdist_param{5}.sigma];  % (/hr)
+InputOpts.Marginals(5).Type = 'Weibull';
+InputOpts.Marginals(5).Parameters = [bestfitdist_param{5}.A bestfitdist_param{5}.B];  % (/hr)
 InputOpts.Marginals(5).Bounds = [0 2];  % (/hr)
 
 InputOpts.Marginals(6).Name = '$\alpha_{20}$';  % base proliferation rate IPA
-InputOpts.Marginals(6).Type = 'Weibull';
-InputOpts.Marginals(6).Parameters = [bestfitdist_param{6}.A bestfitdist_param{6}.B];  % (/hr)
+InputOpts.Marginals(6).Type = 'Uniform';
+InputOpts.Marginals(6).Parameters = [0 2];  % (/hr)
 InputOpts.Marginals(6).Bounds = [0 2];  % (/hr)
 
 InputOpts.Marginals(7).Name = '$\alpha_{21}$';  % proliferation rate IPA wrt PDGFA
@@ -63,13 +63,13 @@ InputOpts.Marginals(8).Parameters = [0 1];  % (/hr)
 InputOpts.Marginals(8).Bounds = [0 1];  % (/hr)
 
 InputOpts.Marginals(9).Name = '$\alpha_{23}$';  % proliferation rate IPA wrt hyaloid oxygen
-InputOpts.Marginals(9).Type = 'Weibull';
-InputOpts.Marginals(9).Parameters = [bestfitdist_param{9}.A bestfitdist_param{9}.B];  % (/hr)
+InputOpts.Marginals(9).Type = 'Uniform';
+InputOpts.Marginals(9).Parameters = [0 2];  % (/hr)
 InputOpts.Marginals(9).Bounds = [0 2];  % (/hr)
 
 InputOpts.Marginals(10).Name = '$\beta_0$';  % base differentiation rate
-InputOpts.Marginals(10).Type = 'Uniform';
-InputOpts.Marginals(10).Parameters = [0 2];  % (/hr)
+InputOpts.Marginals(10).Type = 'Weibull';
+InputOpts.Marginals(10).Parameters = [bestfitdist_param{10}.A bestfitdist_param{10}.B];  % (/hr)
 InputOpts.Marginals(10).Bounds = [0 2];  % (/hr)
 
 InputOpts.Marginals(11).Name = '$\beta_1$';  % differentiation rate wrt LIF
@@ -78,13 +78,13 @@ InputOpts.Marginals(11).Parameters = [0 2];  % (/hr)
 InputOpts.Marginals(11).Bounds = [0 2];  % (/hr)
 
 InputOpts.Marginals(12).Name = '$\beta_2$';  % differentiation rate wrt choroid oxygen
-InputOpts.Marginals(12).Type = 'Uniform';
-InputOpts.Marginals(12).Parameters = [0 2];  % (/hr)
+InputOpts.Marginals(12).Type = 'Weibull';
+InputOpts.Marginals(12).Parameters = [bestfitdist_param{12}.A bestfitdist_param{12}.B];  % (/hr)
 InputOpts.Marginals(12).Bounds = [0 2];  % (/hr)
 
 InputOpts.Marginals(13).Name = '$\beta_3$';  % differentiation rate wrt hyaloid oxygen
-InputOpts.Marginals(13).Type = 'Gaussian';
-InputOpts.Marginals(13).Parameters = [bestfitdist_param{13}.mu bestfitdist_param{13}.sigma];  % (/hr)
+InputOpts.Marginals(13).Type = 'Weibull';
+InputOpts.Marginals(13).Parameters = [bestfitdist_param{13}.A bestfitdist_param{13}.B];  % (/hr)
 InputOpts.Marginals(13).Bounds = [0 2];  % (/hr)
 
 InputOpts.Marginals(14).Name = '$\beta_4$';  % mass action rate
@@ -93,23 +93,23 @@ InputOpts.Marginals(14).Parameters = [0 2];  % (/hr)
 InputOpts.Marginals(14).Bounds = [0 2];  % (/hr)
 
 InputOpts.Marginals(15).Name = '$\eta_1$';  % apoptosis rate APC
-InputOpts.Marginals(15).Type = 'Uniform';
-InputOpts.Marginals(15).Parameters = [0 2];  % (/hr)
+InputOpts.Marginals(15).Type = 'Gaussian';
+InputOpts.Marginals(15).Parameters = [bestfitdist_param{15}.mu bestfitdist_param{15}.sigma];  % (/hr)
 InputOpts.Marginals(15).Bounds = [0 2];  % (/hr)
 
 InputOpts.Marginals(16).Name = '$\eta_2$';  % apoptosis rate IPA
-InputOpts.Marginals(16).Type = 'Weibull';
-InputOpts.Marginals(16).Parameters = [bestfitdist_param{16}.A bestfitdist_param{16}.B];  % (/hr)
+InputOpts.Marginals(16).Type = 'Uniform';
+InputOpts.Marginals(16).Parameters = [0 2];  % (/hr)
 InputOpts.Marginals(16).Bounds = [0 2];  % (/hr)
 
 InputOpts.Marginals(17).Name = '$P_\mathrm{hy}$';  % partial pressure of oxygen due to hyaloid artery
-InputOpts.Marginals(17).Type = 'Gamma';
-InputOpts.Marginals(17).Parameters = [bestfitdist_param{17}.a bestfitdist_param{17}.b];  % (dimensionless)
+InputOpts.Marginals(17).Type = 'Weibull';
+InputOpts.Marginals(17).Parameters = [bestfitdist_param{17}.A bestfitdist_param{17}.B];  % (dimensionless)
 InputOpts.Marginals(17).Bounds = [0 20];  % (dimensionless)
 
 InputOpts.Marginals(18).Name = '$r_\mathrm{hy}$';  % radius at half-maximum of Hill function for hyaloid
-InputOpts.Marginals(18).Type = 'Weibull';
-InputOpts.Marginals(18).Parameters = [bestfitdist_param{18}.A bestfitdist_param{18}.B];  % (mm)
+InputOpts.Marginals(18).Type = 'Uniform';
+InputOpts.Marginals(18).Parameters = [0.001 2];  % (mm)
 InputOpts.Marginals(18).Bounds = [0.001 2];  % (mm)
 
 % Create an INPUT object based on the specified marginals:

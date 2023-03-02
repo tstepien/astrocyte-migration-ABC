@@ -4,7 +4,7 @@ clc;
 addpath emcee_mymod
 
 multiplier = 1;
-power = 5;
+power = 6;
 N = (multiplier)*10^(power);
 num_param = 18;
 
