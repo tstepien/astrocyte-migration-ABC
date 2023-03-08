@@ -21,13 +21,13 @@ num_param = 18;
 
 %%%%%%%%%%%%%%%%%%%%%%% load Latin Hypercube points %%%%%%%%%%%%%%%%%%%%%%%
 load(strcat(pwd,'/LHpts/LHpts',num2str(num_param),'_',num2str(multiplier),...
-    'e',num2str(power),'.mat'))
+    'e',num2str(power),'_4.mat'))
 
 % if strcmp(savefiles,'yes')==1
 %     doublecheck = input('Are you sure you would like to save the output files? (it may overwrite): ');
 %     if strcmp(doublecheck,'y')==1
         diary(strcat(pwd,'/parameter_analysis/diary_abc',num2str(num_param),'_',...
-            num2str(multiplier),'e',num2str(power),'.txt'));
+            num2str(multiplier),'e',num2str(power),'_4.txt'));
 %     else
 %         return;
 %     end
@@ -85,7 +85,7 @@ err_rad = zeros(N,1);
 err_dens = zeros(N,1);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% run simulations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-parfor i=1:N
+parfor i=3e5+1:4e5
     disp(['iteration i: ',num2str(i)])
     %%% solve equation
     [t,r,c1,c2,~,~,mvgbdy,~,~] = eqnsolver(mu(i),alpha10(i),alpha11(i),...
