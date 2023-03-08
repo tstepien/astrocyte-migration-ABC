@@ -21,7 +21,7 @@ num_param = 18;
 
 %%%%%%%%%%%%%%%%%%%%%%% load Latin Hypercube points %%%%%%%%%%%%%%%%%%%%%%%
 load(strcat(pwd,'/LHpts/LHpts',num2str(num_param),'_',num2str(multiplier),...
-    'e',num2str(power),'_2.mat'))
+    'e',num2str(power),'.mat'))
 
 % if strcmp(savefiles,'yes')==1
 %     doublecheck = input('Are you sure you would like to save the output files? (it may overwrite): ');
@@ -99,6 +99,6 @@ end
 
 % if strcmp(savefiles,'yes')==1
     save(strcat(pwd,'/parameter_analysis/abc',num2str(num_param),'_',...
-        num2str(multiplier),'e',num2str(power),'.mat'));
+        num2str(multiplier),'e',num2str(power),'_2.mat'));
     diary off
 % end
