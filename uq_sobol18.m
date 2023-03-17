@@ -25,7 +25,7 @@ myModel = uq_createModel(ModelOpts);
 InputOpts.Marginals(1).Name = '$\mu$';  % adhesion constant
 InputOpts.Marginals(1).Type = 'Gaussian';
 InputOpts.Marginals(1).Parameters = [bestfitdist_param{1}.mu bestfitdist_param{1}.sigma];  % (mN h/mm^3)
-InputOpts.Marginals(1).Bounds = [0.01 10];  % (mN h/mm^3)
+InputOpts.Marginals(1).Bounds = [0.0001 0.1];  % (mN h/mm^3)
 
 InputOpts.Marginals(2).Name = '$\alpha_{10}$';  % base proliferation rate APC
 InputOpts.Marginals(2).Type = 'Uniform';
@@ -83,8 +83,8 @@ InputOpts.Marginals(12).Parameters = [0 2];  % (/hr)
 InputOpts.Marginals(12).Bounds = [0 2];  % (/hr)
 
 InputOpts.Marginals(13).Name = '$\beta_3$';  % differentiation rate wrt hyaloid oxygen
-InputOpts.Marginals(13).Type = 'Gaussian';
-InputOpts.Marginals(13).Parameters = [bestfitdist_param{13}.mu bestfitdist_param{13}.sigma];  % (/hr)
+InputOpts.Marginals(13).Type = 'Weibull';
+InputOpts.Marginals(13).Parameters = [bestfitdist_param{13}.A bestfitdist_param{13}.B];  % (/hr)
 InputOpts.Marginals(13).Bounds = [0 2];  % (/hr)
 
 InputOpts.Marginals(14).Name = '$\beta_4$';  % mass action rate
@@ -98,8 +98,8 @@ InputOpts.Marginals(15).Parameters = [0 2];  % (/hr)
 InputOpts.Marginals(15).Bounds = [0 2];  % (/hr)
 
 InputOpts.Marginals(16).Name = '$\eta_2$';  % apoptosis rate IPA
-InputOpts.Marginals(16).Type = 'Weibull';
-InputOpts.Marginals(16).Parameters = [bestfitdist_param{16}.A bestfitdist_param{16}.B];  % (/hr)
+InputOpts.Marginals(16).Type = 'Logistic';
+InputOpts.Marginals(16).Parameters = [bestfitdist_param{16}.mu bestfitdist_param{16}.sigma];  % (/hr)
 InputOpts.Marginals(16).Bounds = [0 2];  % (/hr)
 
 InputOpts.Marginals(17).Name = '$P_\mathrm{hy}$';  % partial pressure of oxygen due to hyaloid artery
@@ -149,7 +149,9 @@ SobolAnalysis = uq_createAnalysis(SobolOpts);
 uq_print(SobolAnalysis)
 
 % Create a graphical representation of the results:
-uq_display(SobolAnalysis)
+if ~isdeployed
+    uq_display(SobolAnalysis)
+end
 
 % Save variables to file
-save(filename)
+%save(filename)

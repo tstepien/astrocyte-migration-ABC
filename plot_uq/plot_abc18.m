@@ -3,7 +3,7 @@ clc;
 
 addpath emcee_mymod
 
-multiplier = 1;
+multiplier = 5;
 power = 5;
 N = (multiplier)*10^(power);
 num_param = 18;
@@ -162,7 +162,7 @@ if strcmp(titles_on,'yes')==1
     sgtitle(strcat(['Smallest ',num2str(percentholdon*100),'% Error (',num2str(num_hold),' parameter sets)']))
 end
 
-set(fig3,'Units','inches','Position',[2,2,15,8],'PaperPositionMode','auto')
+set(fig3,'Units','inches','Position',[0,0,15,8],'PaperPositionMode','auto')
 
 %% fit the data to different probabiltiy distributions
 
@@ -289,7 +289,7 @@ for i=1:length(pos_tiled)
     end
     clear cc rr
 end
-set(fig4,'Units','inches','Position',[2,2,11,9],'PaperPositionMode','auto')
+set(fig4,'Units','inches','Position',[-1,-1,11,9],'PaperPositionMode','auto')
 
 %% correlation
 
