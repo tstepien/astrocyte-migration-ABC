@@ -8,9 +8,9 @@ rng(100,'twister')
 uqlab
 
 num_param = 18;
-sampleN = 1e5;
+sampleN = 1e4;
 
-filename = strcat('parameter_analysis/sobol',num2str(num_param),'.mat');
+filename = strcat('parameter_analysis/sobol',num2str(num_param),'_1e4.mat');
 load(strcat('plot_uq/distributions',num2str(num_param),'.mat'));
 
 %% 2 - COMPUTATIONAL MODEL
