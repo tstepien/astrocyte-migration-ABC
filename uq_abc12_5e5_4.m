@@ -8,7 +8,7 @@ power = 5;
 N = (multiplier)*10^(power);
 num_param = 12;
 
-iternum = 1;
+iternum = 4;
 
 %%%%%%%%%%%%%%%%%%%%%% create Latin Hypercube points %%%%%%%%%%%%%%%%%%%%%%
 % %%% MATLAB function (painstakenly slow for large N)
@@ -75,7 +75,7 @@ err_rad = zeros(N,1);
 err_dens = zeros(N,1);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% run simulations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-parfor i=1:1e5
+parfor i=3e5+1:4e5
     disp(['iteration i: ',num2str(i)])
     %%% solve equation
     [t,r,c1,c2,~,~,mvgbdy,~,~] = eqnsolver(mu(i),alpha10(i),alpha11(i),...
