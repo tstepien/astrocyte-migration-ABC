@@ -41,6 +41,10 @@ m.rmax = 5; %%% max radius (mm) (estimate rat retinal radius = 4.1 mm)
 m.tmax = 7*24; %%% max time (hr) (7 days = 168 hr)
 
 %%%%%%%%%%%%%%%%%%%%%%%% parameters to investigate %%%%%%%%%%%%%%%%%%%%%%%%
+% set equal to 0: alpha13, alpha20, alpha23, beta3, P_hy, r_hy
+% note: set r_hy=1 to avoid singularity at r=0, but essentially r_hy=0
+% because P_hy=0
+
 bound = [0.0001 0.1; %mu - adhesion constant
     0 2; %alpha10 - (/hr) base proliferation rate APC
     0 2; %alpha11 - (/hr) proliferation rate APC wrt PDGFA
@@ -81,7 +85,7 @@ parfor i=2e5+1:3e5
     [t,r,c1,c2,~,~,mvgbdy,~,~] = eqnsolver(mu(i),alpha10(i),alpha11(i),...
         alpha12(i),0,0,alpha21(i),alpha22(i),0,...
         beta0(i),beta1(i),beta2(i),0,beta4(i),eta1(i),eta2(i),...
-        0,0,m);
+        0,1,m);
     
     %%% error calculation
     [err_tot(i),err_time(i),err_rad(i),err_dens(i)]  = errorfunction(t,r,mvgbdy,c1,c2);
