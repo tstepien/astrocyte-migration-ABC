@@ -36,7 +36,8 @@ eta2 = X(:,12);
 
 %%% hyaloid artery
 P_hy = 0;
-r_hy = 0;
+r_hy = 1; % set r_hy=1 to avoid singularity at r=0, but essentially r_hy=0
+          % because P_hy=0
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% fixed parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% mesh parameters
