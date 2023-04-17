@@ -63,10 +63,10 @@ alpha11 = (bound(3,2) - bound(3,1))*LHpts(:,3) + bound(3,1);
 alpha12 = (bound(4,2) - bound(4,1))*LHpts(:,4) + bound(4,1);
 alpha21 = (bound(5,2) - bound(5,1))*LHpts(:,5) + bound(5,1);
 alpha22 = (bound(6,2) - bound(6,1))*LHpts(:,6) + bound(6,1);
-beta1   = (bound(7,2) - bound(7,1))*LHpts(:,8) + bound(7,1);
-beta2   = (bound(8,2) - bound(8,1))*LHpts(:,9) + bound(8,1);
-beta4   = (bound(9,2) - bound(9,1))*LHpts(:,10) + bound(9,1);
-eta2    = (bound(10,2) - bound(10,1))*LHpts(:,12) + bound(10,1);
+beta1   = (bound(7,2) - bound(7,1))*LHpts(:,7) + bound(7,1);
+beta2   = (bound(8,2) - bound(8,1))*LHpts(:,8) + bound(8,1);
+beta4   = (bound(9,2) - bound(9,1))*LHpts(:,9) + bound(9,1);
+eta2    = (bound(10,2) - bound(10,1))*LHpts(:,10) + bound(10,1);
 
 %%%%%%%%%%%%%%%%%%%%%%%% preallocate error vectors %%%%%%%%%%%%%%%%%%%%%%%%
 err_tot = zeros(N,1);
