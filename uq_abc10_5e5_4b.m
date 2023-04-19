@@ -8,7 +8,7 @@ power = 5;
 N = (multiplier)*10^(power);
 num_param = 10;
 
-iternum = 2;
+iternum = '4b';
 
 %%%%%%%%%%%%%%%%%%%%%% create Latin Hypercube points %%%%%%%%%%%%%%%%%%%%%%
 % %%% MATLAB function (painstakenly slow for large N)
@@ -29,7 +29,7 @@ load(strcat(pwd,'/LHpts/LHpts',num2str(num_param),'_',num2str(multiplier),...
 %     doublecheck = input('Are you sure you would like to save the output files? (it may overwrite): ');
 %     if strcmp(doublecheck,'y')==1
         diary(strcat(pwd,'/parameter_analysis/diary_abc',num2str(num_param),'_',...
-            num2str(multiplier),'e',num2str(power),'_',num2str(iternum),'.txt'));
+            num2str(multiplier),'e',num2str(power),'_',iternum,'.txt'));
 %     else
 %         return;
 %     end
@@ -75,7 +75,7 @@ err_rad = zeros(N,1);
 err_dens = zeros(N,1);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% run simulations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-for i=1+1e5:2e5
+for i=1+3.5e5:4e5
     disp(['iteration i: ',num2str(i)])
     %%% solve equation
     [t,r,c1,c2,~,~,mvgbdy,~,~] = eqnsolver(mu(i),alpha10(i),alpha11(i),...
@@ -89,6 +89,6 @@ end
 
 % if strcmp(savefiles,'yes')==1
     save(strcat(pwd,'/parameter_analysis/abc',num2str(num_param),'_',...
-        num2str(multiplier),'e',num2str(power),'_',num2str(iternum),'.mat'));
+        num2str(multiplier),'e',num2str(power),'_',iternum,'.mat'));
     diary off
 % end
