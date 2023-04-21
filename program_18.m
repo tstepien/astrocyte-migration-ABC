@@ -7,26 +7,26 @@ addpath plot_simulations
 %%% space unit: mm
 
 %%%%%%%%%%%%%%%%%%%%%%%%%% astrocyte parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%
-mu = 5; %%% adhesion constant
-alpha10 = 1.1; %%% (/hr) basal proliferation rate APC
-alpha11 = 1.1; %%% (/hr) proliferation rate APC wrt PDGFA
-alpha12 = 0.44; %%% (/hr) proliferation rate APC wrt choroid oxygen
-alpha13 = 0.77; %%% (/hr) proliferation rate APC wrt hylaoid oxygen
-alpha20 = 1; %%% (/hr) basal proliferation rate IPA
-alpha21 = 0.85; %%% (/hr) proliferation rate IPA wrt PDGFA
-alpha22 = 0.37; %%% (/hr) proliferation rate IPA wrt choroid oxygen
+mu = 0.069; %%% adhesion constant
+alpha10 = 0.91; %%% (/hr) basal proliferation rate APC
+alpha11 = 1.3; %%% (/hr) proliferation rate APC wrt PDGFA
+alpha12 = 0.4; %%% (/hr) proliferation rate APC wrt choroid oxygen
+alpha13 = 1.2; %%% (/hr) proliferation rate APC wrt hylaoid oxygen
+alpha20 = 1.2; %%% (/hr) basal proliferation rate IPA
+alpha21 = 1.2; %%% (/hr) proliferation rate IPA wrt PDGFA
+alpha22 = 0.59; %%% (/hr) proliferation rate IPA wrt choroid oxygen
 alpha23 = 1.1; %%% (/hr) proliferation rate IPA wrt hyaloid oxygen
-beta0 = 1.1; %%% (/hr) basal differentiation rate
-beta1 = 1; %%% (/hr) differentiation rate wrt LIF
-beta2 = 1.1; %%% (/hr) differentiation rate wrt choroid oxygen
-beta3 = 1.1; %%% (/hr) differentiation rate wrt hyaloid oxygen
-beta4 = 1.1; %%% (/hr) mass action rate
-eta1 = 0.85; %%% (/hr) apoptosis rate APC
-eta2 = 1.2; %%% (/hr) apoptosis rate IPA
+beta0 = 0.65; %%% (/hr) basal differentiation rate
+beta1 = 1.3; %%% (/hr) differentiation rate wrt LIF
+beta2 = 1.2; %%% (/hr) differentiation rate wrt choroid oxygen
+beta3 = 1.2; %%% (/hr) differentiation rate wrt hyaloid oxygen
+beta4 = 1.4; %%% (/hr) mass action rate
+eta1 = 0.84; %%% (/hr) apoptosis rate APC
+eta2 = 1.3; %%% (/hr) apoptosis rate IPA
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% hyaloid artery %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-P_hy = 7.9; %%% partial pressure of oxygen due to hyaloid artery
-r_hy = 0.88; %%% radius at half-maximum of Hill function for hyaloid
+P_hy = 6.4; %%% partial pressure of oxygen due to hyaloid artery
+r_hy = 1.2; %%% radius at half-maximum of Hill function for hyaloid
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% mesh parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 m.dr = 0.01;
