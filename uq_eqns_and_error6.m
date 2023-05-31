@@ -6,8 +6,7 @@ function Y = uq_eqns_and_error6(X)
 % simulated time (days)
 %
 % inputs:
-%   X = [mu, alpha10, alpha11, alpha12, alpha21, ...
-%           alpha22, beta1, beta4]
+%   X = [mu, alpha11, alpha12, alpha21, beta1, beta4]
 %
 % note: removed alpha13, alpha20, alpha23, beta3, Phy, rhy
 %   beta0, eta1
