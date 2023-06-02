@@ -45,6 +45,7 @@ m.tmax = 7*24; %%% max time (hr) (7 days = 168 hr)
 % note: set r_hy=1 to avoid singularity at r=0, but essentially r_hy=0
 % because P_hy=0
 % set equal to 0: beta0, eta1, eta2, alpha10, alpha22, beta2
+% fix alpha12=0.125
 
 bound = [0.0001 0.1; %mu - adhesion constant
     0 2; %alpha11 - (/hr) proliferation rate APC wrt PDGFA
