@@ -173,7 +173,7 @@ while tcurr < tmax && j<R-1
             dt_c = 0;
             numiter = numiter + 1;
             if numiter >50
-                disp('***stopping simulation since got stuck in a time loop***')
+                disp('***predictor-corrector stuck in a loop***')
                 return;
             end
         end
