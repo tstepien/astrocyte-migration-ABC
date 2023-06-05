@@ -145,7 +145,7 @@ for i=1:num_param
     if strcmp(titles_on,'yes')==1
         title(param_names_words{i},'FontWeight','normal')
     end
-    if i==1 || i==5 || i==7
+    if i==1 || i==4 || i==5
         ylabel('Percentage','Interpreter','latex')
     end
     xlim([0,bound(i,2)])
