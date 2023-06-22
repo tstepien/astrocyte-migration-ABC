@@ -169,11 +169,11 @@ while tcurr < tmax && j<R-1
         if abs(dt_p-dt_c)<tol
             break;
         else
-            dt_p = dt_c;
+            dt_p = abs(real(dt_c));
             dt_c = 0;
             numiter = numiter + 1;
             if numiter >50
-                disp('***predictor-corrector stuck in a loop***')
+                disp('***stopping simulation since predictor-corrector stuck in a loop***')
                 return;
             end
         end
