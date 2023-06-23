@@ -12,7 +12,7 @@
 #SBATCH --output=logs/MATLAB_%j.txt    # Output and error log
 pwd; hostname; date
 
-module load matlab
+module load matlab/2022b
 ./uq_abc18_5e5_4
 
 date
