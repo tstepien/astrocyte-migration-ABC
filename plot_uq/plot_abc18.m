@@ -8,7 +8,7 @@ power = 5;
 N = (multiplier)*10^(power);
 num_param = 18;
 
-percentholdon = 0.1;
+percentholdon = 1;
 what_set = 'maxthreshold'; %'maxthreshold' or 'maxmode'
 fit_dist_plot = 'no'; % using percentholdon = 0.01 for distribution fits
 titles_on = 'yes';
@@ -74,25 +74,25 @@ end
 
 %% look at errors that are smaller than the mode errors for density, radius, and time
 
-ind_maxmode = ind( err_original(:,1) <= modes_error(1) ...
-    & err_original(:,2) <= modes_error(2) ...
-    & err_original(:,3) <= modes_error(3) );
-num_maxmode = length(ind_maxmode);
-
-err_maxmode = err_original(ind_maxmode,:);
-
-[~,ind_sort_maxmode] = sort(err_maxmode(:,4));
-err_maxmode_sort = err_maxmode(ind_sort_maxmode,:);
-
-fig2 = figure;
-tiledlayout(2,2)
-for i=1:4
-    nexttile
-    scatter(1:num_maxmode,err_maxmode_sort(:,i))
-    xlim([0,num_maxmode])
-    xlabel(err_names{i})
-end
-sgtitle(strcat(['Errors < modes for density/radius/time (',num2str(num_maxmode),' parameter sets)']))
+% ind_maxmode = ind( err_original(:,1) <= modes_error(1) ...
+%     & err_original(:,2) <= modes_error(2) ...
+%     & err_original(:,3) <= modes_error(3) );
+% num_maxmode = length(ind_maxmode);
+% 
+% err_maxmode = err_original(ind_maxmode,:);
+% 
+% [~,ind_sort_maxmode] = sort(err_maxmode(:,4));
+% err_maxmode_sort = err_maxmode(ind_sort_maxmode,:);
+% 
+% fig2 = figure;
+% tiledlayout(2,2)
+% for i=1:4
+%     nexttile
+%     scatter(1:num_maxmode,err_maxmode_sort(:,i))
+%     xlim([0,num_maxmode])
+%     xlabel(err_names{i})
+% end
+% sgtitle(strcat(['Errors < modes for density/radius/time (',num2str(num_maxmode),' parameter sets)']))
 
 %% histograms of parameters
 
