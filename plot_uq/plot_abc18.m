@@ -274,8 +274,8 @@ for i=1:length(pos_tiled)
         [f,xi] = ksdensity(param_sort_hold(:,cc));
         plot(xi,f);
     else % below the diagonal
-        [pdfx,xi] = ksdensity(param_sort_hold(:,rr));
-        [pdfy,yi] = ksdensity(param_sort_hold(:,cc));
+        [pdfx,xi] = ksdensity(param_sort_hold(:,cc));
+        [pdfy,yi] = ksdensity(param_sort_hold(:,rr));
         [xxi,yyi] = meshgrid(xi,yi);
         [pdfxx,pdfyy] = meshgrid(pdfx,pdfy);
         pdfxy = pdfxx.*pdfyy;
