@@ -7,8 +7,9 @@ addpath plot_simulations
 %%% space unit: mm
 
 %%%%%%%%%%%%%%%%%%%%%% loading a parameter set file %%%%%%%%%%%%%%%%%%%%%%%
-load('uq/min_param.mat');
-ind = 4;
+% load('uq/min_param.mat');
+load('parameter_analysis/minparam_18.mat');
+ind = 1;
 
 mu = param_val(ind,1); %%% adhesion constant
 alpha10 = param_val(ind,2); %%% (/hr) basal proliferation rate APC

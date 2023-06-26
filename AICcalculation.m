@@ -80,3 +80,7 @@ for j=1:P
     
     clear ind
 end
+
+% param_val = [mu(ind),alpha10(ind),alpha11(ind),alpha12(ind),alpha13(ind),...
+%         alpha20(ind),alpha21(ind),alpha22(ind),alpha23(ind),beta0(ind),beta1(ind),beta2(ind),...
+%         beta3(ind),beta4(ind),eta1(ind),eta2(ind),P_hy(ind),r_hy(ind)];
