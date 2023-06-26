@@ -8,7 +8,7 @@ power = 5;
 N = (multiplier)*10^(power);
 num_param = 13;
 
-iternum = 1;
+iternum = '5';
 
 %%%%%%%%%%%%%%%%%%%%%% create Latin Hypercube points %%%%%%%%%%%%%%%%%%%%%%
 % %%% MATLAB function (painstakenly slow for large N)
