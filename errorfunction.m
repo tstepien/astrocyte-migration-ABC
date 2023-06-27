@@ -44,10 +44,16 @@ comp_APC = zeros(numdays,length(r));
 comp_IPA = zeros(numdays,length(r));
 nodes_APC = zeros(numdays,length(r));
 nodes_IPA = zeros(numdays,length(r));
+nodes_retina = zeros(numdays,length(r));
 numnodes_APC = zeros(numdays,1);
 numnodes_IPA = zeros(numdays,1);
+numnodes_retina = zeros(numdays,1);
 dens_annulus = zeros(numdays,length(r));
 dens_disc = zeros(numdays,length(r));
+
+%%% set entries<eps to 0
+c1(abs(c1)<eps) = 0;
+c2(abs(c2)<eps) = 0;
 
 %%% calculate values on each day of data
 for i=1:numdays
@@ -61,17 +67,19 @@ for i=1:numdays
     
     nodes_APC(i,:) = (r<=rad_APC(i) & r>rad_IPA(i)); %% annulus
     nodes_IPA(i,:) = (r<=rad_IPA(i)); %% disc
+    nodes_retina(i,:) = (r<=rad_APC(i)); %% retina
     
     numnodes_APC(i) = sum(nodes_APC(i,:));
     numnodes_IPA(i) = sum(nodes_IPA(i,:));
+    numnodes_retina(i) = sum(nodes_retina(i,:));
     
     %%% incorrect density relationship for APCs and IPAs on
     %%% (APC annulus) and (IPA disc)
     
-    %%% where c1<cmin or c2>cmin on the APC annulus (incorrect relationship)
-    dens_annulus(i,:) = ( c2(ind(i),:)>cmin | c1(ind(i),:)<cmin ) .* nodes_APC(i,:);
-    %%% where c1>cmin or c2<cmin on the IPA disc (incorrect relationship)
-    dens_disc(i,:) = ( c1(ind(i),:)>cmin | c2(ind(i),:)<cmin ) .* nodes_IPA(i,:);
+    %%% where c1<ce or c2>ce on the APC annulus (incorrect relationship)
+    dens_annulus(i,:) = ( c2(ind(i),:)>ce | c1(ind(i),:)<ce ) .* nodes_APC(i,:);
+    %%% where c1>ce or c2<ce on the IPA disc (incorrect relationship)
+    dens_disc(i,:) = ( c1(ind(i),:)>ce | c2(ind(i),:)<ce ) .* nodes_IPA(i,:);
 end
 
 
@@ -80,14 +88,15 @@ end
 err_time = abs(7 - t(end)/24);
 
 %%% radius error
-err_rad = sum( abs(rad_APC - mvgbdy(ind)) ./ rad_APC );
+%err_rad = sum( abs(rad_APC - mvgbdy(ind)) ./ rad_APC );
+err_rad = sum( abs(rad_APC - mvgbdy(ind)) );
 
 %%% density error
-err_APC = sum( dens_annulus , 2) ./ numnodes_APC;
-err_IPA = sum( dens_disc , 2) ./ numnodes_IPA;
+err_APC = sum( dens_annulus , 2);% ./ numnodes_APC;
+err_IPA = sum( dens_disc , 2);% ./ numnodes_IPA;
 err_IPA(1) = 0; %%% initial time point has no IPAs by initial condition, so
                 %%% numnodes_IPA=0 and dividing by zero results in NaN
-err_dens = sum( err_APC + err_IPA );
+err_dens = sum( (err_APC + err_IPA) ./ numnodes_retina );
 
 %%% total error
 err_tot = err_time + err_rad + err_dens;
