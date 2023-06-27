@@ -10,7 +10,7 @@ num_param = 18;
 
 percentholdon = 1;
 what_set = 'maxthreshold'; %'maxthreshold' or 'maxmode'
-fit_dist_plot = 'no'; % using percentholdon = 0.01 for distribution fits
+fit_dist_plot = 'yes'; % using percentholdon for distribution fits
 titles_on = 'yes';
 
 load(strcat('../parameter_analysis/abc',num2str(num_param),'_',...
@@ -94,7 +94,7 @@ end
 % end
 % sgtitle(strcat(['Errors < modes for density/radius/time (',num2str(num_maxmode),' parameter sets)']))
 
-%% histograms of parameters
+%% sort and hold onto 'percentholdon' smallest parameter sets
 
 if strcmp(what_set,'maxmode')==1
     num_parametersets = num_maxmode;
@@ -114,55 +114,6 @@ for i = 1:num_param
     param_sort(:,i) = param_original(ind_parametersets,i);
     param_sort_hold(:,i) = param_sort(ind_sort(1:num_hold),i);
 end
-
-fig3 = figure;
-tiledlayout(4,5,'TileSpacing','compact','Padding','compact')
-pos_tiled = [1:5,7:19];
-for i=1:num_param
-    nexttile(pos_tiled(i))
-    
-    if strcmp(fit_dist_plot,'no')==1
-        histogram(param_sort_hold(:,i),'Normalization','probability',...
-            'BinMethod','sturges','FaceColor','none','LineWidth',1.5);
-    elseif strcmp(fit_dist_plot,'yes')==1
-        distributionfit = {'exponential','normal','uniform','exponential','uniform',...
-            'uniform','exponential','uniform','exponential','normal',...
-            'normal','normal','normal'};
-        if strcmp(distributionfit{i},'uniform')==0
-            h = histfit(param_sort_hold(:,i),[],distributionfit{i});
-            h(1).FaceColor = 'none';
-            h(2).Color = 'k';
-            box on
-            yt = get(gca,'YTick');
-            set(gca,'YTick',yt,'YTickLabel',round(yt/num_hold,2));
-        else
-            hold on
-            histogram(param_sort_hold(:,i),'Normalization','probability',...
-                'BinMethod','sqrt','FaceColor','none');
-            plot(linspace(bound(i,1),bound(i,2),100),0.02*ones(1,100),'k',...
-                'LineWidth',2.5)
-            box on
-            hold off
-        end
-    end
-    
-    xlabel(param_names{i},'Interpreter','latex')
-    if strcmp(titles_on,'yes')==1
-        title(param_names_words{i},'FontWeight','normal')
-    end
-    if i==1 || i==6 || i==10 || i==15
-        ylabel('Percentage','Interpreter','latex')
-    end
-    xlim([0,bound(i,2)])
-    
-    set(gca,'FontSize',14)
-end
-
-if strcmp(titles_on,'yes')==1
-    sgtitle(strcat(['Smallest ',num2str(percentholdon*100),'% Error (',num2str(num_hold),' parameter sets)']))
-end
-
-set(fig3,'Units','inches','Position',[0,0,15,8],'PaperPositionMode','auto')
 
 %% fit the data to different probabiltiy distributions
 
@@ -246,6 +197,55 @@ disp(bestfitdist);
 
 % export distribution information
 save(strcat('distributions',num2str(num_param),'.mat'),'bestfitdist','bestfitdist_param')
+
+%% histograms of parameters
+
+fig3 = figure;
+tiledlayout(4,5,'TileSpacing','compact','Padding','compact')
+pos_tiled = [1:5,7:19];
+for i=1:num_param
+    nexttile(pos_tiled(i))
+    
+    if strcmp(fit_dist_plot,'no')==1
+        histogram(param_sort_hold(:,i),'Normalization','probability',...
+            'BinMethod','sturges','FaceColor','none','LineWidth',1.5);
+    elseif strcmp(fit_dist_plot,'yes')==1
+        if strcmp(bestfitdist{i},'Uniform')==0
+            h = histfit(param_sort_hold(:,i),[],bestfitdist{i});
+            h(1).FaceColor = 'none';
+            h(2).Color = 'k';
+            box on
+            yt = get(gca,'YTick');
+            set(gca,'YTick',yt,'YTickLabel',round(yt/num_hold,2));
+        else
+            hold on
+            histogram(param_sort_hold(:,i),'Normalization','probability',...
+                'BinMethod','sqrt','FaceColor','none');
+            hh = get(gca,'YLim');
+            plot(linspace(bound(i,1),bound(i,2),100),hh(2)/2*ones(1,100),'k',...
+                'LineWidth',2.5)
+            box on
+            hold off
+        end
+    end
+    
+    xlabel(param_names{i},'Interpreter','latex')
+    if strcmp(titles_on,'yes')==1
+        title(param_names_words{i},'FontWeight','normal')
+    end
+    if i==1 || i==6 || i==10 || i==15
+        ylabel('Percentage','Interpreter','latex')
+    end
+    xlim([0,bound(i,2)])
+    
+    set(gca,'FontSize',14)
+end
+
+if strcmp(titles_on,'yes')==1
+    sgtitle(strcat(['Smallest ',num2str(percentholdon*100),'% Error (',num2str(num_hold),' parameter sets)']))
+end
+
+set(fig3,'Units','inches','Position',[0,0,15,8],'PaperPositionMode','auto')
 
 %% corner plot
 

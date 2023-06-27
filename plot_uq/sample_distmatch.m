@@ -84,3 +84,32 @@ for j=1:num_param
     bestfitdist_param(j) = dist_param(ind,j);
 end
 disp(bestfitdist);
+
+%% histograms of parameters
+
+tiledlayout(4,4,'TileSpacing','compact','Padding','compact')
+for i=1:num_param
+    nexttile(pos_tiled)
+
+    if strcmp(bestfitdist{i},'Uniform')==0
+        h = histfit(param_sort_hold(:,i),[],bestfitdist{i});
+        h(1).FaceColor = 'none';
+        h(2).Color = 'k';
+        box on
+        yt = get(gca,'YTick');
+        set(gca,'YTick',yt,'YTickLabel',round(yt/num_hold,2));
+    else
+        hold on
+        histogram(param_sort_hold(:,i),'Normalization','probability',...
+            'BinMethod','sqrt','FaceColor','none');
+        hh = get(gca,'YLim');
+        plot(linspace(bound(i,1),bound(i,2),100),hh(2)/2*ones(1,100),'k',...
+            'LineWidth',2.5)
+        box on
+        hold off
+    end
+
+    xlabel(param_names{i},'Interpreter','latex')
+    ylabel('Percentage','Interpreter','latex')
+    xlim([0,bound(i,2)])
+end
