@@ -7,8 +7,8 @@ addpath plot_simulations
 %%% space unit: mm
 
 %%%%%%%%%%%%%%%%%%%%%% loading a parameter set file %%%%%%%%%%%%%%%%%%%%%%%
-% load('uq/min_param.mat');
-load('parameter_analysis/minparam_18.mat');
+% load('parameter_analysis/minparam_18.mat');
+load('parameter_analysis/pointestimate_inversion18.mat');
 ind = 1;
 
 mu = param_val(ind,1); %%% adhesion constant

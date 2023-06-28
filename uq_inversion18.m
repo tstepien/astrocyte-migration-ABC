@@ -8,7 +8,7 @@ rng(100,'twister')
 uqlab
 
 num_param = 18;
-num_steps = 500;
+num_steps = 1000;
 num_chains = 100;
 
 savefiles = 'yes';
@@ -215,6 +215,8 @@ end
 if ~isdeployed
     uq_display(myBayesianAnalysis)
 end
+
+param_val = myBayesianAnalysis.Results.PostProc.PointEstimate.X{1,1}(1:num_param);
 
 % Save variables to file
 if strcmp(savefiles,'yes')==1
