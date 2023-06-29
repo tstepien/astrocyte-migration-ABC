@@ -50,14 +50,14 @@ bound = [0.0001 0.1; %mu - adhesion constant
     0 2; %alpha21 - (/hr) proliferation rate IPA wrt PDGFA
     0 2; %alpha22 - (/hr) proliferation rate IPA wrt choroid oxygen
     0 2; %alpha23 - (/hr) proliferation rate IPA wrt hyaloid oxygen
-    0 2; %beta0 - (/hr) base differentiation rate
-    0 2; %beta1 - (/hr) differentiation rate wrt LIF
-    0 2; %beta2 -  (/hr) differentiation rate wrt choroid oxygen
-    0 2; %beta3 -  (/hr) differentiation rate wrt hyaloid oxygen
-    0 2; %beta4 -  (/hr) mass action rate
+    0 3; %beta0 - (/hr) base differentiation rate
+    0 3; %beta1 - (/hr) differentiation rate wrt LIF
+    0 3; %beta2 -  (/hr) differentiation rate wrt choroid oxygen
+    0 3; %beta3 -  (/hr) differentiation rate wrt hyaloid oxygen
+    0 3; %beta4 -  (/hr) mass action rate
     0 2; %eta1 - (/hr) apoptosis rate APC
     0 2; %eta2 - (/hr) apoptosis rate IPA
-    0 20; %P_hy - partial pressure of oxygen due to hyaloid artery
+    0 40; %P_hy - partial pressure of oxygen due to hyaloid artery
     0.001 2]; %r_hy - radius at half-maximum of Hill function for hyaloid
 numpar = length(bound);
 

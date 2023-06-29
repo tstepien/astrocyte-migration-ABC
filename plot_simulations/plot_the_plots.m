@@ -17,7 +17,12 @@ j_init = s0/dr+1;
 [thickness_ret,~,~,~] = thick_rad(t,r);
     
 %%% oxygen
-PO2 = oxygen(r,thickness_ret,P0,Dalpha,M0);
+% PO2 = oxygen(r,thickness_ret,P0,Dalpha,M0);
+T = length(t);
+PO2 = zeros(T,R);
+for i=1:T
+    [~,PO2(i,:)] = oxygen_jtb(r,thickness_ret(i,:),P0,Pm,Dalpha,M0);
+end
 % PO2frac = PO2./(Pm+PO2);
 
 %%% variables
