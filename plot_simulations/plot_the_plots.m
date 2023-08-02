@@ -15,15 +15,6 @@ j_init = s0/dr+1;
 
 %%% cell layer thickness and radius
 [thickness_ret,~,~,~] = thick_rad(t,r);
-    
-%%% oxygen
-% PO2 = oxygen(r,thickness_ret,P0,Dalpha,M0);
-T = length(t);
-PO2 = zeros(T,R);
-for i=1:T
-    [~,PO2(i,:)] = oxygen_jtb(r,thickness_ret(i,:),P0,Pm,Dalpha,M0);
-end
-% PO2frac = PO2./(Pm+PO2);
 
 %%% variables
 T = length(t);
@@ -59,12 +50,15 @@ c1plot = zeros(T,R+1);
 c2plot = zeros(T,R+1);
 vel_cirplot = zeros(T,R+1);
 vel_radplot = zeros(T,R+1);
+tension_plot = zeros(T,R+1);
 rplot = zeros(T,R+1);
 for i = 1:T
     c1plot(i,:) = [c1(i,1:j_init+(i-1)) , zeros(1,R+1-(j_init+(i-1)))];
     c2plot(i,:) = [c2(i,1:j_init+(i-1)) , zeros(1,R+1-(j_init+(i-1)))];
     vel_cirplot(i,:) = [vel_cir(i,1:j_init+(i-1)) , zeros(1,R+1-(j_init+(i-1)))];
     vel_radplot(i,:) = [vel_rad(i,1:j_init+(i-1)) , zeros(1,R+1-(j_init+(i-1)))];
+    tension_plot(i,:) = [kappa*(1./sqrt(pi*(c1plot(i,1:j_init+(i-1))...
+        + c2plot(i,1:j_init+(i-1)))) - rbar) , zeros(1,R+1-(j_init+(i-1)))];
     
     rplot(i,:) = [r(1:j_init+(i-1)) , r(j_init+(i-1)) , r(j_init+i:end)];
 end
@@ -75,15 +69,17 @@ fsticks = 14;
 %% plot cell concentrations
 
 figure
+tiledlayout(3,3,'TileSpacing','Compact')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-subaxis(3,3,3,'MarginLeft',0.07,'MarginRight',0.005,'MarginTop',0.03,'MarginBottom',0.15)
+% total cell population
+nexttile
 hold on
 for i=1:numcurvesplot
     plot(rplot(plotind(i),:),c1plot(plotind(i),:)+c2plot(plotind(i),:),...
         'LineWidth',1.5,'Color',co(i,:))
 end
 % ylim_sum = get(gca,'YLim');
-    ylim_sum = [0,5000];
+    ylim_sum = [0,1500];
 line([max_astrocytes,max_astrocytes],ylim_sum,'LineStyle','--',...
     'Color',[0.5,0.5,0.5],'LineWidth',1.25)
 hold off
@@ -96,7 +92,8 @@ else
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-subaxis(3,3,1,'MarginLeft',0.055,'MarginRight',0.01)
+% APCs
+nexttile
 hold on
 for i=1:numcurvesplot
     plot(rplot(plotind(i),:),c1plot(plotind(i),:),'LineWidth',1.5,...
@@ -114,7 +111,8 @@ else
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-subaxis(3,3,2,'MarginLeft',0.06,'MarginRight',0.01)
+% IPAs
+nexttile
 hold on
 for i=1:numcurvesplot
     plot(rplot(plotind(i),:),c2plot(plotind(i),:),'LineWidth',1.5,...
@@ -132,7 +130,8 @@ else
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-subaxis(3,3,4,'MarginTop',0.03,'MarginBottom',0.08)
+% moving boundary
+nexttile
 hold on
 plot(t/24,mvgbdy,'k','LineWidth',1.5)
 scatter(t/24,mvgbdy,20,'k')
@@ -149,7 +148,8 @@ else
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-subaxis(3,3,5,'MarginTop',0.03)
+% retina thickness
+nexttile
 if size(thickness_ret,1)==1 || size(thickness_ret,2)==1
     plot(t/24,thickness_ret,'-o','LineWidth',1.5)
     xlabel('t (days)','FontSize',fslabel)
@@ -165,15 +165,16 @@ ylabel('retinal thickness (mm)','FontSize',fslabel)
 set(gca,'XLim',[0,rmax],'FontSize',fsticks)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-subaxis(3,3,6,'MarginRight',0.005)
+% oxygen
+nexttile
 hy = hyaloid(r,P_hy,r_hy);
 if size(thickness_ret,1)==1 || size(thickness_ret,2)==1
-    plot(thickness_ret,hy+PO2,'-o','LineWidth',1.5)
+    plot(thickness_ret,hy+choroidPO2,'-o','LineWidth',1.5)
     xlabel('total retinal thickness (mm)','FontSize',fslabel)
 else
     hold on
     for i=1:numcurvesplot
-        plot(r,hy+PO2(plotind(i),:),'LineWidth',1.5,'Color',co(i,:))
+        plot(r,hy+choroidPO2(plotind(i),:),'LineWidth',1.5,'Color',co(i,:))
     end
     hold off
     xlabel('radius (mm)','FontSize',fslabel)
@@ -182,7 +183,8 @@ ylabel('Choroid+Hyaloid P_{O_2} (mmHg)','FontSize',fslabel)
 set(gca,'XLim',[0,rmax],'FontSize',fsticks)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-subaxis(3,3,7,'MarginBottom',0.06)
+% PDGFA
+nexttile
 hold on
 for i=1:numcurvesplot
     plot(r,q1(plotind(i),:),'LineWidth',1.5,'Color',co(i,:))
@@ -193,7 +195,8 @@ ylabel('PDGFA (ng/mL)','FontSize',fslabel)
 set(gca,'XLim',[0,rmax],'FontSize',fsticks)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-subaxis(3,3,8,'MarginBottom',0.06)
+% LIF
+nexttile
 hold on
 for i=1:numcurvesplot
     plot(r,q2(plotind(i),:),'LineWidth',1.5,'Color',co(i,:))
@@ -203,6 +206,19 @@ xlabel('radius (mm)','FontSize',fslabel)
 ylabel('LIF (ng/mL)','FontSize',fslabel)
 set(gca,'XLim',[0,rmax],'FontSize',fsticks)
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% tension
+nexttile
+hold on
+for i=1:numcurvesplot
+    plot(rplot(plotind(i),:),tension_plot(plotind(i),:),'LineWidth',1.5,'Color',co(i,:))
+end
+hold off
+xlabel('radius (mm)','FontSize',fslabel)
+ylabel('Tension (Pa mm)','FontSize',fslabel)
+set(gca,'XLim',[0,rmax],'YLim',[0,4],'FontSize',fsticks)
+
 h = legend([num2str(t(plotind(1))/24),' days (E15)'],...
     [num2str(t(plotind(2))/24,3),' days (E',num2str(round(15+t(plotind(2))/24,1)),')'],...
     [num2str(t(plotind(3))/24,3),' days (E',num2str(round(15+t(plotind(3))/24,1)),')'],...
@@ -211,7 +227,7 @@ h = legend([num2str(t(plotind(1))/24),' days (E15)'],...
     [num2str(t(plotind(6))/24,3),' days (E',num2str(round(15+t(plotind(6))/24,1)),')'],...
     [num2str(t(plotind(7))/24,3),' days (E',num2str(round(15+t(plotind(7))/24,1)),')'],...
     [num2str(t(plotind(8))/24,3),' days (E',num2str(round(15+t(plotind(8))/24,1)),'/P0)']);
-set(h,'FontSize',fsticks,'Position',[0.713 0.08 0.13 0.22]);
+set(h,'FontSize',fsticks-2,'Position',[0.84 0.113 0.13 0.22]);
 
 set(gcf,'Units','inches','Position',[2,2,16,10],'PaperPositionMode','auto')
 
@@ -220,44 +236,45 @@ set(gcf,'Units','inches','Position',[2,2,16,10],'PaperPositionMode','auto')
 %% plot velocities
 
 figure
-subaxis(2,2,1,'MarginLeft',0.05,'MarginRight',0.01,'MarginTop',0.03,'MarginBottom',0.05)
+tiledlayout(2,2,'TileSpacing','compact')
+nexttile
 hold on
 for i=1:numcurvesplot
-    plot(rplot(plotind(i),:),vel_cirplot(plotind(i),:))
+    plot(rplot(plotind(i),:),vel_cirplot(plotind(i),:),'LineWidth',1.5)
 end
 hold off
-xlabel('r')
-ylabel('circumferential velocity')
+xlabel('r','FontSize',fslabel)
+ylabel('circumferential velocity','FontSize',fslabel)
 set(gca,'XLim',[0,mvgbdy(end)+5*dr])
 
-subaxis(2,2,2,'MarginLeft',0.05,'MarginRight',0.01)
+nexttile
 hold on
 for i=1:numcurvesplot
-    plot(rplot(plotind(i),:),vel_radplot(plotind(i),:))
+    plot(rplot(plotind(i),:),vel_radplot(plotind(i),:),'LineWidth',1.5)
 end
 hold off
-xlabel('r')
-ylabel('radial velocity')
+xlabel('r','FontSize',fslabel)
+ylabel('radial velocity','FontSize',fslabel)
 set(gca,'XLim',[0,mvgbdy(end)+5*dr])
 
-subaxis(2,2,3,'MarginTop',0.03,'MarginBottom',0.05)
+nexttile
 hold on
 for i=1:numcurvesplot
-    plot(rplot(plotind(i),:),vel_cirplot(plotind(i),:)+vel_radplot(plotind(i),:))
+    plot(rplot(plotind(i),:),vel_cirplot(plotind(i),:)+vel_radplot(plotind(i),:),'LineWidth',1.5)
 end
 hold off
-xlabel('r')
-ylabel('circumferential + radial velocity')
+xlabel('r','FontSize',fslabel)
+ylabel('circumferential + radial velocity','FontSize',fslabel)
 set(gca,'XLim',[0,mvgbdy(end)+5*dr])
 
-subaxis(2,2,4,'MarginTop',0.03,'MarginBottom',0.05)
+nexttile
 hold on
 for i=1:numcurvesplot
-    plot(rplot(plotind(i),:),vel_cirplot(plotind(i),:).*rplot(plotind(i),:))
+    plot(rplot(plotind(i),:),vel_cirplot(plotind(i),:).*rplot(plotind(i),:),'LineWidth',1.5)
 end
 hold off
-xlabel('r')
-ylabel('velocity')
+xlabel('r','FontSize',fslabel)
+ylabel('velocity','FontSize',fslabel)
 set(gca,'XLim',[0,mvgbdy(end)+5*dr])
 
 
