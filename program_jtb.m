@@ -7,11 +7,11 @@ addpath plot_simulations
 %%% space unit: mm
 
 %%%%%%%%%%%%%%%%%%%%%%%%%% astrocyte parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%
-mu = 0.015; %%% adhesion constant
+mu = 15; %%% adhesion constant (Pa h/mm)
 alpha10 = 0.08; %%% (/hr) basal proliferation rate APC
 alpha11 = 0.09; %%% (/hr) proliferation rate APC wrt PDGFA
 alpha12 = 0.08; %%% (/hr) proliferation rate APC wrt choroid oxygen
-alpha13 = 0; %%% (/hr) proliferation rate APC wrt hylaoid oxygen
+alpha13 = 0; %%% (/hr) proliferation rate APC wrt hyaloid oxygen
 alpha20 = 0; %%% (/hr) basal proliferation rate IPA
 alpha21 = 0.01; %%% (/hr) proliferation rate IPA wrt PDGFA
 alpha22 = 0.005; %%% (/hr) proliferation rate IPA wrt choroid oxygen
@@ -56,9 +56,9 @@ m.tmax = 7*24; %%% max time (hr) (7 days = 168 hr)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% solve equation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 tic
-[t,r,c1,c2,q1,q2,mvgbdy,vel_cir,vel_rad] = eqnsolver(mu,alpha10,alpha11,...
-    alpha12,alpha13,alpha20,alpha21,alpha22,alpha23,beta0,beta1,beta2,...
-    beta3,beta4,eta1,eta2,P_hy,r_hy,m);
+[t,r,c1,c2,q1,q2,mvgbdy,vel_cir,vel_rad,choroidPO2] = eqnsolver(mu,alpha10,...
+    alpha11,alpha12,alpha13,alpha20,alpha21,alpha22,alpha23,beta0,beta1,...
+    beta2,beta3,beta4,eta1,eta2,P_hy,r_hy,m);
 toc
 
 
@@ -78,6 +78,6 @@ for i = 1:length(t)
 end
 
 %% plots
-plot_the_plots
-plot_the_plots_APCIPA
-plot_movingbdy
+% plot_the_plots
+% plot_the_plots_APCIPA
+% plot_movingbdy
