@@ -1,9 +1,9 @@
-function [t,r,c1,c2,q1,q2,mvgbdy,vel_cir,vel_rad] = eqnsolver(mu,alpha10,...
-    alpha11,alpha12,alpha13,alpha20,alpha21,alpha22,alpha23,beta0,beta1,...
-    beta2,beta3,beta4,eta1,eta2,P_hy,r_hy,m)
-% [c1,c2] = [t,r,c1,c2,q1,q2,mvgbdy,vel_cir,vel_rad] = eqnsolver(mu,alpha10,...
-%     alpha11,alpha12,alpha13,alpha20,alpha21,alpha22,alpha23,beta0,beta1,...
-%     beta2,beta3,beta4,eta1,eta2,P_hy,r_hy,m)
+function [t,r,c1,c2,q1,q2,mvgbdy,vel_cir,vel_rad,choroidPO2] = eqnsolver(mu,...
+    alpha10,alpha11,alpha12,alpha13,alpha20,alpha21,alpha22,alpha23,beta0,...
+    beta1,beta2,beta3,beta4,eta1,eta2,P_hy,r_hy,m)
+% [c1,c2] = [t,r,c1,c2,q1,q2,mvgbdy,vel_cir,vel_rad,choroidPO2] = eqnsolver(mu,...
+%     alpha10,alpha11,alpha12,alpha13,alpha20,alpha21,alpha22,alpha23,beta0,...
+%     beta1,beta2,beta3,beta4,eta1,eta2,P_hy,r_hy,m)
 %
 % this is the solver
 %
@@ -21,6 +21,7 @@ function [t,r,c1,c2,q1,q2,mvgbdy,vel_cir,vel_rad] = eqnsolver(mu,alpha10,...
 %   mvgbdy  = location of moving boundary
 %   vel_cir = circumferential spreading (v/r)
 %   vel_rad = radial spreading (partial v/partial r)
+%   choroidPO2  = partial pressure of choroid oxygen
 
 global whatstep tcurr;
 
@@ -100,6 +101,9 @@ j = j_init;
 
 mvgbdy_vel = [];
 
+%%% choroid oxygen PO2;
+choroidPO2 = [];
+
 %%% concentration on the moving boundary (mb)
 c1mb = c1(j);
 c2mb = c2(j);
@@ -133,7 +137,7 @@ while tcurr < tmax && j<R-1
     
         %%% oxygen
         % PO2 = oxygen(r,thickness_ret,P0,Dalpha,M0);
-        PO2 = oxygen_jtb(r,thickness_ret,P0,Pm,Dalpha,M0);
+        PO2 = oxygen_jtb(thickness_ret,P0,Pm,Dalpha,M0);
         
         %%% growth factors
         [q1_hat,~] = growthfactors_implicit(q1_old,q2_old,dt_p,tcurr,...
@@ -188,7 +192,7 @@ while tcurr < tmax && j<R-1
     
     %%% oxygen
     % PO2 = oxygen(r,thickness_ret,P0,Dalpha,M0);
-    PO2 = oxygen_jtb(r,thickness_ret,P0,Pm,Dalpha,M0);
+    PO2 = oxygen_jtb(thickness_ret,P0,Pm,Dalpha,M0);
     
     %%% growth factors
     [q1_new,q2_new] = growthfactors_implicit(q1_old,q2_old,dt_c,tcurr,...
@@ -202,7 +206,7 @@ while tcurr < tmax && j<R-1
     
     %%% cells separate
     [c1_new,c2_new] = cellpops_separate(j,c1_old,c2_old,k_new,q1_new,...
-        q2_new,PO2,dt_c,r,Pm,kappa,mu,alpha10,alpha11,alpha13,alpha12,...
+        q2_new,PO2,dt_c,r,Pm,kappa,mu,alpha10,alpha11,alpha12,alpha13,...
         alpha20,alpha21,alpha22,alpha23,beta0,beta1,beta2,beta3,beta4,...
         eta1,eta2,ce,cmax,hy);
 
@@ -229,6 +233,7 @@ while tcurr < tmax && j<R-1
     t = [t ; tcurr];
     c1mb = [c1mb ; c1_new(j)];
     c2mb = [c2mb ; c2_new(j)];
+    choroidPO2 = [choroidPO2 ; PO2];
 
     if sum(c1_new<0 & abs(c1_new)>10*eps )>0 ...
             || sum(c2_new<0 & abs(c2_new)>10*eps)>0
