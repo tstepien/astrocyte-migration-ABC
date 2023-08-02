@@ -1,10 +1,6 @@
 %%% this file contains all of the fixed parameters that are known/derived
 %%% from literature
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%% oxygen parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Pm = 10.5; % (mmHg)
-
-
 %%%%%%%%%%%%%%%%%%%%%%%% growth factor parameters %%%%%%%%%%%%%%%%%%%%%%%%%
 lambda = 1.6; %%% tortuosity of medium (dimensionless)
 phi = 0.2; %%% porosity/volume fraction in extracellular space (%)
@@ -34,10 +30,10 @@ cmin = 1/(pi*rproc^2); %%% reference cell density that includes processes
                        %%% (cells/mm^2)
 cmax = 1/(pi*rbar^2); %%% reference cell density that includes only the 
                       %%% cell body (cells/mm^2)
-kappa = 0.3; %%% tension function spring constant = 300 Pa 
-             %%% converted to units mN/mm^2
-Te = 3.10*10^(-6); %%% tension at leading edge = 3.10 Pa mm
-                   %%% converted to units N/mm
+kappa = 300; %%% tension function spring constant (Pa)
+             %%% [equivalent to 0.3 mN/mm^2]
+Te = 3.10; %%% tension at leading edge (Pa mm)
+           %%% [equivalent to 3.10*10^(-6) N/mm]
 ce = 1000; %%% cell density at leading edge (cells/mm^2)
 
 
