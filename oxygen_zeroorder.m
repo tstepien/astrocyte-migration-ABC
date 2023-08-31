@@ -1,6 +1,10 @@
-function PO2 = oxygen(r,thickness_ret,P0,Dalpha,M0)
-% PO2 = oxygen(r,thickness_ret,P0,Dalpha,M0)
+function PO2 = oxygen_zeroorder(r,thickness_ret,P0,Dalpha,M0)
+% PO2 = oxygen_zeroorder(r,thickness_ret,P0,Dalpha,M0)
 % choroid PO2
+%
+% Equation from Dollery et al. (1969) PMID: 5395349
+% Uniform oxygen demand throughout the retina
+% a.k.a. Zero-order kinetics from Popel (1989) PMID: 2673661
 %
 % inputs:
 %   r             = spatial mesh

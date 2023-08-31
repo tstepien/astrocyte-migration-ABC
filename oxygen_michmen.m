@@ -1,5 +1,5 @@
-function Pvec = oxygen_jtb(thickness_ret,P0,Pm,Dalpha,M0)
-% Pvec = oxygen_jtb(thickness_ret,P0,Pm,Dalpha,M0)
+function Pvec = oxygen_michmen(thickness_ret,P0,Pm,Dalpha,M0)
+% Pvec = oxygen_michmen(thickness_ret,P0,Pm,Dalpha,M0)
 % 
 % 1D oxygen diffusion with Michaelis-Menten uptake
 % Calculate PO2 on inner surface of retina - TWS, June 2021
@@ -10,16 +10,15 @@ function Pvec = oxygen_jtb(thickness_ret,P0,Pm,Dalpha,M0)
 k = M0 / Dalpha;
 
 N = length(thickness_ret);
+Nind = sum(thickness_ret>0);
 Pvec = zeros(1,N); % put PO2 = 0 when retina has zero thickness
 
-for i = 1:N
-    if thickness_ret(i)>0
-        xmesh = linspace(0,thickness_ret(i),21);
-        solinit = bvpinit(xmesh, @(x) guess(x,thickness_ret(i),P0));
-        opts = bvpset('FJacobian',@(x,y) jacbvp(x,y,k,Pm),'BCJacobian',@jacbc);
-        sol = bvp4c(@(x,y) bvpfcn(x,y,k,Pm), @(ya,yb) bcfcn(ya,yb,P0), solinit, opts);
-        Pvec(i) = sol.y(1,length(sol.x));
-    end
+parfor i = 1:Nind
+    xmesh = linspace(0,thickness_ret(i),21);
+    solinit = bvpinit(xmesh, @(x) guess(x,thickness_ret(i),P0));
+    opts = bvpset('FJacobian',@(x,y) jacbvp(x,y,k,Pm),'BCJacobian',@jacbc);
+    sol = bvp4c(@(x,y) bvpfcn(x,y,k,Pm), @(ya,yb) bcfcn(ya,yb,P0), solinit, opts);
+    Pvec(i) = sol.y(1,length(sol.x));
 end
 
 end
