@@ -12,13 +12,15 @@ function [err_tot,err_time,err_rad,err_dens] = errorfunction(t,r,mvgbdy,c1,c2)
 %   c2     = density of IPAs
 %
 % outputs:
+%   err_tot  = total error = (err_rad + err_dens + err_time)
+%   err_time = error from simulation time end
 %   err_rad  = error from astrocyte radius
 %   err_dens = error from astrocyte density
-%   err_tot  = total error = (err_rad + err_dens + err_time)
 
 %%% penalties
-if t(end)/24>8  || ~isreal(t(end)) || sum(c1(:)<0 & abs(c1(:))>10*eps)>0 ...
-        || sum(c2(:)<0 & abs(c2(:))>10*eps)>0 || t(end)/24 <6
+if t(end)/24>8 || t(end)/24 <6  || ~isreal(t(end)) ...
+        || sum(c1(:)<0 & abs(c1(:))>10*eps)>0 ...
+        || sum(c2(:)<0 & abs(c2(:))>10*eps)>0
     err_tot = 10^4; %NaN;
     err_time = 10^4; %NaN;
     err_rad = 10^4; %NaN;
@@ -40,18 +42,16 @@ numdays = length(dayswithdata);
 
 %%% pre-allocate arrays
 ind = zeros(numdays,1);
-comp_APC = zeros(numdays,length(r));
-comp_IPA = zeros(numdays,length(r));
+comp_APClarger = zeros(numdays,length(r));
+comp_IPAlarger = zeros(numdays,length(r));
 nodes_APC = zeros(numdays,length(r));
 nodes_IPA = zeros(numdays,length(r));
 nodes_retina = zeros(numdays,length(r));
 numnodes_APC = zeros(numdays,1);
 numnodes_IPA = zeros(numdays,1);
 numnodes_retina = zeros(numdays,1);
-dens_annulus = zeros(numdays,length(r));
-dens_disc = zeros(numdays,length(r));
 
-%%% set entries<eps to 0
+%%% set |entries|<eps to 0
 c1(abs(c1)<eps) = 0;
 c2(abs(c2)<eps) = 0;
 
@@ -61,10 +61,7 @@ for i=1:numdays
     jj = dayswithdata(i);
     ind(i) = find(abs((t/24-(jj-1)))==min(abs(t/24-(jj-1))),1,'first');
     
-    %%% density
-    comp_APC(i,:) = (c1(ind(i),:)>0);
-    comp_IPA(i,:) = (c2(ind(i),:)>0);
-    
+    %%% density - data
     nodes_APC(i,:) = (r<=rad_APC(i) & r>rad_IPA(i)); %% annulus
     nodes_IPA(i,:) = (r<=rad_IPA(i)); %% disc
     nodes_retina(i,:) = (r<=rad_APC(i)); %% retina
@@ -73,13 +70,9 @@ for i=1:numdays
     numnodes_IPA(i) = sum(nodes_IPA(i,:));
     numnodes_retina(i) = sum(nodes_retina(i,:));
     
-    %%% incorrect density relationship for APCs and IPAs on
-    %%% (APC annulus) and (IPA disc)
-    
-    %%% where c1<ce or c2>ce on the APC annulus (incorrect relationship)
-    dens_annulus(i,:) = ( c2(ind(i),:)>ce | c1(ind(i),:)<ce ) .* nodes_APC(i,:);
-    %%% where c1>ce or c2<ce on the IPA disc (incorrect relationship)
-    dens_disc(i,:) = ( c1(ind(i),:)>ce | c2(ind(i),:)<ce ) .* nodes_IPA(i,:);
+    %%% density - simulations
+    comp_APClarger(i,:) = (c1(ind(i),:) > c2(ind(i),:));
+    comp_IPAlarger(i,:) = (c1(ind(i),:) < c2(ind(i),:));
 end
 
 
@@ -92,11 +85,9 @@ err_time = abs(7 - t(end)/24);
 err_rad = sum( abs(rad_APC - mvgbdy(ind)) );
 
 %%% density error
-err_APC = sum( dens_annulus , 2);% ./ numnodes_APC;
-err_IPA = sum( dens_disc , 2);% ./ numnodes_IPA;
-err_IPA(1) = 0; %%% initial time point has no IPAs by initial condition, so
-                %%% numnodes_IPA=0 and dividing by zero results in NaN
-err_dens = sum( (err_APC + err_IPA) ./ numnodes_retina );
+err_APC = 1 - jaccard(comp_APClarger,nodes_APC);
+err_IPA = 1 - jaccard(comp_IPAlarger,nodes_IPA);
+err_dens = err_APC + err_IPA;
 
 %%% total error
 err_tot = err_time + err_rad + err_dens;
@@ -106,12 +97,12 @@ err_tot = err_time + err_rad + err_dens;
 % tiledlayout(2,2)
 % 
 % nexttile
-% plot(r,dens_annulus)
-% title('where c1<cmin or c2>cmin on the APC annulus (incorrect relationship)')
+% plot(r,comp_APClarger)
+% title('where c1>c2 (APC>IPA)')
 % 
 % nexttile
-% plot(r,dens_disc)
-% title('where c1>cmin or c2<cmin on the IPA disc (incorrect relationship)')
+% plot(r,comp_IPAlarger)
+% title('where c1<c2 (APC<IPA)')
 % 
 % nexttile
 % plot(r,nodes_APC)
