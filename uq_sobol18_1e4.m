@@ -25,7 +25,7 @@ myModel = uq_createModel(ModelOpts);
 InputOpts.Marginals(1).Name = '$\mu$';  % adhesion constant
 InputOpts.Marginals(1).Type = 'Gaussian';
 InputOpts.Marginals(1).Parameters = [bestfitdist_param{1}.mu bestfitdist_param{1}.sigma];  % (mN h/mm^3)
-InputOpts.Marginals(1).Bounds = [0.0001 0.1];  % (mN h/mm^3)
+InputOpts.Marginals(1).Bounds = [0.1 100];  % (mN h/mm^3)
 
 InputOpts.Marginals(2).Name = '$\alpha_{10}$';  % base proliferation rate APC
 InputOpts.Marginals(2).Type = 'Uniform';
