@@ -48,7 +48,7 @@ Tprimeatce = Tderivative(ce,kappa); % T'(ce)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% mesh set up %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 r = 0:dr:rmax;
 R = length(r);
-rhalf = (r(1:R-1)+r(2:R))/2;
+% rhalf = (r(1:R-1)+r(2:R))/2;
 
 tol = 10^(-6); % tolerance for predictor-corrector scheme
 
@@ -101,8 +101,10 @@ j = j_init;
 
 mvgbdy_vel = [];
 
-%%% choroid oxygen PO2;
-choroidPO2 = [];
+%%% choroid oxygen PO2
+[thickness_ret,~,~,~] = thick_rad(tcurr,r);
+% choroidPO2 = oxygen_zeroorder(r,thickness_ret,P0,Dalpha,M0);
+choroidPO2 = oxygen_michmen(thickness_ret,P0,Pm,Dalpha,M0);
 
 %%% concentration on the moving boundary (mb)
 c1mb = c1(j);
@@ -136,8 +138,8 @@ while tcurr < tmax && j<R-1
         [thickness_ret,thickness_RGC,radius_endo,~] = thick_rad(tcurr+dt_p,r);
     
         %%% oxygen
-        % PO2 = oxygen(r,thickness_ret,P0,Dalpha,M0);
-        PO2 = oxygen_jtb(thickness_ret,P0,Pm,Dalpha,M0);
+        % PO2 = oxygen_zeroorder(r,thickness_ret,P0,Dalpha,M0);
+        PO2 = oxygen_michmen(thickness_ret,P0,Pm,Dalpha,M0);
         
         %%% growth factors
         [q1_hat,~] = growthfactors_implicit(q1_old,q2_old,dt_p,tcurr,...
@@ -191,8 +193,8 @@ while tcurr < tmax && j<R-1
     [thickness_ret,thickness_RGC,radius_endo,~] = thick_rad(tcurr+dt_c,r);
     
     %%% oxygen
-    % PO2 = oxygen(r,thickness_ret,P0,Dalpha,M0);
-    PO2 = oxygen_jtb(thickness_ret,P0,Pm,Dalpha,M0);
+    % PO2 = oxygen_zeroorder(r,thickness_ret,P0,Dalpha,M0);
+    PO2 = oxygen_michmen(thickness_ret,P0,Pm,Dalpha,M0);
     
     %%% growth factors
     [q1_new,q2_new] = growthfactors_implicit(q1_old,q2_old,dt_c,tcurr,...

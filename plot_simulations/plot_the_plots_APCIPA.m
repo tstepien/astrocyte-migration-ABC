@@ -58,15 +58,10 @@ fsticks = 14;
 %% plot cell concentrations
 
 figure
+tiledlayout(2,4,'TileSpacing','compact')
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 for i=1:8
-    if i==1
-        subaxis(2,4,1,'MarginTop',0.07,'MarginBottom',0.175,'MarginLeft',0.06,'MarginRight',0.01)
-    elseif i==5
-        subaxis(2,4,5,'MarginTop',0.14,'MarginBottom',0.1)
-    else
-        subaxis(2,4,i)
-    end
+    nexttile
     hold on
     plot(rplot(plotind(i),:),c1plot(plotind(i),:),...
         'LineWidth',1.5,'Color',co(1,:))

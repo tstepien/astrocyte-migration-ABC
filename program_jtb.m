@@ -3,6 +3,9 @@ clc;
 close all;
 addpath plot_simulations
 
+%%% Note: the subfunction oxygen_michmen uses a parfor to speed up
+%%% calculations
+
 %%% time unit: hr
 %%% space unit: mm
 
@@ -78,6 +81,6 @@ for i = 1:length(t)
 end
 
 %% plots
-% plot_the_plots
+plot_the_plots
 % plot_the_plots_APCIPA
 % plot_movingbdy
