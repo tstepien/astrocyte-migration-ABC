@@ -50,6 +50,8 @@ nodes_retina = zeros(numdays,length(r));
 numnodes_APC = zeros(numdays,1);
 numnodes_IPA = zeros(numdays,1);
 numnodes_retina = zeros(numdays,1);
+err_APC = zeros(numdays,1);
+err_IPA = zeros(numdays,1);
 
 %%% set |entries|<eps to 0
 c1(abs(c1)<eps) = 0;
@@ -85,9 +87,11 @@ err_time = abs(7 - t(end)/24);
 err_rad = sum( abs(rad_APC - mvgbdy(ind)) );
 
 %%% density error
-err_APC = 1 - jaccard(comp_APClarger,nodes_APC);
-err_IPA = 1 - jaccard(comp_IPAlarger,nodes_IPA);
-err_dens = err_APC + err_IPA;
+for i=1:numdays
+    err_APC(i) = 1 - jaccard(comp_APClarger(i,:),nodes_APC(i,:));
+    err_IPA(i) = 1 - jaccard(comp_IPAlarger(i,:),nodes_IPA(i,:));
+end
+err_dens = sum(err_APC) + sum(err_IPA);
 
 %%% total error
 err_tot = err_time + err_rad + err_dens;
