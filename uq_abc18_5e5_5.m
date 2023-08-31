@@ -41,7 +41,7 @@ m.rmax = 5; %%% max radius (mm) (estimate rat retinal radius = 4.1 mm)
 m.tmax = 7*24; %%% max time (hr) (7 days = 168 hr)
 
 %%%%%%%%%%%%%%%%%%%%%%%% parameters to investigate %%%%%%%%%%%%%%%%%%%%%%%%
-bound = [0.0001 0.1; %mu - adhesion constant
+bound = [0.1 100; %mu - adhesion constant
     0 2; %alpha10 - (/hr) base proliferation rate APC
     0 2; %alpha11 - (/hr) proliferation rate APC wrt PDGFA
     0 2; %alpha12 - (/hr) proliferation rate APC wrt choroid oxygen
