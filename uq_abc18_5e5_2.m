@@ -3,7 +3,7 @@ clc;
 
 % savefiles = 'yes';
 
-multiplier = 5;
+multiplier = 1;
 power = 5;
 N = (multiplier)*10^(power);
 num_param = 18;
@@ -87,7 +87,7 @@ err_rad = zeros(N,1);
 err_dens = zeros(N,1);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% run simulations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-parfor i=1+1e5:2e5
+parfor i=1+2e4:4e4
     disp(['iteration i: ',num2str(i)])
     %%% solve equation
     [t,r,c1,c2,~,~,mvgbdy,~,~] = eqnsolver(mu(i),alpha10(i),alpha11(i),...
