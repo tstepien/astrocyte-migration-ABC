@@ -9,6 +9,8 @@ addpath plot_simulations
 %%% time unit: hr
 %%% space unit: mm
 
+oxyfunc = 'oxygen_michmen';
+
 %%%%%%%%%%%%%%%%%%%%%%%%%% astrocyte parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%
 mu = 15; %%% adhesion constant (Pa h/mm)
 alpha10 = 0.08; %%% (/hr) basal proliferation rate APC
@@ -61,7 +63,7 @@ m.tmax = 7*24; %%% max time (hr) (7 days = 168 hr)
 tic
 [t,r,c1,c2,q1,q2,mvgbdy,vel_cir,vel_rad,choroidPO2] = eqnsolver(mu,alpha10,...
     alpha11,alpha12,alpha13,alpha20,alpha21,alpha22,alpha23,beta0,beta1,...
-    beta2,beta3,beta4,eta1,eta2,P_hy,r_hy,m);
+    beta2,beta3,beta4,eta1,eta2,P_hy,r_hy,m,oxyfunc);
 toc
 
 

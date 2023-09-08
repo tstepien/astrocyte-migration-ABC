@@ -3,12 +3,14 @@ clc;
 
 % savefiles = 'yes';
 
-multiplier = 1;
-power = 5;
+multiplier = 5;
+power = 4;
 N = (multiplier)*10^(power);
 num_param = 18;
 
 iternum = '4';
+
+oxyfunc = 'oxygen_michmen';
 
 %%%%%%%%%%%%%%%%%%%%%% create Latin Hypercube points %%%%%%%%%%%%%%%%%%%%%%
 % %%% MATLAB function (painstakenly slow for large N)
@@ -87,13 +89,13 @@ err_rad = zeros(N,1);
 err_dens = zeros(N,1);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% run simulations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-parfor i=1+6e4:8e4
+parfor i=1+3e4:4e4
     disp(['iteration i: ',num2str(i)])
     %%% solve equation
     [t,r,c1,c2,~,~,mvgbdy,~,~] = eqnsolver(mu(i),alpha10(i),alpha11(i),...
         alpha12(i),alpha13(i),alpha20(i),alpha21(i),alpha22(i),alpha23(i),...
         beta0(i),beta1(i),beta2(i),beta3(i),beta4(i),eta1(i),eta2(i),...
-        P_hy(i),r_hy(i),m);
+        P_hy(i),r_hy(i),m,oxyfunc);
     
     %%% error calculation
     [err_tot(i),err_time(i),err_rad(i),err_dens(i)]  = errorfunction(t,r,mvgbdy,c1,c2);

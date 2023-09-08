@@ -1,15 +1,17 @@
 function [t,r,c1,c2,q1,q2,mvgbdy,vel_cir,vel_rad,choroidPO2] = eqnsolver(mu,...
     alpha10,alpha11,alpha12,alpha13,alpha20,alpha21,alpha22,alpha23,beta0,...
-    beta1,beta2,beta3,beta4,eta1,eta2,P_hy,r_hy,m)
+    beta1,beta2,beta3,beta4,eta1,eta2,P_hy,r_hy,m,oxyfunc)
 % [c1,c2] = [t,r,c1,c2,q1,q2,mvgbdy,vel_cir,vel_rad,choroidPO2] = eqnsolver(mu,...
 %     alpha10,alpha11,alpha12,alpha13,alpha20,alpha21,alpha22,alpha23,beta0,...
-%     beta1,beta2,beta3,beta4,eta1,eta2,P_hy,r_hy,m)
+%     beta1,beta2,beta3,beta4,eta1,eta2,P_hy,r_hy,m,oxyfunc)
 %
 % this is the solver
 %
 % Inputs:
-%   [...] = parameter values
-%   m     = structure of mesh values
+%   [...]   = parameter values
+%   m       = structure of mesh values
+%   oxyfunc = oxygen function - either 'oxygen_zeroorder' for zero-order 
+% %           kinetics or 'oxygen_michmen' for Michaelis-Menten
 %
 % Outputs:
 %   t       = time
@@ -103,8 +105,7 @@ mvgbdy_vel = [];
 
 %%% choroid oxygen PO2
 [thickness_ret,~,~,~] = thick_rad(tcurr,r);
-% choroidPO2 = oxygen_zeroorder(r,thickness_ret,P0,Dalpha,M0);
-choroidPO2 = oxygen_michmen(thickness_ret,P0,Pm,Dalpha,M0);
+choroidPO2 = feval(oxyfunc,r,thickness_ret,P0,Pm,Dalpha,M0);
 
 %%% concentration on the moving boundary (mb)
 c1mb = c1(j);
@@ -138,8 +139,7 @@ while tcurr < tmax && j<R-1
         [thickness_ret,thickness_RGC,radius_endo,~] = thick_rad(tcurr+dt_p,r);
     
         %%% oxygen
-        % PO2 = oxygen_zeroorder(r,thickness_ret,P0,Dalpha,M0);
-        PO2 = oxygen_michmen(thickness_ret,P0,Pm,Dalpha,M0);
+        PO2 = feval(oxyfunc,r,thickness_ret,P0,Pm,Dalpha,M0);
         
         %%% growth factors
         [q1_hat,~] = growthfactors_implicit(q1_old,q2_old,dt_p,tcurr,...
@@ -193,8 +193,7 @@ while tcurr < tmax && j<R-1
     [thickness_ret,thickness_RGC,radius_endo,~] = thick_rad(tcurr+dt_c,r);
     
     %%% oxygen
-    % PO2 = oxygen_zeroorder(r,thickness_ret,P0,Dalpha,M0);
-    PO2 = oxygen_michmen(thickness_ret,P0,Pm,Dalpha,M0);
+    PO2 = feval(oxyfunc,r,thickness_ret,P0,Pm,Dalpha,M0);
     
     %%% growth factors
     [q1_new,q2_new] = growthfactors_implicit(q1_old,q2_old,dt_c,tcurr,...

@@ -1,5 +1,5 @@
-function PO2 = oxygen_zeroorder(r,thickness_ret,P0,Dalpha,M0)
-% PO2 = oxygen_zeroorder(r,thickness_ret,P0,Dalpha,M0)
+function PO2 = oxygen_zeroorder(r,thickness_ret,P0,Pm,Dalpha,M0)
+% PO2 = oxygen_zeroorder(r,thickness_ret,P0,Pm,Dalpha,M0)
 % choroid PO2
 %
 % Equation from Dollery et al. (1969) PMID: 5395349
@@ -10,6 +10,7 @@ function PO2 = oxygen_zeroorder(r,thickness_ret,P0,Dalpha,M0)
 %   r             = spatial mesh
 %   thickness_ret = total retinal thickness (mm)
 %   {others}      = parameters
+%                   (note that Pm is extraneous)
 %
 % outputs:
 %   PO2 = partial pressure of oxygen (O2)

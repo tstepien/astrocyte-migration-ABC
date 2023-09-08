@@ -1,11 +1,13 @@
-function Pvec = oxygen_michmen(thickness_ret,P0,Pm,Dalpha,M0)
-% Pvec = oxygen_michmen(thickness_ret,P0,Pm,Dalpha,M0)
+function Pvec = oxygen_michmen(r,thickness_ret,P0,Pm,Dalpha,M0)
+% Pvec = oxygen_michmen(r,thickness_ret,P0,Pm,Dalpha,M0)
 % 
 % 1D oxygen diffusion with Michaelis-Menten uptake
 % Calculate PO2 on inner surface of retina - TWS, June 2021
 %   updated to preallocate arrays and add Jacobian - TLS, August 2023
 % dy1/dx = y2
 % dy2/dx = M0 / Dalpha * y1/(Pm + y1)
+%
+% note that input r is extraneous
 
 k = M0 / Dalpha;
 
