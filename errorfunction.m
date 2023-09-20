@@ -1,5 +1,5 @@
-function [err_tot,err_time,err_rad,err_dens] = errorfunction(t,r,mvgbdy,c1,c2)
-% [err_tot,err_time,err_rad,err_dens] = errorfunction(t,mvgbdy,c1,c2)
+function [err_tot,err_time,err_rad,err_dens,err_flag] = errorfunction(t,r,mvgbdy,c1,c2)
+% [err_tot,err_time,err_rad,err_dens,err_flag] = errorfunction(t,mvgbdy,c1,c2)
 %
 % This is the error function for comparing the experimental data with
 % simulations
@@ -16,15 +16,33 @@ function [err_tot,err_time,err_rad,err_dens] = errorfunction(t,r,mvgbdy,c1,c2)
 %   err_time = error from simulation time end
 %   err_rad  = error from astrocyte radius
 %   err_dens = error from astrocyte density
+%   err_flag = error flag
+
+err_flag = [];
 
 %%% penalties
-if t(end)/24>8 || t(end)/24 <6  || ~isreal(t(end)) ...
+if t(end)/24>8 || t(end)/24<6  || ~isreal(t(end)) ...
         || sum(c1(:)<0 & abs(c1(:))>10*eps)>0 ...
         || sum(c2(:)<0 & abs(c2(:))>10*eps)>0
     err_tot = 10^4; %NaN;
     err_time = 10^4; %NaN;
     err_rad = 10^4; %NaN;
     err_dens = 10^4; %NaN;
+    if t(end)/24>8
+        err_flag = [err_flag , 1];
+    end
+    if t(end)/26<6
+        err_flag = [err_flag , 2];
+    end
+    if ~isreal(t(end))
+        err_flag = [err_flag , 3];
+    end
+    if sum(c1(:)<0 & abs(c1(:))>10*eps)>0
+        err_flag = [err_flag , 4];
+    end
+    if sum(c2(:)<0 & abs(c2(:))>10*eps)>0
+        err_flag = [err_flag , 5];
+    end
     return
 end
 
