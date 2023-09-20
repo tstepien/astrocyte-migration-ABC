@@ -3,6 +3,8 @@ clc;
 close all;
 addpath plot_simulations
 
+%%% This program matches the parameter values used in the JTB paper
+
 %%% Note: the subfunction oxygen_michmen uses a parfor to speed up
 %%% calculations
 
