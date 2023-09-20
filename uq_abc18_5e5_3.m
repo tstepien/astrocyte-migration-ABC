@@ -4,13 +4,13 @@ clc;
 % savefiles = 'yes';
 
 multiplier = 5;
-power = 4;
+power = 5;
 N = (multiplier)*10^(power);
 num_param = 18;
 
-iternum = '5';
+iternum = '3';
 
-oxyfunc = 'oxygen_michmen';
+oxyfunc = 'oxygen_zeroorder';
 
 %%%%%%%%%%%%%%%%%%%%%% create Latin Hypercube points %%%%%%%%%%%%%%%%%%%%%%
 % %%% MATLAB function (painstakenly slow for large N)
@@ -87,9 +87,10 @@ err_tot = zeros(N,1);
 err_time = zeros(N,1);
 err_rad = zeros(N,1);
 err_dens = zeros(N,1);
+err_flag = cell(N,1);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% run simulations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-parfor i=1+4e4:5e4
+parfor i=1+2e5:3e5
     disp(['iteration i: ',num2str(i)])
     %%% solve equation
     [t,r,c1,c2,~,~,mvgbdy,~,~] = eqnsolver(mu(i),alpha10(i),alpha11(i),...
@@ -98,7 +99,8 @@ parfor i=1+4e4:5e4
         P_hy(i),r_hy(i),m,oxyfunc);
     
     %%% error calculation
-    [err_tot(i),err_time(i),err_rad(i),err_dens(i)]  = errorfunction(t,r,mvgbdy,c1,c2);
+    [err_tot(i),err_time(i),err_rad(i),err_dens(i),err_flag{i}] ...
+        = errorfunction(t,r,mvgbdy,c1,c2);
 end
 
 % if strcmp(savefiles,'yes')==1
