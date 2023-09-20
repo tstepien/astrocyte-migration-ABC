@@ -46,8 +46,8 @@ maxRGCthick = 46*0.001; %%% maximum thickness of RGC layer: 46 micon converted t
 
 
 %%%%%%%%%%%%%%%%%%%%%%% partial pressure of oxygen %%%%%%%%%%%%%%%%%%%%%%%%
-P0 = 60;
-Pm = 10.5;
+P0 = 60; % mmHg
+Pm = 10.5; % mmHg
 
 Dalpha = 4.73*10^(-10); % cm^3 O2/cm/s/mmHg
 M0 = 1.8; % cm^3 O2/100g/min
