@@ -302,4 +302,4 @@ for i=1:num_param
     end
 end
 
-max(abs(corrmatrix(:)))
+maxcorrmatrix = max(abs(corrmatrix(:)))

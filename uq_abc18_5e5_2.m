@@ -59,7 +59,7 @@ bound = [0.1 100; %mu - adhesion constant
     0 3; %beta4 -  (/hr) mass action rate
     0 2; %eta1 - (/hr) apoptosis rate APC
     0 2; %eta2 - (/hr) apoptosis rate IPA
-    0 40; %P_hy - partial pressure of oxygen due to hyaloid artery
+    0 20; %P_hy - partial pressure of oxygen due to hyaloid artery
     0.001 2]; %r_hy - radius at half-maximum of Hill function for hyaloid
 numpar = length(bound);
 
