@@ -48,10 +48,10 @@ N = size(X,1);
 Y = zeros(N,1);
 
 for i=1:N
-    [t,r,c1,c2,~,~,mvgbdy,~,~] = eqnsolver(mu(i),alpha10(i),alpha11(i),...
+    [t,r,c1,c2,~,~,mvgbdy,~,~,~] = eqnsolver(mu(i),alpha10(i),alpha11(i),...
         alpha12(i),alpha13(i),alpha20(i),alpha21(i),alpha22(i),alpha23(i),...
         beta0(i),beta1(i),beta2(i),beta3(i),beta4(i),eta1(i),eta2(i),...
-        P_hy(i),r_hy(i),m);
+        P_hy(i),r_hy(i),m,'oxygen_zeroorder');
     
-    [Y(i),~,~,~] = errorfunction(t,r,mvgbdy,c1,c2);
+    [Y(i),~,~,~,~] = errorfunction(t,r,mvgbdy,c1,c2);
 end
