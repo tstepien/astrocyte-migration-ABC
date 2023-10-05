@@ -8,9 +8,9 @@ rng(100,'twister')
 uqlab
 
 num_param = 18;
-sampleN = 1e4;
+sampleN = 1e3;
 
-filename = strcat('parameter_analysis/sobol',num2str(num_param),'_1e4.mat');
+filename = strcat('parameter_analysis/sobol',num2str(num_param),'_',num2str(sampleN),'.mat');
 load(strcat('plot_uq/distributions',num2str(num_param),'.mat'));
 
 %% 2 - COMPUTATIONAL MODEL
@@ -60,7 +60,7 @@ InputOpts.Marginals(7).Bounds = [0 2];  % (/hr)
 InputOpts.Marginals(8).Name = '$\alpha_{22}$';  % proliferation rate IPA wrt choroid oxygen
 InputOpts.Marginals(8).Type = 'Gaussian';
 InputOpts.Marginals(8).Parameters = [bestfitdist_param{8}.mu bestfitdist_param{8}.sigma];  % (/hr)
-InputOpts.Marginals(8).Bounds = [0 1];  % (/hr)
+InputOpts.Marginals(8).Bounds = [0 2];  % (/hr)
 
 InputOpts.Marginals(9).Name = '$\alpha_{23}$';  % proliferation rate IPA wrt hyaloid oxygen
 InputOpts.Marginals(9).Type = 'Exponential';
@@ -70,27 +70,27 @@ InputOpts.Marginals(9).Bounds = [0 2];  % (/hr)
 InputOpts.Marginals(10).Name = '$\beta_0$';  % base differentiation rate
 InputOpts.Marginals(10).Type = 'Gaussian';
 InputOpts.Marginals(10).Parameters = [bestfitdist_param{10}.mu bestfitdist_param{10}.sigma];  % (/hr)
-InputOpts.Marginals(10).Bounds = [0 2];  % (/hr)
+InputOpts.Marginals(10).Bounds = [0 3];  % (/hr)
 
 InputOpts.Marginals(11).Name = '$\beta_1$';  % differentiation rate wrt LIF
 InputOpts.Marginals(11).Type = 'Gaussian';
 InputOpts.Marginals(11).Parameters = [bestfitdist_param{11}.mu bestfitdist_param{11}.sigma];  % (/hr)
-InputOpts.Marginals(11).Bounds = [0 2];  % (/hr)
+InputOpts.Marginals(11).Bounds = [0 3];  % (/hr)
 
 InputOpts.Marginals(12).Name = '$\beta_2$';  % differentiation rate wrt choroid oxygen
 InputOpts.Marginals(12).Type = 'Uniform';
-InputOpts.Marginals(12).Parameters = [0 2];  % (/hr)
-InputOpts.Marginals(12).Bounds = [0 2];  % (/hr)
+InputOpts.Marginals(12).Parameters = [0 3];  % (/hr)
+InputOpts.Marginals(12).Bounds = [0 3];  % (/hr)
 
 InputOpts.Marginals(13).Name = '$\beta_3$';  % differentiation rate wrt hyaloid oxygen
 InputOpts.Marginals(13).Type = 'Weibull';
 InputOpts.Marginals(13).Parameters = [bestfitdist_param{13}.A bestfitdist_param{13}.B];  % (/hr)
-InputOpts.Marginals(13).Bounds = [0 2];  % (/hr)
+InputOpts.Marginals(13).Bounds = [0 3];  % (/hr)
 
 InputOpts.Marginals(14).Name = '$\beta_4$';  % mass action rate
 InputOpts.Marginals(14).Type = 'Uniform';
-InputOpts.Marginals(14).Parameters = [0 2];  % (/hr)
-InputOpts.Marginals(14).Bounds = [0 2];  % (/hr)
+InputOpts.Marginals(14).Parameters = [0 3];  % (/hr)
+InputOpts.Marginals(14).Bounds = [0 3];  % (/hr)
 
 InputOpts.Marginals(15).Name = '$\eta_1$';  % apoptosis rate APC
 InputOpts.Marginals(15).Type = 'Weibull';
