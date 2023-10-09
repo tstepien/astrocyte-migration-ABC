@@ -7,7 +7,7 @@ clearvars
 rng(100,'twister')
 uqlab
 
-num_param = 13;
+num_param = 11;
 sampleN = 1e3;
 
 filename = strcat('parameter_analysis/sobol',num2str(num_param),'_',num2str(sampleN),'.mat');
@@ -38,8 +38,8 @@ InputOpts.Marginals(3).Parameters = [0 2];  % (/hr)
 InputOpts.Marginals(3).Bounds = [0 2];  % (/hr)
 
 InputOpts.Marginals(4).Name = '$\alpha_{12}$';  % proliferation rate APC wrt choroid oxygen
-InputOpts.Marginals(4).Type = 'Gaussian';
-InputOpts.Marginals(4).Parameters = [bestfitdist_param{4}.mu bestfitdist_param{4}.sigma];  % (/hr)
+InputOpts.Marginals(4).Type = 'Uniform';
+InputOpts.Marginals(4).Parameters = [0 2];  % (/hr)
 InputOpts.Marginals(4).Bounds = [0 2];  % (/hr)
 
 InputOpts.Marginals(5).Name = '$\alpha_{20}$';  % base proliferation rate IPA
@@ -58,8 +58,8 @@ InputOpts.Marginals(7).Parameters = [0 2];  % (/hr)
 InputOpts.Marginals(7).Bounds = [0 2];  % (/hr)
 
 InputOpts.Marginals(8).Name = '$\beta_0$';  % base differentiation rate
-InputOpts.Marginals(8).Type = 'Gaussian';
-InputOpts.Marginals(8).Parameters = [bestfitdist_param{8}.mu bestfitdist_param{8}.sigma];  % (/hr)
+InputOpts.Marginals(8).Type = 'Uniform';
+InputOpts.Marginals(8).Parameters = [0 3];  % (/hr)
 InputOpts.Marginals(8).Bounds = [0 3];  % (/hr)
 
 InputOpts.Marginals(9).Name = '$\beta_1$';  % differentiation rate wrt LIF
@@ -67,25 +67,15 @@ InputOpts.Marginals(9).Type = 'Uniform';
 InputOpts.Marginals(9).Parameters = [0 3];  % (/hr)
 InputOpts.Marginals(9).Bounds = [0 3];  % (/hr)
 
-InputOpts.Marginals(10).Name = '$\beta_2$';  % differentiation rate wrt choroid oxygen
-InputOpts.Marginals(10).Type = 'Weibull';
-InputOpts.Marginals(10).Parameters = [bestfitdist_param{10}.A bestfitdist_param{10}.B];  % (/hr)
+InputOpts.Marginals(10).Name = '$\beta_4$';  % mass action rate
+InputOpts.Marginals(10).Type = 'Uniform';
+InputOpts.Marginals(10).Parameters = [0 3];  % (/hr)
 InputOpts.Marginals(10).Bounds = [0 3];  % (/hr)
 
-InputOpts.Marginals(11).Name = '$\beta_4$';  % mass action rate
-InputOpts.Marginals(11).Type = 'Uniform';
-InputOpts.Marginals(11).Parameters = [0 3];  % (/hr)
-InputOpts.Marginals(11).Bounds = [0 3];  % (/hr)
-
-InputOpts.Marginals(12).Name = '$\eta_1$';  % apoptosis rate APC
-InputOpts.Marginals(12).Type = 'Weibull';
-InputOpts.Marginals(12).Parameters = [bestfitdist_param{12}.A bestfitdist_param{12}.B];  % (/hr)
-InputOpts.Marginals(12).Bounds = [0 2];  % (/hr)
-
-InputOpts.Marginals(13).Name = '$\eta_2$';  % apoptosis rate IPA
-InputOpts.Marginals(13).Type = 'Gaussian';
-InputOpts.Marginals(13).Parameters = [bestfitdist_param{13}.mu bestfitdist_param{13}.sigma];  % (/hr)
-InputOpts.Marginals(13).Bounds = [0 2];  % (/hr)
+InputOpts.Marginals(11).Name = '$\eta_2$';  % apoptosis rate IPA
+InputOpts.Marginals(11).Type = 'Gaussian';
+InputOpts.Marginals(11).Parameters = [bestfitdist_param{13}.mu bestfitdist_param{13}.sigma];  % (/hr)
+InputOpts.Marginals(11).Bounds = [0 2];  % (/hr)
 
 % Create an INPUT object based on the specified marginals:
 myInput = uq_createInput(InputOpts);
