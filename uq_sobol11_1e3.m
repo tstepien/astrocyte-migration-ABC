@@ -74,7 +74,7 @@ InputOpts.Marginals(10).Bounds = [0 3];  % (/hr)
 
 InputOpts.Marginals(11).Name = '$\eta_2$';  % apoptosis rate IPA
 InputOpts.Marginals(11).Type = 'Gaussian';
-InputOpts.Marginals(11).Parameters = [bestfitdist_param{13}.mu bestfitdist_param{13}.sigma];  % (/hr)
+InputOpts.Marginals(11).Parameters = [bestfitdist_param{11}.mu bestfitdist_param{11}.sigma];  % (/hr)
 InputOpts.Marginals(11).Bounds = [0 2];  % (/hr)
 
 % Create an INPUT object based on the specified marginals:
