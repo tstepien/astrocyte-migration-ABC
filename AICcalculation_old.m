@@ -1,7 +1,7 @@
 clear variables
 clc
 
-pn = [18;13;11];
+pn = [18;12;10;9;7;6];
 P = length(pn);
 
 % number of data points: 7 APC radii, 7 IPA radii, 1 time point = 15
@@ -17,22 +17,46 @@ for j=1:P
 
     ind = find(err_tot==min(err_tot));
 
-    if pn(j)==11
+    if pn(j)==6
         P_beta2 = 0;
-        P_eta1 = 0;
     else
         P_beta2 = beta2(ind);
+    end
+
+    if pn(j)==6 || pn(j)==7
+        P_alpha10 = 0;
+        P_alpha22 = 0;
+    else
+        P_alpha10 = alpha10(ind);
+        P_alpha22 = alpha22(ind);
+    end
+
+    if pn(j)==6 || pn(j)==7 || pn(j)==9
+        P_eta2 = 0;
+    else
+        P_eta2 = eta2(ind);
+    end
+
+    if pn(j)==6 || pn(j)==7 || pn(j)==9 ...
+            || pn(j)==10
+        P_beta0 = 0;
+        P_eta1 = 0;
+    else
+        P_beta0 = beta0(ind);
         P_eta1 = eta1(ind);
     end
 
-    if pn(j)==11 || pn(j)==13
+    if pn(j)==6 || pn(j)==7 || pn(j)==9 ...
+            || pn(j)==10 || pn(j)==12
         P_alpha13 = 0;
+        P_alpha20 = 0;
         P_alpha23 = 0;
         P_beta3 = 0;
         P_Phy = 0;
         P_rhy = 1;
     else
         P_alpha13 = alpha13(ind);
+        P_alpha20 = alpha20(ind);
         P_alpha23 = alpha23(ind);
         P_beta3 = beta3(ind);
         P_Phy = P_hy(ind);
@@ -40,16 +64,11 @@ for j=1:P
     end
 
     P_mu = mu(ind);
-    P_alpha10 = alpha10(ind);
     P_alpha11 = alpha11(ind);
     P_alpha12 = alpha12(ind);
-    P_alpha20 = alpha20(ind);
     P_alpha21 = alpha21(ind);
-    P_alpha22 = alpha22(ind);
-    P_beta0 = beta0(ind);
     P_beta1 = beta1(ind);
     P_beta4 = beta4(ind);
-    P_eta2 = eta2(ind);
 
     param_val(j,:) = [P_mu,P_alpha10,P_alpha11,P_alpha12,P_alpha13,...
         P_alpha20,P_alpha21,P_alpha22,P_alpha23,P_beta0,P_beta1,P_beta2,...
@@ -61,9 +80,6 @@ for j=1:P
     
     clear ind
 end
-
-min_error = error_val(:,4);
-table(pn,min_error,AIC_val,AICc_val)
 
 % param_val = [mu(ind),alpha10(ind),alpha11(ind),alpha12(ind),alpha13(ind),...
 %         alpha20(ind),alpha21(ind),alpha22(ind),alpha23(ind),beta0(ind),beta1(ind),beta2(ind),...
