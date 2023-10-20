@@ -1,7 +1,7 @@
 clear variables
 clc
 
-pn = [18;13;11];
+pn = [18;13;11;10];
 P = length(pn);
 
 % number of data points: 7 APC radii, 7 IPA radii, 1 time point = 15
@@ -17,7 +17,13 @@ for j=1:P
 
     ind = find(err_tot==min(err_tot));
 
-    if pn(j)==11
+    if pn(j)==10
+        P_alpha22 = 0;
+    else
+        P_alpha22 = alpha22(ind);
+    end
+    
+    if pn(j)==10 || pn(j)==11
         P_beta2 = 0;
         P_eta1 = 0;
     else
@@ -25,7 +31,7 @@ for j=1:P
         P_eta1 = eta1(ind);
     end
 
-    if pn(j)==11 || pn(j)==13
+    if pn(j)==10 || pn(j)==11 || pn(j)==13
         P_alpha13 = 0;
         P_alpha23 = 0;
         P_beta3 = 0;
@@ -45,7 +51,6 @@ for j=1:P
     P_alpha12 = alpha12(ind);
     P_alpha20 = alpha20(ind);
     P_alpha21 = alpha21(ind);
-    P_alpha22 = alpha22(ind);
     P_beta0 = beta0(ind);
     P_beta1 = beta1(ind);
     P_beta4 = beta4(ind);
