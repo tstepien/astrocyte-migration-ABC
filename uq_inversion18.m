@@ -37,93 +37,93 @@ myForwardModel = uq_createModel(ModelOpts);
 
 PriorOpts.Marginals(1).Name = '$\mu$';  % adhesion constant
 PriorOpts.Marginals(1).Type = 'Uniform';
-PriorOpts.Marginals(1).Parameters = [0.1 100];  % (mN h/mm^3)
-PriorOpts.Marginals(1).Bounds = [0.1 100];  % (mN h/mm^3)
+PriorOpts.Marginals(1).Parameters = [5 20];  % (mN h/mm^3)
+PriorOpts.Marginals(1).Bounds = [5 20];  % (mN h/mm^3)
 
 PriorOpts.Marginals(2).Name = '$\alpha_{10}$';  % base proliferation rate APC
 PriorOpts.Marginals(2).Type = 'Uniform';
-PriorOpts.Marginals(2).Parameters = [0 2];  % (/hr)
-PriorOpts.Marginals(2).Bounds = [0 2];  % (/hr)
+PriorOpts.Marginals(2).Parameters = [0 0.1];  % (/hr)
+PriorOpts.Marginals(2).Bounds = [0 0.1];  % (/hr)
 
 PriorOpts.Marginals(3).Name = '$\alpha_{11}$';  % proliferation rate APC wrt PDGFA
 PriorOpts.Marginals(3).Type = 'Uniform';
-PriorOpts.Marginals(3).Parameters = [0 2];  % (/hr)
-PriorOpts.Marginals(3).Bounds = [0 2];  % (/hr)
+PriorOpts.Marginals(3).Parameters = [0 0.1];  % (/hr)
+PriorOpts.Marginals(3).Bounds = [0 0.1];  % (/hr)
 
 PriorOpts.Marginals(4).Name = '$\alpha_{12}$';  % proliferation rate APC wrt choroid oxygen
 PriorOpts.Marginals(4).Type = 'Uniform';
-PriorOpts.Marginals(4).Parameters = [0 2];  % (/hr)
-PriorOpts.Marginals(4).Bounds = [0 2];  % (/hr)
+PriorOpts.Marginals(4).Parameters = [0 0.1];  % (/hr)
+PriorOpts.Marginals(4).Bounds = [0 0.1];  % (/hr)
 
 PriorOpts.Marginals(5).Name = '$\alpha_{13}$';  % proliferation rate APC wrt hyaloid oxygen
 PriorOpts.Marginals(5).Type = 'Uniform';
-PriorOpts.Marginals(5).Parameters = [0 2];  % (/hr)
-PriorOpts.Marginals(5).Bounds = [0 2];  % (/hr)
+PriorOpts.Marginals(5).Parameters = [0 0.1];  % (/hr)
+PriorOpts.Marginals(5).Bounds = [0 0.1];  % (/hr)
 
 PriorOpts.Marginals(6).Name = '$\alpha_{20}$';  % base proliferation rate IPA
 PriorOpts.Marginals(6).Type = 'Uniform';
-PriorOpts.Marginals(6).Parameters = [0 2];  % (/hr)
-PriorOpts.Marginals(6).Bounds = [0 2];  % (/hr)
+PriorOpts.Marginals(6).Parameters = [0 0.1];  % (/hr)
+PriorOpts.Marginals(6).Bounds = [0 0.1];  % (/hr)
 
 PriorOpts.Marginals(7).Name = '$\alpha_{21}$';  % proliferation rate IPA wrt PDGFA
 PriorOpts.Marginals(7).Type = 'Uniform';
-PriorOpts.Marginals(7).Parameters = [0 2];  % (/hr)
-PriorOpts.Marginals(7).Bounds = [0 2];  % (/hr)
+PriorOpts.Marginals(7).Parameters = [0 0.1];  % (/hr)
+PriorOpts.Marginals(7).Bounds = [0 0.1];  % (/hr)
 
 PriorOpts.Marginals(8).Name = '$\alpha_{22}$';  % proliferation rate IPA wrt choroid oxygen
 PriorOpts.Marginals(8).Type = 'Uniform';
-PriorOpts.Marginals(8).Parameters = [0 2];  % (/hr)
-PriorOpts.Marginals(8).Bounds = [0 2];  % (/hr)
+PriorOpts.Marginals(8).Parameters = [0 0.1];  % (/hr)
+PriorOpts.Marginals(8).Bounds = [0 0.1];  % (/hr)
 
 PriorOpts.Marginals(9).Name = '$\alpha_{23}$';  % proliferation rate IPA wrt hyaloid oxygen
 PriorOpts.Marginals(9).Type = 'Uniform';
-PriorOpts.Marginals(9).Parameters = [0 2];  % (/hr)
-PriorOpts.Marginals(9).Bounds = [0 2];  % (/hr)
+PriorOpts.Marginals(9).Parameters = [0 0.1];  % (/hr)
+PriorOpts.Marginals(9).Bounds = [0 0.1];  % (/hr)
 
 PriorOpts.Marginals(10).Name = '$\beta_0$';  % base differentiation rate
 PriorOpts.Marginals(10).Type = 'Uniform';
-PriorOpts.Marginals(10).Parameters = [0 3];  % (/hr)
-PriorOpts.Marginals(10).Bounds = [0 3];  % (/hr)
+PriorOpts.Marginals(10).Parameters = [0 0.1];  % (/hr)
+PriorOpts.Marginals(10).Bounds = [0 0.1];  % (/hr)
 
 PriorOpts.Marginals(11).Name = '$\beta_1$';  % mass action rate
 PriorOpts.Marginals(11).Type = 'Uniform';
-PriorOpts.Marginals(11).Parameters = [0 3];  % (/hr)
-PriorOpts.Marginals(11).Bounds = [0 3];  % (/hr)
+PriorOpts.Marginals(11).Parameters = [0 0.1];  % (/hr)
+PriorOpts.Marginals(11).Bounds = [0 0.1];  % (/hr)
 
 PriorOpts.Marginals(12).Name = '$\beta_2$';  % differentiation rate wrt LIF
 PriorOpts.Marginals(12).Type = 'Uniform';
-PriorOpts.Marginals(12).Parameters = [0 3];  % (/hr)
-PriorOpts.Marginals(12).Bounds = [0 3];  % (/hr)
+PriorOpts.Marginals(12).Parameters = [0 0.1];  % (/hr)
+PriorOpts.Marginals(12).Bounds = [0 0.1];  % (/hr)
 
 PriorOpts.Marginals(13).Name = '$\beta_3$';  % differentiation rate wrt choroid oxygen
 PriorOpts.Marginals(13).Type = 'Uniform';
-PriorOpts.Marginals(13).Parameters = [0 3];  % (/hr)
-PriorOpts.Marginals(13).Bounds = [0 3];  % (/hr)
+PriorOpts.Marginals(13).Parameters = [0 0.1];  % (/hr)
+PriorOpts.Marginals(13).Bounds = [0 0.1];  % (/hr)
 
 PriorOpts.Marginals(14).Name = '$\beta_4$';  % differentiation rate wrt hyaloid oxygen
 PriorOpts.Marginals(14).Type = 'Uniform';
-PriorOpts.Marginals(14).Parameters = [0 3];  % (/hr)
-PriorOpts.Marginals(14).Bounds = [0 3];  % (/hr)
+PriorOpts.Marginals(14).Parameters = [0 0.1];  % (/hr)
+PriorOpts.Marginals(14).Bounds = [0 0.1];  % (/hr)
 
 PriorOpts.Marginals(15).Name = '$\eta_1$';  % apoptosis rate APC
 PriorOpts.Marginals(15).Type = 'Uniform';
-PriorOpts.Marginals(15).Parameters = [0 2];  % (/hr)
-PriorOpts.Marginals(15).Bounds = [0 2];  % (/hr)
+PriorOpts.Marginals(15).Parameters = [0 0.1];  % (/hr)
+PriorOpts.Marginals(15).Bounds = [0 0.1];  % (/hr)
 
 PriorOpts.Marginals(16).Name = '$\eta_2$';  % apoptosis rate IPA
 PriorOpts.Marginals(16).Type = 'Uniform';
-PriorOpts.Marginals(16).Parameters = [0 2];  % (/hr)
-PriorOpts.Marginals(16).Bounds = [0 2];  % (/hr)
+PriorOpts.Marginals(16).Parameters = [0 0.1];  % (/hr)
+PriorOpts.Marginals(16).Bounds = [0 0.1];  % (/hr)
 
 PriorOpts.Marginals(17).Name = '$P_\mathrm{hy}$';  % partial pressure of oxygen due to hyaloid artery
 PriorOpts.Marginals(17).Type = 'Uniform';
-PriorOpts.Marginals(17).Parameters = [0 40];  % (dimensionless)
-PriorOpts.Marginals(17).Bounds = [0 40];  % (dimensionless)
+PriorOpts.Marginals(17).Parameters = [0 20];  % (dimensionless)
+PriorOpts.Marginals(17).Bounds = [0 20];  % (dimensionless)
 
 PriorOpts.Marginals(18).Name = '$r_\mathrm{hy}$';  % radius at half-maximum of Hill function for hyaloid
 PriorOpts.Marginals(18).Type = 'Uniform';
-PriorOpts.Marginals(18).Parameters = [0.001 2];  % (mm)
-PriorOpts.Marginals(18).Bounds = [0.001 2];  % (mm)
+PriorOpts.Marginals(18).Parameters = [0.1 2];  % (mm)
+PriorOpts.Marginals(18).Bounds = [0.1 2];  % (mm)
 
 myPriorDist = uq_createInput(PriorOpts);
 
