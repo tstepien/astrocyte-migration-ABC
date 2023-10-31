@@ -21,7 +21,7 @@ function [err_tot,err_time,err_rad,err_dens,err_flag] = errorfunction(t,r,mvgbdy
 err_flag = [];
 
 %%% penalties
-if t(end)/24>8 || t(end)/24<6  || ~isreal(t(end)) ...
+if t(end)/24>8 || ~isreal(t(end)) ...
         || sum(c1(:)<0 & abs(c1(:))>10*eps)>0 ...
         || sum(c2(:)<0 & abs(c2(:))>10*eps)>0
     err_tot = 10^4; %NaN;
@@ -31,17 +31,14 @@ if t(end)/24>8 || t(end)/24<6  || ~isreal(t(end)) ...
     if t(end)/24>8
         err_flag = [err_flag , 1];
     end
-    if t(end)/26<6
+    if ~isreal(t(end))
         err_flag = [err_flag , 2];
     end
-    if ~isreal(t(end))
+    if sum(c1(:)<0 & abs(c1(:))>10*eps)>0
         err_flag = [err_flag , 3];
     end
-    if sum(c1(:)<0 & abs(c1(:))>10*eps)>0
-        err_flag = [err_flag , 4];
-    end
     if sum(c2(:)<0 & abs(c2(:))>10*eps)>0
-        err_flag = [err_flag , 5];
+        err_flag = [err_flag , 4];
     end
     return
 end
@@ -82,8 +79,12 @@ for i=1:numdays
     ind(i) = find(abs((t/24-(jj-1)))==min(abs(t/24-(jj-1))),1,'first');
     
     %%% density - data
-    nodes_APC(i,:) = (r<=rad_APC(i) & r>rad_IPA(i)); %% annulus
-    nodes_IPA(i,:) = (r<=rad_IPA(i)); %% disc
+    if i==1
+        nodes_APC(i,:) = (r<=rad_APC(i)); %% annulus
+    else
+        nodes_APC(i,:) = (r<=rad_APC(i) & r>rad_IPA(i)); %% annulus
+        nodes_IPA(i,:) = (r<=rad_IPA(i)); %% disc
+    end
     nodes_retina(i,:) = (r<=rad_APC(i)); %% retina
     
     numnodes_APC(i) = sum(nodes_APC(i,:));
@@ -95,24 +96,24 @@ for i=1:numdays
     comp_IPAlarger(i,:) = (c1(ind(i),:) < c2(ind(i),:));
 end
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% errors %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% time error
 err_time = abs(7 - t(end)/24);
 
 %%% radius error
-%err_rad = sum( abs(rad_APC - mvgbdy(ind)) ./ rad_APC );
-err_rad = sum( abs(rad_APC - mvgbdy(ind)) );
+%%% note that rad_APC(1)=mvgbdy(1) by initial condition
+err_rad = sum( abs(rad_APC(2:end) - mvgbdy(ind(2:end))) );
 
 %%% density error
-for i=1:numdays
+%%% start at i=2 since APC and IPA density will match by initial condition
+for i=2:numdays
     err_APC(i) = 1 - jaccard(comp_APClarger(i,:),nodes_APC(i,:));
     err_IPA(i) = 1 - jaccard(comp_IPAlarger(i,:),nodes_IPA(i,:));
 end
-err_dens = sum(err_APC) + sum(err_IPA);
+err_dens = (sum(err_APC) + sum(err_IPA))/(numdays-1);
 
 %%% total error
-err_tot = err_time + err_rad + err_dens;
+err_tot = err_time + 2*err_rad + err_dens;
 
 %%% figure
 % figure
