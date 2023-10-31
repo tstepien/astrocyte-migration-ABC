@@ -21,8 +21,8 @@ function [err_tot,err_time,err_rad,err_dens,err_flag] = errorfunction(t,r,mvgbdy
 err_flag = [];
 
 %%% penalties
-if t(end)/24>8 || ~isreal(t(end)) || isequal(sum(c1(end,:)<eps),length(r)) ...
-        || isequal(sum(c2(end,:)<eps),length(r)) ...
+if t(end)/24>8 || ~isreal(t(end)) || isequal(sum(c1(end,:)<1),length(r)) ...
+        || isequal(sum(c2(end,:)<1),length(r)) ...
         || sum(c1(:)<0 & abs(c1(:))>10*eps)>0 ...
         || sum(c2(:)<0 & abs(c2(:))>10*eps)>0
     err_tot = 10^4; %NaN;
@@ -35,10 +35,10 @@ if t(end)/24>8 || ~isreal(t(end)) || isequal(sum(c1(end,:)<eps),length(r)) ...
     if ~isreal(t(end))
         err_flag = [err_flag , 2];
     end
-    if isequal(sum(c1(end,:)<eps),length(r))
+    if isequal(sum(c1(end,:)<1),length(r))
         err_flag = [err_flag , 3];
     end
-    if isequal(sum(c2(end,:)<eps),length(r))
+    if isequal(sum(c2(end,:)<1),length(r))
         err_flag = [err_flag , 4];
     end
     if sum(c1(:)<0 & abs(c1(:))>10*eps)>0
