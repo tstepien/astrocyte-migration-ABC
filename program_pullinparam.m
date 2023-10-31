@@ -6,10 +6,10 @@ addpath plot_simulations
 %%% time unit: hr
 %%% space unit: mm
 
-oxyfunc = 'oxygen_michmen';
+oxyfunc = 'oxygen_zeroorder';
 
 %%%%%%%%%%%%%%%%%%%%%% loading a parameter set file %%%%%%%%%%%%%%%%%%%%%%%
-load('parameter_analysis/abc18_5e5.mat');
+load('parameter_analysis/abc10_5e5.mat');
 % load('parameter_analysis/pointestimate_inversion18.mat');
 smallestval = 1;
 errorsmall = mink(err_tot,smallestval);
@@ -86,7 +86,7 @@ toc
 
 %% error
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% error calculation %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-[err_tot,err_time,err_rad,err_dens] = errorfunction(t,r,mvgbdy,c1,c2);
+[err_tot,err_time,err_rad,err_dens,err_flag] = errorfunction(t,r,mvgbdy,c1,c2);
 disp(['total error: ',num2str(err_tot)])
 
 
