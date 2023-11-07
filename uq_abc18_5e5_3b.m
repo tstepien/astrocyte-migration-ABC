@@ -8,7 +8,7 @@ power = 5;
 N = (multiplier)*10^(power);
 num_param = 18;
 
-iternum = '4';
+iternum = '3b';
 
 oxyfunc = 'oxygen_zeroorder';
 
@@ -90,7 +90,7 @@ err_dens = zeros(N,1);
 err_flag = cell(N,1);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% run simulations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-parfor i=1+3e5:4e5
+parfor i=1+2.5e5:3e5
     disp(['iteration i: ',num2str(i)])
     %%% solve equation
     [t,r,c1,c2,~,~,mvgbdy,~,~] = eqnsolver(mu(i),alpha10(i),alpha11(i),...
