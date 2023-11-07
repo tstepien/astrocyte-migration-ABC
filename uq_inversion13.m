@@ -7,7 +7,7 @@ clearvars
 rng(100,'twister')
 uqlab
 
-num_param = 18;
+num_param = 13;
 num_steps = 400;
 num_chains = 100;
 
