@@ -8,7 +8,7 @@ power = 5;
 N = (multiplier)*10^(power);
 num_param = 18;
 
-percentholdon = 1;
+percentholdon = 0.1;
 what_set = 'maxthreshold'; %'maxthreshold' or 'maxmode'
 fit_dist_plot = 'yes'; % using percentholdon for distribution fits
 titles_on = 'yes';
@@ -231,7 +231,7 @@ for i=1:num_param
     if i==1 || i==6 || i==10 || i==15
         ylabel('Percentage','Interpreter','latex')
     end
-    xlim([0,bound(i,2)])
+    xlim(bound(i,:))
     
     set(gca,'FontSize',14)
 end
