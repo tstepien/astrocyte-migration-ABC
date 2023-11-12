@@ -8,7 +8,7 @@ power = 5;
 N = (multiplier)*10^(power);
 num_param = 11;
 
-iternum = '1';
+iternum = '2';
 
 oxyfunc = 'oxygen_zeroorder';
 
