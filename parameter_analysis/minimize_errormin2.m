@@ -1,7 +1,7 @@
 load("abc18_5e5.mat");
 
 totalnumber = 5;
-numsmall = 1;
+numsmall = 2;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 [err_min,err_ind] = mink(err_tot,totalnumber);
@@ -44,10 +44,10 @@ if length(r_hy)>1
     r_hy = r_hy(ind); %%% radius at half-maximum of Hill function for hyaloid
 end
 
-initparam = [mu,alpha10,alpha11,alpha12,alpha13,alpha20,alpha21,alpha22,...
+param_init = [mu,alpha10,alpha11,alpha12,alpha13,alpha20,alpha21,alpha22,...
     alpha23,beta0,beta1,beta2,beta3,beta4,eta1,eta2,P_hy,r_hy];
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 addpath ..
-options = optimset('Display','iter','MaxFunEvals',1,'MaxIter',1);
-[newparam,err_output,exitflag,fmsoutput] = fminsearch(@errorfunc18,initparam);
+options = optimset('Display','iter','MaxIter',50);
+[param_new,err_output,exitflag,fmsoutput] = fminsearch(@errorfunc18,initparam);
