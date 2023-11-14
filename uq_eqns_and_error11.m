@@ -7,7 +7,7 @@ function Y = uq_eqns_and_error11(X)
 %
 % inputs:
 %   X = [mu, alpha10, alpha11, alpha12, alpha20, alpha21, ...
-%           alpha22, beta0, beta1, beta4, eta2]
+%           alpha22, beta1, beta2, beta4, eta2]
 %
 % output:
 %   Y = total error
@@ -23,9 +23,9 @@ alpha20 = X(:,5);
 alpha21 = X(:,6);
 alpha22 = X(:,7);
 alpha23 = 0;
-beta0 = X(:,8);
-beta1 = X(:,9);
-beta2 = 0;
+beta0 = 0;
+beta1 = X(:,8);
+beta2 = X(:,9);
 beta3 = 0;
 beta4 = X(:,10);
 eta1 = 0;
@@ -49,7 +49,7 @@ Y = zeros(N,1);
 parfor i=1:N
     [t,r,c1,c2,~,~,mvgbdy,~,~,~] = eqnsolver(mu(i),alpha10(i),alpha11(i),...
         alpha12(i),alpha13,alpha20(i),alpha21(i),alpha22(i),alpha23,...
-        beta0(i),beta1(i),beta2,beta3,beta4(i),eta1,eta2(i),...
+        beta0,beta1(i),beta2(i),beta3,beta4(i),eta1,eta2(i),...
         P_hy,r_hy,m,'oxygen_zeroorder');
     
     [Y(i),~,~,~,~] = errorfunction(t,r,mvgbdy,c1,c2);
