@@ -52,7 +52,11 @@ param_init = [mu,alpha10,alpha11,alpha12,alpha13,alpha20,alpha21,alpha22,...
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 addpath ..
 options = optimset('Display','iter','MaxIter',50);
-[param_new,err_output,exitflag,fmsoutput] = fminsearch(@errorfunc18,param_init);
+if num_param==18
+    [param_new,err_output,exitflag,fmsoutput] = fminsearch(@errorfunc18,param_init);
+elseif num_param==13
+    [param_new,err_output,exitflag,fmsoutput] = fminsearch(@errorfunc13,param_init);
+end
 
 save(strcat('fminsearchresults',strcat(num_param),'_',num2str(numsmall)),...
     'param_new','param_init','err_output','exitflag','fmsoutput');
