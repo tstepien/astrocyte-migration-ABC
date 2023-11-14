@@ -1,4 +1,6 @@
-load("abc18_5e5.mat");
+num_param = 13;
+
+load(strcat('abc',num2str(num_param),'_5e5.mat'));
 
 totalnumber = 5;
 numsmall = 5;
@@ -52,4 +54,5 @@ addpath ..
 options = optimset('Display','iter','MaxIter',50);
 [param_new,err_output,exitflag,fmsoutput] = fminsearch(@errorfunc18,param_init);
 
-save(strcat('fminsearchresults_',num2str(numsmall)),'param_new','param_init');
+save(strcat('fminsearchresults',strcat(num_param),'_',num2str(numsmall)),...
+    'param_new','param_init','err_output','exitflag','fmsoutput');
