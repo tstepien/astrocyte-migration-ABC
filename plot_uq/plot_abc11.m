@@ -8,7 +8,7 @@ power = 5;
 N = (multiplier)*10^(power);
 num_param = 11;
 
-percentholdon = 1;
+percentholdon = 0.025;
 what_set = 'maxthreshold'; %'maxthreshold' or 'maxmode'
 fit_dist_plot = 'yes'; % using percentholdon for distribution fits
 titles_on = 'yes';
@@ -20,20 +20,20 @@ err_original = [err_dens err_rad err_time err_tot];
 err_names = {'Density Error','Radius Error','Time Error','Total Error'};
 
 param_original = [mu, alpha10, alpha11, alpha12, alpha20, alpha21, ...
-    alpha22, beta0, beta1, beta4, eta2];
+    alpha22, beta1, beta2, beta4, eta2];
 
 clear err_dens err_rad err_time err_tot mu alpha10 alpha11 alpha12 alpha20 ...
-    alpha21 alpha22 beta0 beta1 beta4 eta2;
+    alpha21 alpha22 beta1 beta2 beta4 eta2;
 
 param_names = {'$\mu$','$\alpha_{10}$','$\alpha_{11}$','$\alpha_{12}$',...
     '$\alpha_{20}$','$\alpha_{21}$','$\alpha_{22}$',...
-    '$\beta_0$','$\beta_1$','$\beta_4$','$\eta_2$'};
+    '$\beta_1$','$\beta_2$','$\beta_4$','$\eta_2$'};
 num_param = length(param_names);
 param_names_words = {'Adhesion constant','APC base prolif rate',...
     'APC prolif wrt PDGFA','APC prolif wrt choroid O_2',...
     'IPA base prolif rate','IPA prolif wrt PDGFA',...
-    'IPA prolif wrt choroid O_2','Base diff rate',...
-    'Diff rate wrt LIF','Mass action rate','IPA apoptosis rate'};
+    'IPA prolif wrt choroid O_2','Diff rate wrt LIF',...
+    'Diff rate wrt choroid O_2','Mass action rate','IPA apoptosis rate'};
 
 %% remove errors that were set to 10^4
 maxthreshold = 10^4;
@@ -192,7 +192,7 @@ save(strcat('distributions',num2str(num_param),'.mat'),'bestfitdist','bestfitdis
 
 fig3 = figure;
 tiledlayout(4,5,'TileSpacing','compact','Padding','compact')
-pos_tiled = [1:4,7:9,11:12,15,17];
+pos_tiled = [1:4,7:9,12:13,15,17];
 for i=1:num_param
     nexttile(pos_tiled(i))
     
@@ -226,7 +226,7 @@ for i=1:num_param
     if i==1 || i==5 || i==8 || i==11
         ylabel('Percentage','Interpreter','latex')
     end
-    xlim([0,bound(i,2)])
+    xlim(bound(i,:))
     
     set(gca,'FontSize',14)
 end
