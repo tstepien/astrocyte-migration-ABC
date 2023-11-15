@@ -24,7 +24,9 @@ end
 if length(alpha23)>1
     alpha23 = alpha23(ind); %%% (/hr) proliferation rate IPA wrt hyaloid oxygen
 end
-beta0 = beta0(ind); %%% (/hr) basal differentiation rate
+if length(beta0)>1
+    beta0 = beta0(ind); %%% (/hr) basal differentiation rate
+end
 beta1 = beta1(ind); %%% (/hr) differentiation rate wrt LIF
 if length(beta2)>1
     beta2 = beta2(ind); %%% (/hr) differentiation rate wrt choroid oxygen
