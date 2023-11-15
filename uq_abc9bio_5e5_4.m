@@ -24,7 +24,7 @@ oxyfunc = 'oxygen_zeroorder';
 
 
 %%%%%%%%%%%%%%%%%%%%%%% load Latin Hypercube points %%%%%%%%%%%%%%%%%%%%%%%
-load(strcat(pwd,'/LHpts/LHpts',num2str(num_param),'bio_',num2str(multiplier),...
+load(strcat(pwd,'/LHpts/LHpts',num2str(num_param),'_',num2str(multiplier),...
     'e',num2str(power),'.mat'))
 
 % if strcmp(savefiles,'yes')==1
