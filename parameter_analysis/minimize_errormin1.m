@@ -46,8 +46,13 @@ if length(r_hy)>1
     r_hy = r_hy(ind); %%% radius at half-maximum of Hill function for hyaloid
 end
 
-param_init = [mu,alpha10,alpha11,alpha12,alpha13,alpha20,alpha21,alpha22,...
-    alpha23,beta0,beta1,beta2,beta3,beta4,eta1,eta2,P_hy,r_hy];
+if num_param==18
+    param_init = [mu,alpha10,alpha11,alpha12,alpha13,alpha20,alpha21,alpha22,...
+        alpha23,beta0,beta1,beta2,beta3,beta4,eta1,eta2,P_hy,r_hy];
+elseif num_param==13
+    param_init = [mu,alpha10,alpha11,alpha12,alpha20,alpha21,alpha22,...
+        beta0,beta1,beta2,beta4,eta1,eta2];
+end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 addpath ..
@@ -58,5 +63,5 @@ elseif num_param==13
     [param_new,err_output,exitflag,fmsoutput] = fminsearch(@errorfunc13,param_init);
 end
 
-save(strcat('fminsearchresults',strcat(num_param),'_',num2str(numsmall)),...
+save(strcat('fminsearchresults',num2str(num_param),'_',num2str(numsmall)),...
     'param_new','param_init','err_output','exitflag','fmsoutput');
