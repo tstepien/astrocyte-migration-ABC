@@ -1,3 +1,6 @@
+clc
+clear variables
+
 num_param = 11;
 
 load(strcat('abc',num2str(num_param),'_5e5.mat'));
@@ -52,6 +55,9 @@ if num_param==18
     param_init = [mu,alpha10,alpha11,alpha12,alpha13,alpha20,alpha21,alpha22,...
         alpha23,beta0,beta1,beta2,beta3,beta4,eta1,eta2,P_hy,r_hy];
 elseif num_param==13
+    param_init = [mu,alpha10,alpha11,alpha12,alpha20,alpha21,alpha22,...
+        beta1,beta2,beta4,eta2];
+elseif num_param==11
     param_init = [mu,alpha10,alpha11,alpha12,alpha20,alpha21,alpha22,...
         beta1,beta2,beta4,eta2];
 end

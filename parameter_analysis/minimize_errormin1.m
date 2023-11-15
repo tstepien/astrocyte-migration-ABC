@@ -1,3 +1,6 @@
+clc
+clear variables
+
 num_param = 11;
 
 load(strcat('abc',num2str(num_param),'_5e5.mat'));
