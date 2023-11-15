@@ -1,4 +1,4 @@
-num_param = 13;
+num_param = 11;
 
 load(strcat('abc',num2str(num_param),'_5e5.mat'));
 
@@ -51,7 +51,7 @@ if num_param==18
         alpha23,beta0,beta1,beta2,beta3,beta4,eta1,eta2,P_hy,r_hy];
 elseif num_param==13
     param_init = [mu,alpha10,alpha11,alpha12,alpha20,alpha21,alpha22,...
-        beta0,beta1,beta2,beta4,eta1,eta2];
+        beta1,beta2,beta4,eta2];
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -61,6 +61,8 @@ if num_param==18
     [param_new,err_output,exitflag,fmsoutput] = fminsearch(@errorfunc18,param_init);
 elseif num_param==13
     [param_new,err_output,exitflag,fmsoutput] = fminsearch(@errorfunc13,param_init);
+elseif num_param==11
+    [param_new,err_output,exitflag,fmsoutput] = fminsearch(@errorfunc11,param_init);
 end
 
 save(strcat('fminsearchresults',num2str(num_param),'_',num2str(numsmall)),...
