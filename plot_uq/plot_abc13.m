@@ -226,7 +226,7 @@ for i=1:num_param
         title(param_names_words{i},'FontWeight','normal')
     end
     if i==1 || i==5 || i==8 || i==12
-        ylabel('Percentage','Interpreter','latex')
+        ylabel('Probability','Interpreter','latex')
     end
     xlim(bound(i,:))
     
