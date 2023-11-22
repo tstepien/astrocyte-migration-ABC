@@ -1,9 +1,10 @@
 clc
 clear variables
 
-num_param = 11;
+num_param = 9;
+ninetype = 'bio';
 
-load(strcat('abc',num2str(num_param),'_5e5.mat'));
+load(strcat('abc',num2str(num_param),ninetype,'_5e5.mat'));
 
 totalnumber = 5;
 numsmall = 2;
@@ -60,6 +61,9 @@ elseif num_param==13
 elseif num_param==11
     param_init = [mu,alpha10,alpha11,alpha12,alpha20,alpha21,alpha22,...
         beta1,beta2,beta4,eta2];
+elseif num_param==9 && strcmp(ninetype,'bio')==1
+    param_init = [mu,alpha10,alpha11,alpha12,alpha20,alpha21,...
+        beta1,beta4,eta2];
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -71,7 +75,9 @@ elseif num_param==13
     [param_new,err_output,exitflag,fmsoutput] = fminsearch(@errorfunc13,param_init);
 elseif num_param==11
     [param_new,err_output,exitflag,fmsoutput] = fminsearch(@errorfunc11,param_init);
+elseif num_param==9 && strcmp(ninetype,'bio')==1
+    [param_new,err_output,exitflag,fmsoutput] = fminsearch(@errorfunc9bio,param_init);
 end
 
-save(strcat('fminsearchresults',num2str(num_param),'_',num2str(numsmall)),...
+save(strcat('fminsearchresults',num2str(num_param),ninetype,'_',num2str(numsmall)),...
     'param_new','param_init','err_output','exitflag','fmsoutput');

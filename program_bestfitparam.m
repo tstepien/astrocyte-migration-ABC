@@ -9,8 +9,9 @@ addpath plot_simulations
 oxyfunc = 'oxygen_zeroorder';
 
 %%%%%%%%%%%%%%%%%%%%%% loading a parameter set file %%%%%%%%%%%%%%%%%%%%%%%
-num_param = 11;
-load(strcat('parameter_analysis/bestfitparam',num2str(num_param),'.mat'));
+num_param = 9;
+ninetype = 'bio';
+load(strcat('parameter_analysis/bestfitparam',num2str(num_param),ninetype,'.mat'));
 
 if num_param==18
     mu = param_new(1); %%% adhesion constant
@@ -67,6 +68,25 @@ elseif num_param==11
     beta4 = param_new(10); %%% (/hr) mass action rate
     eta1 = 0; %%% (/hr) apoptosis rate APC
     eta2 = param_new(11); %%% (/hr) apoptosis rate IPA
+    P_hy = 0; %%% partial pressure of oxygen due to hyaloid artery
+    r_hy = 1; %%% radius at half-maximum of Hill function for hyaloid
+elseif num_param==9 && strcmp(ninetype,'bio')==1
+    mu = param_new(1); %%% adhesion constant
+    alpha10 = param_new(2); %%% (/hr) basal proliferation rate APC
+    alpha11 = param_new(3); %%% (/hr) proliferation rate APC wrt PDGFA
+    alpha12 = param_new(4); %%% (/hr) proliferation rate APC wrt choroid oxygen
+    alpha13 = 0; %%% (/hr) proliferation rate APC wrt hylaoid oxygen
+    alpha20 = param_new(5); %%% (/hr) basal proliferation rate IPA
+    alpha21 = param_new(6); %%% (/hr) proliferation rate IPA wrt PDGFA
+    alpha22 = 0; %%% (/hr) proliferation rate IPA wrt choroid oxygen
+    alpha23 = 0; %%% (/hr) proliferation rate IPA wrt hyaloid oxygen
+    beta0 = 0; %%% (/hr) basal differentiation rate
+    beta1 = param_new(7); %%% (/hr) differentiation rate wrt LIF
+    beta2 = 0; %%% (/hr) differentiation rate wrt choroid oxygen
+    beta3 = 0; %%% (/hr) differentiation rate wrt hyaloid oxygen
+    beta4 = param_new(8); %%% (/hr) mass action rate
+    eta1 = 0; %%% (/hr) apoptosis rate APC
+    eta2 = param_new(9); %%% (/hr) apoptosis rate IPA
     P_hy = 0; %%% partial pressure of oxygen due to hyaloid artery
     r_hy = 1; %%% radius at half-maximum of Hill function for hyaloid
 end
