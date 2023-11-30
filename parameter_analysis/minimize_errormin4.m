@@ -2,7 +2,7 @@ clc
 clear variables
 
 num_param = 9;
-ninetype = 'bio';
+ninetype = 'uni';
 
 load(strcat('abc',num2str(num_param),ninetype,'_5e5.mat'));
 
@@ -15,7 +15,9 @@ ind = err_ind(numsmall);
 
 mu = mu(ind); %%% adhesion constant
 alpha10 = alpha10(ind); %%% (/hr) basal proliferation rate APC
-alpha11 = alpha11(ind); %%% (/hr) proliferation rate APC wrt PDGFA
+if length(alpha11)>1
+    alpha11 = alpha11(ind); %%% (/hr) proliferation rate APC wrt PDGFA
+end
 alpha12 = alpha12(ind); %%% (/hr) proliferation rate APC wrt choroid oxygen
 if length(alpha13)>1
     alpha13 = alpha13(ind); %%% (/hr) proliferation rate APC wrt hylaoid oxygen
@@ -57,13 +59,18 @@ if num_param==18
         alpha23,beta0,beta1,beta2,beta3,beta4,eta1,eta2,P_hy,r_hy];
 elseif num_param==13
     param_init = [mu,alpha10,alpha11,alpha12,alpha20,alpha21,alpha22,...
-        beta1,beta2,beta4,eta2];
+        beta0,beta1,beta2,beta4,eta1,eta2];
 elseif num_param==11
     param_init = [mu,alpha10,alpha11,alpha12,alpha20,alpha21,alpha22,...
         beta1,beta2,beta4,eta2];
-elseif num_param==9 && strcmp(ninetype,'bio')==1
-    param_init = [mu,alpha10,alpha11,alpha12,alpha20,alpha21,...
-        beta1,beta4,eta2];
+elseif num_param==9 
+    if strcmp(ninetype,'bio')==1
+        param_init = [mu,alpha10,alpha11,alpha12,alpha20,alpha21,...
+            beta1,beta4,eta2];
+    elseif strcmp(ninetype,'uni')==1
+        param_init = [mu,alpha10,alpha12,alpha20,alpha21,alpha22,...
+            beta1,beta2,eta2];
+    end
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -75,8 +82,12 @@ elseif num_param==13
     [param_new,err_output,exitflag,fmsoutput] = fminsearch(@errorfunc13,param_init);
 elseif num_param==11
     [param_new,err_output,exitflag,fmsoutput] = fminsearch(@errorfunc11,param_init);
-elseif num_param==9 && strcmp(ninetype,'bio')==1
-    [param_new,err_output,exitflag,fmsoutput] = fminsearch(@errorfunc9bio,param_init);
+elseif num_param==9
+    if strcmp(ninetype,'bio')==1
+        [param_new,err_output,exitflag,fmsoutput] = fminsearch(@errorfunc9bio,param_init);
+    elseif strcmp(ninetype,'uni')==1
+        [param_new,err_output,exitflag,fmsoutput] = fminsearch(@errorfunc9uni,param_init);
+    end
 end
 
 save(strcat('fminsearchresults',num2str(num_param),ninetype,'_',num2str(numsmall)),...
