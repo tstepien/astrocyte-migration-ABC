@@ -1,5 +1,5 @@
 #!/bin/sh
-#SBATCH --job-name=uq_sobol10_1e3
+#SBATCH --job-name=uq_sobol9bio_1e3
 #SBATCH --mail-type=ALL         # Mail events (NONE, BEGIN, END, FAIL, ALL)
 #SBATCH --mail-user=tstepien@ufl.edu # Where to send mail
 #SBATCH --account=tstepien
@@ -13,7 +13,7 @@
 pwd; hostname; date
 
 module load matlab/2022b
-./uq_sobol10_1e3
+./uq_sobol9bio_1e3
 
 date
 

@@ -13,26 +13,27 @@ what_set = 'maxthreshold'; %'maxthreshold' or 'maxmode'
 fit_dist_plot = 'yes'; % using percentholdon for distribution fits
 titles_on = 'yes';
 
-load(strcat('../parameter_analysis/abc',num2str(num_param),'bio_',...
+load(strcat('../parameter_analysis/abc',num2str(num_param),'uni_',...
     num2str(multiplier),'e',num2str(power),'.mat'))
 
 err_original = [err_dens err_rad err_time err_tot];
 err_names = {'Density Error','Radius Error','Time Error','Total Error'};
 
-param_original = [mu, alpha10, alpha11, alpha12, alpha20, alpha21, ...
-    beta1, beta4, eta2];
+param_original = [mu, alpha10, alpha12, alpha20, alpha21, ...
+    alpha22, beta1, beta2, eta2];
 
 clear err_dens err_rad err_time err_tot mu alpha10 alpha11 alpha12 alpha20 ...
-    alpha21 beta1 beta4 eta2;
+    alpha21 alpha22 beta1 beta2 beta4 eta2;
 
-param_names = {'$\mu$','$\alpha_{10}$','$\alpha_{11}$','$\alpha_{12}$',...
-    '$\alpha_{20}$','$\alpha_{21}$',...
-    '$\beta_1$','$\beta_4$','$\eta_2$'};
+param_names = {'$\mu$','$\alpha_{10}$','$\alpha_{12}$',...
+    '$\alpha_{20}$','$\alpha_{21}$','$\alpha_{22}$',...
+    '$\beta_1$','$\beta_2$','$\eta_2$'};
 num_param = length(param_names);
 param_names_words = {'Adhesion constant','APC base prolif rate',...
-    'APC prolif wrt PDGFA','APC prolif wrt choroid O_2',...
+    'APC prolif wrt choroid O_2',...
     'IPA base prolif rate','IPA prolif wrt PDGFA',...
-    'Diff rate wrt LIF','Mass action rate','IPA apoptosis rate'};
+    'IPA prolif wrt choroid O_2','Diff rate wrt LIF',...
+    'Diff rate wrt choroid O_2','IPA apoptosis rate'};
 
 %% remove errors that were set to 10^4
 maxthreshold = 10^4;
@@ -185,13 +186,13 @@ end
 disp(bestfitdist);
 
 % export distribution information
-save(strcat('distributions',num2str(num_param),'bio.mat'),'bestfitdist','bestfitdist_param')
+save(strcat('distributions',num2str(num_param),'uni.mat'),'bestfitdist','bestfitdist_param')
 
 %% histograms of parameters
 
 fig3 = figure;
 tiledlayout(4,5,'TileSpacing','compact','Padding','compact')
-pos_tiled = [1:4,7:8,12,15,17];
+pos_tiled = [1:2,4,7:9,12:13,17];
 for i=1:num_param
     nexttile(pos_tiled(i))
     
@@ -222,7 +223,7 @@ for i=1:num_param
     if strcmp(titles_on,'yes')==1
         title(param_names_words{i},'FontWeight','normal')
     end
-    if i==1 || i==5 || i==7 || i==9
+    if i==1 || i==4 || i==7 || i==9
         ylabel('Probability','Interpreter','latex')
     end
     xlim(bound(i,:))
