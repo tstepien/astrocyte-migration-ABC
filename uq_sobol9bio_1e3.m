@@ -7,15 +7,15 @@ clearvars
 rng(100,'twister')
 uqlab
 
-num_param = 11;
+num_param = 9;
 sampleN = 1e3;
 
-filename = strcat('parameter_analysis/sobol',num2str(num_param),'_',num2str(sampleN),'.mat');
-load(strcat('plot_uq/distributions',num2str(num_param),'.mat'));
+filename = strcat('parameter_analysis/sobol',num2str(num_param),'_',num2str(sampleN),'bio.mat');
+load(strcat('plot_uq/distributions',num2str(num_param),'bio.mat'));
 
 %% 2 - COMPUTATIONAL MODEL
 % Create a MODEL object from the function file:
-ModelOpts.mFile = strcat('uq_eqns_and_error',num2str(num_param));
+ModelOpts.mFile = strcat('uq_eqns_and_error',num2str(num_param),'bio');
 
 myModel = uq_createModel(ModelOpts);
 

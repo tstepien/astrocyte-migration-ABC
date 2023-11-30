@@ -7,15 +7,15 @@ clearvars
 rng(100,'twister')
 uqlab
 
-num_param = 11;
+num_param = 9;
 sampleN = 1e3;
 
-filename = strcat('parameter_analysis/sobol',num2str(num_param),'_',num2str(sampleN),'.mat');
-load(strcat('plot_uq/distributions',num2str(num_param),'.mat'));
+filename = strcat('parameter_analysis/sobol',num2str(num_param),'_',num2str(sampleN),'uni.mat');
+load(strcat('plot_uq/distributions',num2str(num_param),'uni.mat'));
 
 %% 2 - COMPUTATIONAL MODEL
 % Create a MODEL object from the function file:
-ModelOpts.mFile = strcat('uq_eqns_and_error',num2str(num_param));
+ModelOpts.mFile = strcat('uq_eqns_and_error',num2str(num_param),'uni');
 
 myModel = uq_createModel(ModelOpts);
 
@@ -64,7 +64,7 @@ InputOpts.Marginals(8).Bounds = [0 0.1];  % (/hr)
 
 InputOpts.Marginals(9).Name = '$\eta_2$';  % apoptosis rate IPA
 InputOpts.Marginals(9).Type = 'Gaussian';
-InputOpts.Marginals(9).Parameters = [bestfitdist_param{9}.A bestfitdist_param{9}.B];  % (/hr)
+InputOpts.Marginals(9).Parameters = [bestfitdist_param{9}.mu bestfitdist_param{9}.sigma];  % (/hr)
 InputOpts.Marginals(9).Bounds = [0 0.1];  % (/hr)
 
 % Create an INPUT object based on the specified marginals:
