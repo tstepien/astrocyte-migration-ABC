@@ -77,7 +77,7 @@ nexttile
 hold on
 for i=1:numcurvesplot
     plot(rplot(plotind(i),:),c1plot(plotind(i),:)+c2plot(plotind(i),:),...
-        'LineWidth',1.5,'Color',co(i,:))
+        'LineWidth',2.5,'Color',co(i,:))
 end
 % ylim_sum = get(gca,'YLim');
     ylim_sum = [0,1500];
@@ -100,8 +100,10 @@ h = legend([num2str(t(plotind(1))/24),' days (E15)'],...
     [num2str(t(plotind(6))/24,3),' days (E',num2str(round(15+t(plotind(6))/24,1)),')'],...
     [num2str(t(plotind(7))/24,3),' days (E',num2str(round(15+t(plotind(7))/24,1)),')'],...
     [num2str(t(plotind(8))/24,3),' days (E',num2str(round(15+t(plotind(8))/24,1)),'/P0)']);
-set(h,'FontSize',fsticks,'NumColumns',4,...
-    'Position',[0.12 0.89 0.58 0.125]);
+%%% if saving to eps
+set(h,'FontSize',fsticks,'NumColumns',4,'Position',[0.12 0.885 0.59 0.22]);
+%%% if viewing in MATLAB
+% set(h,'FontSize',fsticks,'NumColumns',4,'Position',[0.12 0.885 0.59 0.13]);
 
 annotation(gcf,'textbox',[0.0169 0.9 0.0347 0.0980],...
     'String',plotletter,'LineStyle','none','FontSize',fstitle,'FontWeight','bold');
@@ -111,7 +113,7 @@ annotation(gcf,'textbox',[0.0169 0.9 0.0347 0.0980],...
 nexttile
 hold on
 for i=1:numcurvesplot
-    plot(rplot(plotind(i),:),c1plot(plotind(i),:),'LineWidth',1.5,...
+    plot(rplot(plotind(i),:),c1plot(plotind(i),:),'LineWidth',2.5,...
         'Color',co(i,:))
 end
 line([max_astrocytes,max_astrocytes],ylim_sum,'LineStyle','--',...
@@ -130,7 +132,7 @@ end
 nexttile
 hold on
 for i=1:numcurvesplot
-    plot(rplot(plotind(i),:),c2plot(plotind(i),:),'LineWidth',1.5,...
+    plot(rplot(plotind(i),:),c2plot(plotind(i),:),'LineWidth',2.5,...
         'Color',co(i,:))
 end
 line([max_astrocytes,max_astrocytes],ylim_sum,'LineStyle','--',...
@@ -148,9 +150,9 @@ end
 % moving boundary
 nexttile
 hold on
-plot(t/24,mvgbdy,'k','LineWidth',1.5)
-scatter(t/24,mvgbdy,20,'k')
-scatter(rad_days,rad_APC,150,[0.5 0.5 0.5],'x','LineWidth',1.5)
+plot(t/24,mvgbdy,'k','LineWidth',2.5)
+%scatter(t/24,mvgbdy,20,'k')
+scatter(rad_days,rad_APC,150,[0.5 0.5 0.5],'x','LineWidth',2.5)
 hold off
 xlabel('Time (days)','FontSize',fslabel,'Interpreter','latex')
 ylabel('Cell boundary (mm)','FontSize',fslabel,'Interpreter','latex')
@@ -163,5 +165,5 @@ else
 end
 
 
-set(gcf,'Units','inches','Position',[2,2,14,4.25],'PaperPositionMode','auto')
+set(gcf,'Units','inches','Position',[2,2,14,3.75],'PaperPositionMode','auto')
 
