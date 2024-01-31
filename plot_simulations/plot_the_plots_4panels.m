@@ -63,13 +63,14 @@ for i = 1:T
     rplot(i,:) = [r(1:j_init+(i-1)) , r(j_init+(i-1)) , r(j_init+i:end)];
 end
 
+fstitle = 22;
 fslabel = 16;
 fsticks = 14;
 
 %% plot cell concentrations
 
 figure
-tiledlayout(1,4,'TileSpacing','tight','Padding','tight')
+tiledlayout(1,4,'TileSpacing','tight','Padding','tight','OuterPosition',[0 0 1 0.875])
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % total cell population
 nexttile
@@ -83,13 +84,27 @@ end
 line([max_astrocytes,max_astrocytes],ylim_sum,'LineStyle','--',...
     'Color',[0.5,0.5,0.5],'LineWidth',1.25)
 hold off
-xlabel('radius (mm)','FontSize',fslabel)
-ylabel('APCs + IPAs (cells/mm^2)','FontSize',fslabel)
+xlabel('Radius (mm)','FontSize',fslabel,'Interpreter','latex')
+ylabel('APCs $+$ IPAs (cells/mm$^2$)','FontSize',fslabel,'Interpreter','latex')
 if mvgbdy(end)<1.5
     set(gca,'XLim',[0,mvgbdy(end)+5*dr],'FontSize',fsticks)
 else
     set(gca,'XLim',[0,rmax],'FontSize',fsticks)
 end
+
+h = legend([num2str(t(plotind(1))/24),' days (E15)'],...
+    [num2str(t(plotind(2))/24,3),' days (E',num2str(round(15+t(plotind(2))/24,1)),')'],...
+    [num2str(t(plotind(3))/24,3),' days (E',num2str(round(15+t(plotind(3))/24,1)),')'],...
+    [num2str(t(plotind(4))/24,3),' days (E',num2str(round(15+t(plotind(4))/24,1)),')'],...
+    [num2str(t(plotind(5))/24,3),' days (E',num2str(round(15+t(plotind(5))/24,1)),')'],...
+    [num2str(t(plotind(6))/24,3),' days (E',num2str(round(15+t(plotind(6))/24,1)),')'],...
+    [num2str(t(plotind(7))/24,3),' days (E',num2str(round(15+t(plotind(7))/24,1)),')'],...
+    [num2str(t(plotind(8))/24,3),' days (E',num2str(round(15+t(plotind(8))/24,1)),'/P0)']);
+set(h,'FontSize',fsticks,'NumColumns',4,...
+    'Position',[0.12 0.89 0.58 0.125]);
+
+annotation(gcf,'textbox',[0.0169 0.9 0.0347 0.0980],...
+    'String',plotletter,'LineStyle','none','FontSize',fstitle,'FontWeight','bold');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % APCs
@@ -102,8 +117,8 @@ end
 line([max_astrocytes,max_astrocytes],ylim_sum,'LineStyle','--',...
     'Color',[0.5,0.5,0.5],'LineWidth',1.25)
 hold off
-xlabel('radius (mm)','FontSize',fslabel)
-ylabel('APCs (cells/mm^2)','FontSize',fslabel)
+xlabel('Radius (mm)','FontSize',fslabel,'Interpreter','latex')
+ylabel('APCs (cells/mm$^2$)','FontSize',fslabel,'Interpreter','latex')
 if mvgbdy(end)<1.5
     set(gca,'XLim',[0,mvgbdy(end)+5*dr],'FontSize',fsticks,'YLim',ylim_sum)
 else
@@ -121,8 +136,8 @@ end
 line([max_astrocytes,max_astrocytes],ylim_sum,'LineStyle','--',...
     'Color',[0.5,0.5,0.5],'LineWidth',1.25)
 hold off
-xlabel('radius (mm)','FontSize',fslabel)
-ylabel('IPAs (cells/mm^2)','FontSize',fslabel)
+xlabel('Radius (mm)','FontSize',fslabel,'Interpreter','latex')
+ylabel('IPAs (cells/mm$^2$)','FontSize',fslabel,'Interpreter','latex')
 if mvgbdy(end)<1.5
     set(gca,'XLim',[0,mvgbdy(end)+5*dr],'FontSize',fsticks,'YLim',ylim_sum)
 else
@@ -137,8 +152,8 @@ plot(t/24,mvgbdy,'k','LineWidth',1.5)
 scatter(t/24,mvgbdy,20,'k')
 scatter(rad_days,rad_APC,150,[0.5 0.5 0.5],'x','LineWidth',1.5)
 hold off
-xlabel('t (days)','FontSize',fslabel)
-ylabel('moving boundary (mm)','FontSize',fslabel)
+xlabel('Time (days)','FontSize',fslabel,'Interpreter','latex')
+ylabel('Cell boundary (mm)','FontSize',fslabel,'Interpreter','latex')
 ylim_mvgbdy = get(gca,'YLim');
 if ylim_mvgbdy(2)<max_astrocytes
     set(gca,'FontSize',fsticks,'YLim',[0,max_astrocytes])
@@ -148,5 +163,5 @@ else
 end
 
 
-set(gcf,'Units','inches','Position',[2,2,14,3.25],'PaperPositionMode','auto')
+set(gcf,'Units','inches','Position',[2,2,14,4.25],'PaperPositionMode','auto')
 

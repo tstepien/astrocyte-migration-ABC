@@ -9,9 +9,13 @@ addpath plot_simulations
 oxyfunc = 'oxygen_zeroorder';
 
 %%%%%%%%%%%%%%%%%%%%%% loading a parameter set file %%%%%%%%%%%%%%%%%%%%%%%
-num_param = 9;
-ninetype = 'bio';
-load(strcat('parameter_analysis/bestfitparam',num2str(num_param),ninetype,'.mat'));
+num_param = 18;
+if num_param==9
+    ninetype = 'bio';
+    load(strcat('parameter_analysis/bestfitparam',num2str(num_param),ninetype,'.mat'));
+else
+    load(strcat('parameter_analysis/bestfitparam',num2str(num_param),'.mat'));
+end
 
 if num_param==18
     mu = param_new(1); %%% adhesion constant
@@ -108,4 +112,11 @@ toc
 disp(['total error: ',num2str(err_tot)])
 
 %% plots
+if num_param==18
+    plotletter = 'A';
+elseif num_param==9
+    plotletter = 'B';
+else
+    plotletter = '';
+end
 plot_the_plots_4panels
