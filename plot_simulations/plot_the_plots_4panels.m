@@ -80,16 +80,16 @@ for i=1:numcurvesplot
         'LineWidth',2.5,'Color',co(i,:))
 end
 % ylim_sum = get(gca,'YLim');
-    ylim_sum = [0,1500];
-line([max_astrocytes,max_astrocytes],ylim_sum,'LineStyle','--',...
-    'Color',[0.5,0.5,0.5],'LineWidth',1.25)
+ylim_sum = [0,1500];
+% line([max_astrocytes,max_astrocytes],ylim_sum,'LineStyle','--',...
+%     'Color',[0.5,0.5,0.5],'LineWidth',1.25)
 hold off
 xlabel('Radius (mm)','FontSize',fslabel,'Interpreter','latex')
 ylabel('APCs $+$ IPAs (cells/mm$^2$)','FontSize',fslabel,'Interpreter','latex')
 if mvgbdy(end)<1.5
-    set(gca,'XLim',[0,mvgbdy(end)+5*dr],'FontSize',fsticks)
+    set(gca,'XLim',[0,mvgbdy(end)+5*dr],'FontSize',fsticks,'YLim',ylim_sum)
 else
-    set(gca,'XLim',[0,rmax],'FontSize',fsticks)
+    set(gca,'XLim',[0,rmax],'FontSize',fsticks,'YLim',ylim_sum)
 end
 
 h = legend([num2str(t(plotind(1))/24),' days (E15)'],...
@@ -116,8 +116,8 @@ for i=1:numcurvesplot
     plot(rplot(plotind(i),:),c1plot(plotind(i),:),'LineWidth',2.5,...
         'Color',co(i,:))
 end
-line([max_astrocytes,max_astrocytes],ylim_sum,'LineStyle','--',...
-    'Color',[0.5,0.5,0.5],'LineWidth',1.25)
+% line([max_astrocytes,max_astrocytes],ylim_sum,'LineStyle','--',...
+%     'Color',[0.5,0.5,0.5],'LineWidth',1.25)
 hold off
 xlabel('Radius (mm)','FontSize',fslabel,'Interpreter','latex')
 ylabel('APCs (cells/mm$^2$)','FontSize',fslabel,'Interpreter','latex')
@@ -135,8 +135,8 @@ for i=1:numcurvesplot
     plot(rplot(plotind(i),:),c2plot(plotind(i),:),'LineWidth',2.5,...
         'Color',co(i,:))
 end
-line([max_astrocytes,max_astrocytes],ylim_sum,'LineStyle','--',...
-    'Color',[0.5,0.5,0.5],'LineWidth',1.25)
+% line([max_astrocytes,max_astrocytes],ylim_sum,'LineStyle','--',...
+%     'Color',[0.5,0.5,0.5],'LineWidth',1.25)
 hold off
 xlabel('Radius (mm)','FontSize',fslabel,'Interpreter','latex')
 ylabel('IPAs (cells/mm$^2$)','FontSize',fslabel,'Interpreter','latex')

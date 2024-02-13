@@ -9,7 +9,7 @@ addpath plot_simulations
 oxyfunc = 'oxygen_zeroorder';
 
 %%%%%%%%%%%%%%%%%%%%%% loading a parameter set file %%%%%%%%%%%%%%%%%%%%%%%
-num_param = 18;
+num_param = 9;
 if num_param==9
     ninetype = 'bio';
     load(strcat('parameter_analysis/bestfitparam',num2str(num_param),ninetype,'.mat'));
