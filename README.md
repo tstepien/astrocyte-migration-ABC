@@ -19,8 +19,8 @@ The number in the file corresponds with the number of nonzero parameters in the 
 
 ## Additional MATLAB Packages
 The following MATLAB packages were used:
-+ [latin_random.m](https://people.sc.fsu.edu/~jburkardt/m_src/latin_random/latin_random.html): Latin hypercube sampling
-+ [ws_distance.m](https://github.com/nklb/wasserstein-distance): Computes 1- and 2- Wasserstein distance between two discrete probability measures 
++ [latin_random](https://people.sc.fsu.edu/~jburkardt/m_src/latin_random/latin_random.html): Latin hypercube sampling
++ [wasserstein-distance](https://github.com/nklb/wasserstein-distance): Computes 1- and 2- Wasserstein distance (Earth mover's distance) between two discrete probability measures 
 
 ## Licensing
 Copyright 2017-2024 [Tracy Stepien](https://github.com/tstepien/). This is free software made available under the MIT License. For details see the [LICENSE](LICENSE) file.
