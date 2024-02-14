@@ -11,16 +11,16 @@ The MATLAB code contained in the astrocyte-migration-ABC project was developed t
 
 The number in the file corresponds with the number of nonzero parameters in the model.
 
-### Additional MATLAB Packages
-The following MATLAB packages by others were used:
-+ [latin_random.m](https://people.sc.fsu.edu/~jburkardt/m_src/latin_random/latin_random.html): Latin hypercube sampling
-+ [plot_uq/ws_distance.m](https://github.com/nklb/wasserstein-distance): Computes 1- and 2- Wasserstein distance between two discrete probability measures 
-
 ## Description of Folders
 + [ABC_results](ABC_results): Contains .mat files with the parameter sets and corresponding errors (comparing the model to data)
 + [LHpts](LHpts): Contains .mat files with Latin hypercube points (scaled between 0 and 1) for different numbers of model parameters
 + [plot_simulations](plot_simulations): Code to create Figure 1 in the paper
 + [plot_uq](plot_uq): Code to create Figures 2-6 and Table 3 in the paper
+
+## Additional MATLAB Packages
+The following MATLAB packages were used:
++ [latin_random.m](https://people.sc.fsu.edu/~jburkardt/m_src/latin_random/latin_random.html): Latin hypercube sampling
++ [ws_distance.m](https://github.com/nklb/wasserstein-distance): Computes 1- and 2- Wasserstein distance between two discrete probability measures 
 
 ## Licensing
 Copyright 2017-2024 [Tracy Stepien](https://github.com/tstepien/). This is free software made available under the MIT License. For details see the [LICENSE](LICENSE) file.
