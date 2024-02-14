@@ -1,5 +1,2 @@
 .DS_Store
 *.asv
-*.txt
-*.mat
-pathdef.m
