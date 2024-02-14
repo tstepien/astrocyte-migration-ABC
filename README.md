@@ -12,7 +12,7 @@ The MATLAB code contained in the astrocyte-migration-ABC project was developed t
 The number in the file corresponds with the number of nonzero parameters in the model.
 
 ## Description of Folders
-+ [ABC_results](ABC_results): Contains .mat files with the parameter sets and corresponding errors (comparing the model to data)
++ [ABC_results](ABC_results): Contains .mat files with the parameter sets for running approximate Bayesian computation and the corresponding errors (comparing the model to data)
 + [LHpts](LHpts): Contains .mat files with Latin hypercube points (scaled between 0 and 1) for different numbers of model parameters
 + [plot_simulations](plot_simulations): Code to create Figure 1 in the paper
 + [plot_uq](plot_uq): Code to create Figures 2-6 and Table 3 in the paper
