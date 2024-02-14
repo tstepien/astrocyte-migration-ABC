@@ -21,8 +21,8 @@ The other files in the main directory are subfunctions necessary for the simulat
 ### Folders with data hosted elsewhere
 The following two folders are available for download at [https://osf.io/rm5qj/](https://osf.io/rm5qj/)
 
-+ [ABC_results](ABC_results): Contains .mat files with the parameter sets for running approximate Bayesian computation and the corresponding errors (comparing the model to data)
-+ [LHpts](LHpts): Contains .mat files with Latin hypercube points (scaled between 0 and 1) for different numbers of model parameters
++ *ABC_results*: Contains .mat files with the parameter sets for running approximate Bayesian computation and the corresponding errors (comparing the model to data)
++ *LHpts*: Contains .mat files with Latin hypercube points (scaled between 0 and 1) for different numbers of model parameters
 
 ## Additional MATLAB Packages
 The following MATLAB packages were used:
