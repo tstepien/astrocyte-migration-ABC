@@ -15,12 +15,14 @@ The number in the file corresponds with the number of nonzero parameters in the 
 The other files in the main directory are subfunctions necessary for the simulations.
 
 ## Description of Folders
-+ [LHpts](LHpts): Contains .mat files with Latin hypercube points (scaled between 0 and 1) for different numbers of model parameters
 + [plot_simulations](plot_simulations): Code to create Figure 1 in the paper
 + [plot_uq](plot_uq): Code to create Figures 2-6 and Table 3 in the paper
 
 ### Folders with data hosted elsewhere
-+ [ABC_results](ABC_results): Contains .mat files with the parameter sets for running approximate Bayesian computation and the corresponding errors (comparing the model to data). It is available for download at [https://osf.io/rm5qj/](https://osf.io/rm5qj/)
+The following two folders are available for download at [https://osf.io/rm5qj/](https://osf.io/rm5qj/)
+
++ [ABC_results](ABC_results): Contains .mat files with the parameter sets for running approximate Bayesian computation and the corresponding errors (comparing the model to data)
++ [LHpts](LHpts): Contains .mat files with Latin hypercube points (scaled between 0 and 1) for different numbers of model parameters
 
 ## Additional MATLAB Packages
 The following MATLAB packages were used:
