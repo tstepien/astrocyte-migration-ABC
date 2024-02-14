@@ -6,10 +6,13 @@ The MATLAB code contained in the astrocyte-migration-ABC project was developed t
 >[Tracy L. Stepien](https://github.com/tstepien/), An approximate Bayesian computation approach for embryonic astrocyte migration model selection, Submitted to ---
 
 ## Programs
-+ Files beginning with ``program_``: run these programs to solve the astrocyte model equations
-+ Files beginning with ``uq_abc``: run these programs to run approximate Bayesian computation analysis
++ Files beginning with ``program_``: Run these programs to solve the astrocyte model equations
++ Files beginning with ``uq_abc``: Run these programs to run approximate Bayesian computation analysis
++ [ABCcomparemodels.m](ABCcomparemodels.m): Run this program to compute the Bayes factors to compare models
 
 The number in the file corresponds with the number of nonzero parameters in the model.
+
+The other files in the main directory are subfunctions necessary for the simulations.
 
 ## Description of Folders
 + [ABC_results](ABC_results): Contains .mat files with the parameter sets for running approximate Bayesian computation and the corresponding errors (comparing the model to data)
