@@ -11,7 +11,7 @@ what_set = 'maxthreshold'; %'maxthreshold' or 'maxmode'
 fit_dist_plot = 'yes'; % using percentholdon for distribution fits
 titles_on = 'yes';
 
-load(strcat('../parameter_analysis/abc',num2str(num_param),'uni_',...
+load(strcat('../ABC_results/abc',num2str(num_param),'uni_',...
     num2str(multiplier),'e',num2str(power),'.mat'))
 
 err_original = [err_dens err_rad err_time err_tot];

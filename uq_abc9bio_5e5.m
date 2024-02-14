@@ -30,7 +30,7 @@ load(strcat(pwd,'/LHpts/LHpts',num2str(num_param),'_',num2str(multiplier),...
 % if strcmp(savefiles,'yes')==1
 %     doublecheck = input('Are you sure you would like to save the output files? (it may overwrite): ');
 %     if strcmp(doublecheck,'y')==1
-        diary(strcat(pwd,'/parameter_analysis/diary_abc',num2str(num_param),'bio_',...
+        diary(strcat(pwd,'/ABC_results/diary_abc',num2str(num_param),'bio_',...
             num2str(multiplier),'e',num2str(power),'_',iternum,'.txt'));
 %     else
 %         return;
@@ -104,7 +104,7 @@ parfor i=1:N
 end
 
 % if strcmp(savefiles,'yes')==1
-    save(strcat(pwd,'/parameter_analysis/abc',num2str(num_param),'bio_',...
+    save(strcat(pwd,'/ABC_results/abc',num2str(num_param),'bio_',...
         num2str(multiplier),'e',num2str(power),'_',iternum,'.mat'));
     diary off
 % end
