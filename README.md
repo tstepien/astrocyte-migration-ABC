@@ -19,7 +19,7 @@ The other files in the main directory are subfunctions necessary for the simulat
 + [plot_uq](plot_uq): Code to create Figures 2-6 and Table 3 in the paper
 
 ### Folders with data hosted elsewhere
-The following two folders are available for download at [https://osf.io/rm5qj/](https://osf.io/rm5qj/)
+The following two folders are available for download on OSF at [https://osf.io/rm5qj/](https://osf.io/rm5qj/)
 
 + *ABC_results*: Contains .mat files with the parameter sets for running approximate Bayesian computation and the corresponding errors (comparing the model to data)
 + *LHpts*: Contains .mat files with Latin hypercube points (scaled between 0 and 1) for different numbers of model parameters
