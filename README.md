@@ -18,7 +18,7 @@ The other files in the main directory are subfunctions necessary for the simulat
 + [plot_simulations](plot_simulations): Code to create Figure 1 in the paper
 + [plot_uq](plot_uq): Code to create Figures 2-6 and Table 3 in the paper
 
-### Folders with data hosted elsewhere
+### Folders with MATLAB data hosted elsewhere
 The following two folders are available for download on OSF at [https://osf.io/rm5qj/](https://osf.io/rm5qj/)
 
 + *ABC_results*: Contains .mat files with the parameter sets for running approximate Bayesian computation and the corresponding errors (comparing the model to data)
