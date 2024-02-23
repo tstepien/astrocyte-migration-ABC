@@ -3,7 +3,7 @@
 <a href="https://github.com/tstepien/astrocyte-migration-ABC/"><img src="https://img.shields.io/badge/github-tstepien%2Fastrocyte--migration--ABC-blue" /></a> <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" /></a>
 
 The MATLAB code contained in the astrocyte-migration-ABC project was developed to numerically simulate astrocyte migration and differentiation during embryonic development of the retina and its corresponding approximate Bayesian computation (ABC) analysis for parameter estimation and model selection. It is described in:
->[Tracy L. Stepien](https://github.com/tstepien/), An approximate Bayesian computation approach for embryonic astrocyte migration model selection, Submitted to ---
+>[Tracy L. Stepien](https://github.com/tstepien/), An approximate Bayesian computation approach for embryonic astrocyte migration model selection, Submitted to the _Bulletin of Mathematical Biology_.
 
 ## Programs
 + Files beginning with ``program_``: Run these programs to solve the astrocyte model equations
