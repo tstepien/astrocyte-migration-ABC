@@ -27,6 +27,9 @@ function plot_histograms(pos_tiled,pos_tiled_ylabel,num_param,percentholdon,...
 %   param_names       = cell of strings of parameter variables
 %   param_names_words = cell of strings of parameter meanings in words
 
+curvecolor = [0.8500 0.3250 0.0980];
+bincolor = [0.3 0.3 0.3];
+
 fig3 = figure;
 tiledlayout(4,5,'TileSpacing','compact','Padding','compact')
 for i=1:num_param
@@ -34,22 +37,23 @@ for i=1:num_param
     
     if strcmp(fit_dist_plot,'no')==1
         histogram(param_sort_hold(:,i),'Normalization','probability',...
-            'BinMethod','sturges','FaceColor','none','LineWidth',1.5);
+            'BinMethod','sturges','FaceColor','none','EdgeColor',bincolor);
     elseif strcmp(fit_dist_plot,'yes')==1
         if strcmp(bestfitdist{i},'Uniform')==0
             h = histfit(param_sort_hold(:,i),[],bestfitdist{i});
             h(1).FaceColor = 'none';
-            h(2).Color = 'k';
+            h(1).EdgeColor = bincolor;
+            h(2).Color = curvecolor;
             box on
             yt = get(gca,'YTick');
             set(gca,'YTick',yt,'YTickLabel',round(yt/num_hold,2));
         else
             hold on
             histogram(param_sort_hold(:,i),'Normalization','probability',...
-                'BinMethod','sqrt','FaceColor','none');
+                'BinMethod','sqrt','FaceColor','none','EdgeColor',bincolor);
             hh = get(gca,'YLim');
-            plot(linspace(bound(i,1),bound(i,2),100),hh(2)/2*ones(1,100),'k',...
-                'LineWidth',2.5)
+            plot(linspace(bound(i,1),bound(i,2),100),hh(2)/2*ones(1,100),...
+                'Color',curvecolor,'LineWidth',2.5)
             box on
             hold off
         end
