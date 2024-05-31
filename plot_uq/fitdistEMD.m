@@ -102,3 +102,15 @@ for j=1:num_param
     bestfitdist_param(j) = dist_param(ind,j);
 end
 disp(bestfitdist);
+
+
+%% calculate min and max difference from smallest 1-Weisserstein distance
+differencefromsmallest = zeros(num_dist,num_param);
+mindiff = zeros(num_dist,2);
+maxdiff = zeros(num_dist,1);
+for i=1:num_dist
+    differencefromsmallest(i,:) = wsd1(i,:)-min(wsd1(i,:));
+    mindiff(i,:) = mink(differencefromsmallest(i,:),2);
+    maxdiff(i) = max(differencefromsmallest(i,:));
+end
+mindiff = mindiff(:,2);
