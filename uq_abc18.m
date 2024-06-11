@@ -3,7 +3,7 @@ clc;
 
 multiplier = 1;
 power = 5;
-N = 5;%(multiplier)*10^(power);
+N = (multiplier)*10^(power);
 num_param = 18;
 
 rng(100,'twister');
