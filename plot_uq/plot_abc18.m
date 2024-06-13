@@ -6,13 +6,14 @@ power = 5;
 N = (multiplier)*10^(power);
 num_param = 18;
 
-percentholdon = 0.1;
+percentholdon = .1;
 what_set = 'maxthreshold'; %'maxthreshold' or 'maxmode'
 fit_dist_plot = 'yes'; % using percentholdon for distribution fits
 titles_on = 'yes';
 
-load(strcat('../ABC_results/abc',num2str(num_param),'_',...
-    num2str(multiplier),'e',num2str(power),'.mat'))
+% load(strcat('../ABC_results/abc',num2str(num_param),'_',...
+%     num2str(multiplier),'e',num2str(power),'.mat'))
+load('../ABC_results/june2024/abc18_allresults.mat');
 
 err_original = [err_dens err_rad err_time err_tot];
 err_names = {'Density Error','Radius Error','Time Error','Total Error'};
@@ -49,8 +50,8 @@ param_names_words = {'Adhesion constant','APC base prolif rate',...
     param_sort_hold,bound);
 
 % export distribution information
-save(strcat('distributions',num2str(num_param),'.mat'),'bestfitdist',...
-    'bestfitdist_param')
+% save(strcat('distributions',num2str(num_param),'.mat'),'bestfitdist',...
+%     'bestfitdist_param')
 
 %% histograms of parameters
 
