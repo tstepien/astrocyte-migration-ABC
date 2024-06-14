@@ -6,7 +6,7 @@ power = 5;
 N = (multiplier)*10^(power);
 num_param = 18;
 
-percentholdon = .1;
+percentholdon = 1;
 what_set = 'maxthreshold'; %'maxthreshold' or 'maxmode'
 fit_dist_plot = 'yes'; % using percentholdon for distribution fits
 titles_on = 'yes';
@@ -38,6 +38,9 @@ param_names_words = {'Adhesion constant','APC base prolif rate',...
     'Diff rate wrt hyaloid O_2','Mass action rate',...
     'APC apoptosis rate','IPA apoptosis rate','Hyaloid max',...
     'Hyaloid half-max value'};
+
+%% quantile plot - total error vs. percent accepted
+[errorlevels,percentaccepted] = plot_quantile(N,err_original);
 
 %% sort and hold onto 'percentholdon' smallest parameter sets
 
