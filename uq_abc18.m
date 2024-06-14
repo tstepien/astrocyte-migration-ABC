@@ -1,7 +1,7 @@
 clear variables global;
 clc;
 
-multiplier = 1;
+multiplier = 3;
 power = 5;
 N = (multiplier)*10^(power);
 num_param = 18;
@@ -18,7 +18,7 @@ m.rmax = 5; %%% max radius (mm) (estimate rat retinal radius = 4.1 mm)
 m.tmax = 7*24; %%% max time (hr) (7 days = 168 hr)
 
 %%%%%%%%%%%%%%%%%%%%%%%% parameters to investigate %%%%%%%%%%%%%%%%%%%%%%%%
-bound = [5 20; %mu - adhesion constant
+bound = [5 30; %mu - adhesion constant
     0 1; %alpha10 - (/hr) base proliferation rate APC
     0 1; %alpha11 - (/hr) proliferation rate APC wrt PDGFA
     0 1; %alpha12 - (/hr) proliferation rate APC wrt choroid oxygen
