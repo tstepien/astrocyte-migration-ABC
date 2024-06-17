@@ -10,7 +10,7 @@ rng(100,'twister');
 
 oxyfunc = 'oxygen_zeroorder';
 
-diary(strcat(pwd,'/ABC_results/diary_abc',num2str(num_param),'.txt'));
+diary(strcat(pwd,'/ABC_results/diary_abc',num2str(num_param),'_doublerange.txt'));
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% mesh %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 m.dr = 0.01;
@@ -18,24 +18,24 @@ m.rmax = 5; %%% max radius (mm) (estimate rat retinal radius = 4.1 mm)
 m.tmax = 7*24; %%% max time (hr) (7 days = 168 hr)
 
 %%%%%%%%%%%%%%%%%%%%%%%% parameters to investigate %%%%%%%%%%%%%%%%%%%%%%%%
-bound = [5 40; %mu - adhesion constant
-    0 1; %alpha10 - (/hr) base proliferation rate APC
-    0 1; %alpha11 - (/hr) proliferation rate APC wrt PDGFA
-    0 1; %alpha12 - (/hr) proliferation rate APC wrt choroid oxygen
+bound = [5 80; %mu - adhesion constant
+    0 2; %alpha10 - (/hr) base proliferation rate APC
+    0 2; %alpha11 - (/hr) proliferation rate APC wrt PDGFA
+    0 2; %alpha12 - (/hr) proliferation rate APC wrt choroid oxygen
     0 1; %alpha13 - (/hr) proliferation rate APC wrt hyaloid oxygen
-    0 1; %alpha20 - (/hr) base proliferation rate IPA
-    0 1; %alpha21 - (/hr) proliferation rate IPA wrt PDGFA
-    0 1; %alpha22 - (/hr) proliferation rate IPA wrt choroid oxygen
+    0 2; %alpha20 - (/hr) base proliferation rate IPA
+    0 2; %alpha21 - (/hr) proliferation rate IPA wrt PDGFA
+    0 2; %alpha22 - (/hr) proliferation rate IPA wrt choroid oxygen
     0 1; %alpha23 - (/hr) proliferation rate IPA wrt hyaloid oxygen
-    0 0.1; %beta0 - (/hr) base differentiation rate
-    0 0.1; %beta1 - (/hr) differentiation rate wrt LIF
-    0 0.1; %beta2 - (/hr) differentiation rate wrt choroid oxygen
-    0 0.1; %beta3 - (/hr) differentiation rate wrt hyaloid oxygen
-    0 0.1; %beta4 - (/hr) mass action rate
+    0 0.2; %beta0 - (/hr) base differentiation rate
+    0 0.2; %beta1 - (/hr) differentiation rate wrt LIF
+    0 0.2; %beta2 - (/hr) differentiation rate wrt choroid oxygen
+    0 0.2; %beta3 - (/hr) differentiation rate wrt hyaloid oxygen
+    0 0.2; %beta4 - (/hr) mass action rate
     0 5; %eta1 - (/hr) apoptosis rate APC
-    0 5; %eta2 - (/hr) apoptosis rate IPA
+    0 10; %eta2 - (/hr) apoptosis rate IPA
     0 20; %P_hy - partial pressure of oxygen due to hyaloid artery
-    0.1 2]; %r_hy - radius at half-maximum of Hill function for hyaloid
+    0.1 4]; %r_hy - radius at half-maximum of Hill function for hyaloid
 numpar = length(bound);
 
 %%% generate priors based on uniform distribution
@@ -65,7 +65,7 @@ err_rad = zeros(N,1);
 err_dens = zeros(N,1);
 err_flag = cell(N,1);
 
-save(strcat(pwd,'/ABC_results/abc',num2str(num_param),'_setup.mat'));
+save(strcat(pwd,'/ABC_results/abc',num2str(num_param),'_doublerange_setup.mat'));
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% run simulations %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 parfor i=1:N
@@ -81,7 +81,7 @@ parfor i=1:N
         = errorfunction(t,r,mvgbdy,c1,c2);
 
     %%% save data for each iteration
-    par_save18(sprintf(strcat(pwd,'/ABC_results/abc18/output%d.mat'), i), ...
+    par_save18(sprintf(strcat(pwd,'/ABC_results/abc18_doublerange/output%d.mat'), i), ...
         mu(i),alpha10(i),alpha11(i),alpha12(i),alpha13(i),alpha20(i),...
         alpha21(i),alpha22(i),alpha23(i),beta0(i),beta1(i),beta2(i),...
         beta3(i),beta4(i),eta1(i),eta2(i),P_hy(i),r_hy(i),err_tot(i),...
@@ -89,5 +89,5 @@ parfor i=1:N
 end
 
 %%% save all data
-save(strcat(pwd,'/ABC_results/abc',num2str(num_param),'_allresults.mat'));
+save(strcat(pwd,'/ABC_results/abc',num2str(num_param),'_doublerange_allresults.mat'));
 diary off
