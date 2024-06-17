@@ -1,7 +1,7 @@
-function [num_hold,param_sort_hold] = sortparameters(num_param,N,...
-    param_original,err_original,err_names,percentholdon,what_set)
-% [num_hold,param_sort_hold] = sortparameters(num_param,N,...
-%   param_original,err_original,err_names,percentholdon,what_set)
+function [num_hold,param_sort_hold] = sortparameters_percent(num_param,N,...
+    param_original,err_original,err_names,percentholdon)
+% [num_hold,param_sort_hold] = sortparameters_percent(num_param,N,...
+%   param_original,err_original,err_names,percentholdon)
 %
 % Sort and hold onto 'percentholdon' smallest parameter sets
 %
@@ -12,8 +12,6 @@ function [num_hold,param_sort_hold] = sortparameters(num_param,N,...
 %   err_original   = corresponding error of the ABC parameter sets
 %   err_names      = names of the types of errors calculated (for plot)
 %   percentholdon  = percent of accepted parameter sets to hold on to
-%   what_set       = hold onto sets based on the mode or the max threshold
-%                    value
 %
 % outputs:
 %   num_hold        = number of accepted parameter sets from ABC to analyze
@@ -71,15 +69,9 @@ end
 
 %% sort and hold onto 'percentholdon' smallest parameter sets
 
-if strcmp(what_set,'maxmode')==1
-    num_parametersets = num_maxmode;
-    ind_parametersets = ind_maxmode;
-    ind_sort = ind_sort_maxmode;
-elseif strcmp(what_set,'maxthreshold')==1
-    num_parametersets = num_maxthreshold;
-    ind_parametersets = ind_maxthreshold;
-    ind_sort = ind_sort_maxthreshold;
-end
+num_parametersets = num_maxthreshold;
+ind_parametersets = ind_maxthreshold;
+ind_sort = ind_sort_maxthreshold;
 
 num_hold = ceil(percentholdon * num_parametersets);
 
