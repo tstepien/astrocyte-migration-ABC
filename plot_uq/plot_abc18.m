@@ -14,6 +14,7 @@ titles_on = 'yes';
 % load(strcat('../ABC_results/abc',num2str(num_param),'_',...
 %     num2str(multiplier),'e',num2str(power),'.mat'))
 load('../ABC_results/june2024/abc18_allresults.mat');
+% load('../ABC_results/june2024/abc18_doublerange_allresults.mat');
 
 err_original = [err_dens err_rad err_time err_tot];
 err_names = {'Density Error','Radius Error','Time Error','Total Error'};
