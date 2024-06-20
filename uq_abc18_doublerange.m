@@ -18,20 +18,20 @@ m.rmax = 5; %%% max radius (mm) (estimate rat retinal radius = 4.1 mm)
 m.tmax = 7*24; %%% max time (hr) (7 days = 168 hr)
 
 %%%%%%%%%%%%%%%%%%%%%%%% parameters to investigate %%%%%%%%%%%%%%%%%%%%%%%%
-bound = [5 80; %mu - adhesion constant
-    0 2; %alpha10 - (/hr) base proliferation rate APC
-    0 2; %alpha11 - (/hr) proliferation rate APC wrt PDGFA
-    0 2; %alpha12 - (/hr) proliferation rate APC wrt choroid oxygen
-    0 1; %alpha13 - (/hr) proliferation rate APC wrt hyaloid oxygen
-    0 2; %alpha20 - (/hr) base proliferation rate IPA
-    0 2; %alpha21 - (/hr) proliferation rate IPA wrt PDGFA
-    0 2; %alpha22 - (/hr) proliferation rate IPA wrt choroid oxygen
-    0 1; %alpha23 - (/hr) proliferation rate IPA wrt hyaloid oxygen
-    0 0.2; %beta0 - (/hr) base differentiation rate
-    0 0.2; %beta1 - (/hr) differentiation rate wrt LIF
-    0 0.2; %beta2 - (/hr) differentiation rate wrt choroid oxygen
-    0 0.2; %beta3 - (/hr) differentiation rate wrt hyaloid oxygen
-    0 0.2; %beta4 - (/hr) mass action rate
+bound = [5 100; %mu - adhesion constant
+    0 4; %alpha10 - (/hr) base proliferation rate APC
+    0 4; %alpha11 - (/hr) proliferation rate APC wrt PDGFA
+    0 4; %alpha12 - (/hr) proliferation rate APC wrt choroid oxygen
+    0 2; %alpha13 - (/hr) proliferation rate APC wrt hyaloid oxygen
+    0 4; %alpha20 - (/hr) base proliferation rate IPA
+    0 4; %alpha21 - (/hr) proliferation rate IPA wrt PDGFA
+    0 4; %alpha22 - (/hr) proliferation rate IPA wrt choroid oxygen
+    0 2; %alpha23 - (/hr) proliferation rate IPA wrt hyaloid oxygen
+    0 1; %beta0 - (/hr) base differentiation rate
+    0 1; %beta1 - (/hr) differentiation rate wrt LIF
+    0 1; %beta2 - (/hr) differentiation rate wrt choroid oxygen
+    0 1; %beta3 - (/hr) differentiation rate wrt hyaloid oxygen
+    0 1; %beta4 - (/hr) mass action rate
     0 5; %eta1 - (/hr) apoptosis rate APC
     0 10; %eta2 - (/hr) apoptosis rate IPA
     0 20; %P_hy - partial pressure of oxygen due to hyaloid artery
