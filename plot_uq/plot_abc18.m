@@ -1,12 +1,9 @@
 clear variables global;
 clc;
 
-multiplier = 5;
-power = 5;
-N = (multiplier)*10^(power);
-num_param = 18;
+% num_param = 18;
 
-percentholdon = .1;
+percentholdon = 0.1;
 threshold = 18.25;
 fit_dist_plot = 'yes'; % using percentholdon for distribution fits
 titles_on = 'yes';
