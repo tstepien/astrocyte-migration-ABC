@@ -1,7 +1,7 @@
 clear variables global;
 clc;
 
-multiplier = 3;
+multiplier = 5;
 power = 5;
 N = (multiplier)*10^(power);
 num_param = 13;
