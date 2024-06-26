@@ -103,4 +103,5 @@ for i = 1:length(t)
 end
 
 %% plots
+plotletter = '';
 plot_the_plots_4panels

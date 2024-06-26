@@ -3,8 +3,8 @@ clc;
 
 % num_param = 18;
 
-percentholdon = 0.1;
-threshold = 18.25;
+percentholdon = 1;
+threshold = 22;
 fit_dist_plot = 'yes'; % using percentholdon for distribution fits
 titles_on = 'yes';
 
@@ -46,9 +46,13 @@ ind_hold = (err_original(:,4) < 10^4);
 err_new = err_original(ind_hold,:);
 param_new = param_original(ind_hold,:);
 
+numberlessthan10000 = length(err_new);
+
 %%% keep first 1e5 parameter sets (had run extra)
-err_new = err_new(1:1e5,:);
-param_new = param_new(1:1e5,:);
+if numberlessthan10000 > 1e5
+    err_new = err_new(1:1e5,:);
+    param_new = param_new(1:1e5,:);
+end
 
 %% sort and hold onto parameter sets with smallest error
 %%% by threshold value
