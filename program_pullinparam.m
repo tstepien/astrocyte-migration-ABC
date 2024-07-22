@@ -9,7 +9,8 @@ addpath plot_simulations
 oxyfunc = 'oxygen_zeroorder';
 
 %%%%%%%%%%%%%%%%%%%%%% loading a parameter set file %%%%%%%%%%%%%%%%%%%%%%%
-load('parameter_analysis/abc18_5e5.mat');
+% load('parameter_analysis/abc18_5e5.mat');
+load('ABC_results/july2024/abc18_allresults.mat');
 % load('parameter_analysis/pointestimate_inversion18.mat');
 smallestval = 1;
 errorsmall = mink(err_tot,smallestval);
