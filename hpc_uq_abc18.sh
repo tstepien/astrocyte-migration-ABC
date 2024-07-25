@@ -6,7 +6,7 @@
 #SBATCH --qos=tstepien-b
 #SBATCH --nodes=1                  # Use one node
 #SBATCH --ntasks=1                 # Run a single task
-#SBATCH --cpus-per-task=10
+#SBATCH --cpus-per-task=20
 #SBATCH --mem-per-cpu=2gb          # Memory per processor
 #SBATCH --time=72:00:00             # Time limit hrs:min:sec
 #SBATCH --output=logs/MATLAB_%j.txt    # Output and error log
