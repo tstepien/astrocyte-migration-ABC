@@ -45,16 +45,19 @@ levelp1 = interp1([percentaccepted(ind1),percentaccepted(ind2)],...
     [errorlevels(ind1),errorlevels(ind2)],0.1);
 
 fig = figure;
+set(gca,'FontSize',18)
 hold on
 plot(percentaccepted,errorlevels,'-o','Color','k','LineWidth',1.5)
 plot(percentaccepted,levelp1*ones(size(percentaccepted)),'--','Color',...
     [0.5 0.5 0.5],'LineWidth',1.5)
+ylimval = get(gca,'YLim');
+line([0.1,0.1],ylimval,'LineStyle','--','Color',[0.5 0.5 0.5],'LineWidth',1.5)
 hold off
 box on
 annotation(fig,'textbox',...
-    [0.7 0.2 0.2 0.05],...
-    'String',['$\epsilon$=',num2str(levelp1)],'EdgeColor','none',...
-    'Interpreter','latex','FontSize',18);
-set(gca,'FontSize',18)
+    [0.65 0.23 0.2 0.05],...
+    'String',['$\mathcal{E}$=',num2str(levelp1)],'EdgeColor','none',...
+    'Interpreter','latex','FontSize',24);
 xlabel('Percent of parameter sets accepted','Interpreter','latex','FontSize',24)
-ylabel('Error threshold $\epsilon$','Interpreter','latex','FontSize',24)
+ylabel('Error $\mathcal{E}$','Interpreter','latex','FontSize',24)
+set(gca,'XLim',[0,0.5])

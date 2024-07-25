@@ -19,23 +19,23 @@ m.tmax = 7*24; %%% max time (hr) (7 days = 168 hr)
 
 %%%%%%%%%%%%%%%%%%%%%%%% parameters to investigate %%%%%%%%%%%%%%%%%%%%%%%%
 bound = [5 100; %mu - adhesion constant
-    0 5; %alpha10 - (/hr) base proliferation rate APC
-    0 5; %alpha11 - (/hr) proliferation rate APC wrt PDGFA
-    0 5; %alpha12 - (/hr) proliferation rate APC wrt choroid oxygen
-    0 5; %alpha13 - (/hr) proliferation rate APC wrt hyaloid oxygen
-    0 5; %alpha20 - (/hr) base proliferation rate IPA
-    0 5; %alpha21 - (/hr) proliferation rate IPA wrt PDGFA
-    0 5; %alpha22 - (/hr) proliferation rate IPA wrt choroid oxygen
-    0 5; %alpha23 - (/hr) proliferation rate IPA wrt hyaloid oxygen
+    0 1; %alpha10 - (/hr) base proliferation rate APC
+    0 1; %alpha11 - (/hr) proliferation rate APC wrt PDGFA
+    0 1; %alpha12 - (/hr) proliferation rate APC wrt choroid oxygen
+    0 1; %alpha13 - (/hr) proliferation rate APC wrt hyaloid oxygen
+    0 1; %alpha20 - (/hr) base proliferation rate IPA
+    0 1; %alpha21 - (/hr) proliferation rate IPA wrt PDGFA
+    0 1; %alpha22 - (/hr) proliferation rate IPA wrt choroid oxygen
+    0 1; %alpha23 - (/hr) proliferation rate IPA wrt hyaloid oxygen
     0 0.5; %beta0 - (/hr) base differentiation rate
     0 0.5; %beta1 - (/hr) differentiation rate wrt LIF
     0 0.5; %beta2 - (/hr) differentiation rate wrt choroid oxygen
     0 0.5; %beta3 - (/hr) differentiation rate wrt hyaloid oxygen
     0 0.5; %beta4 - (/hr) mass action rate
-    0 5; %eta1 - (/hr) apoptosis rate APC
-    0 10; %eta2 - (/hr) apoptosis rate IPA
+    0 1; %eta1 - (/hr) apoptosis rate APC
+    0 1; %eta2 - (/hr) apoptosis rate IPA
     0 20; %P_hy - partial pressure of oxygen due to hyaloid artery
-    0.1 4]; %r_hy - radius at half-maximum of Hill function for hyaloid
+    0.1 3]; %r_hy - radius at half-maximum of Hill function for hyaloid
 numpar = length(bound);
 
 %%% generate priors based on uniform distribution
