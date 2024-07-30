@@ -50,4 +50,4 @@ for i=1:length(pos_tiled)
     end
     clear cc rr
 end
-set(fig4,'Units','inches','Position',[-1,-1,11,9],'PaperPositionMode','auto')
+set(fig4,'Units','inches','Position',[-1,-1,17,13],'PaperPositionMode','auto')

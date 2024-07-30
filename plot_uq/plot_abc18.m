@@ -1,17 +1,12 @@
 clear variables global;
 clc;
 
-% num_param = 18;
+load('../ABC_results/abc18_5e5.mat');
 
 percentholdon = 1;
-threshold = 30.5;
+threshold = 16.25;
 fit_dist_plot = 'yes'; % using percentholdon for distribution fits
-titles_on = 'yes';
-
-% load(strcat('../ABC_results/abc',num2str(num_param),'_',...
-%     num2str(multiplier),'e',num2str(power),'.mat'))
-load('../ABC_results/july2024/abc18_allresults.mat');
-% load('../ABC_results/june2024/abc18_doublerange_allresults.mat');
+titles_on = 'no';
 
 err_original = [err_dens err_rad err_time err_tot];
 err_names = {'Density Error','Radius Error','Time Error','Total Error'};
@@ -46,22 +41,10 @@ ind_hold = (err_original(:,4) < 10^4);
 err_new = err_original(ind_hold,:);
 param_new = param_original(ind_hold,:);
 
-numberlessthan10000 = length(err_new);
-
-%%% keep first 1e5 parameter sets (had run extra)
-if numberlessthan10000 > 1e5
-    err_new = err_new(1:1e5,:);
-    param_new = param_new(1:1e5,:);
-end
-
 %% sort and hold onto parameter sets with smallest error
 %%% by threshold value
 [num_hold,param_sort_hold] = sortparameters_threshold(param_new,...
     err_new,threshold);
-
-%%% by percent
-% [num_hold,param_sort_hold] = sortparameters_percent(num_param,N,...
-%     param_original,err_original,err_names,percentholdon);
 
 %% fit the data to probability distributions, calculate Earth mover's
 % distance, and report best fitting distribution
@@ -69,8 +52,8 @@ end
     param_sort_hold,bound);
 
 % export distribution information
-% save(strcat('distributions',num2str(num_param),'.mat'),'bestfitdist',...
-%     'bestfitdist_param')
+save(strcat('distributions',num2str(num_param),'.mat'),'bestfitdist',...
+    'bestfitdist_param')
 
 %% histograms of parameters
 

@@ -4,13 +4,14 @@ clc;
 % num_param = 13;
 
 percentholdon = 1;
-threshold = 30.5;
+threshold = 16.25;
 fit_dist_plot = 'yes'; % using percentholdon for distribution fits
 titles_on = 'yes';
 
 % load(strcat('../ABC_results/abc',num2str(num_param),'_',...
 %     num2str(multiplier),'e',num2str(power),'.mat'))
-load('../ABC_results/july2024/abc13_allresults.mat');
+load('../ABC_results/abc13_5e5.mat');
+% load('../ABC_results/july2024/abc13_allresults.mat');
 
 err_original = [err_dens err_rad err_time err_tot];
 err_names = {'Density Error','Radius Error','Time Error','Total Error'};
@@ -41,6 +42,13 @@ param_names_words = {'Adhesion constant','APC base prolif rate',...
 ind_hold = (err_original(:,4) < 10^4);
 err_new = err_original(ind_hold,:);
 param_new = param_original(ind_hold,:);
+
+%%% remove time errors larger than 5
+ind_hold2 = (err_new(:,3)<5);
+err_new2 = err_new(ind_hold2,:);
+param_new2 = param_new(ind_hold2,:);
+err_new = err_new2;
+param_new = param_new2;
 
 numberlessthan10000 = length(err_new);
 
