@@ -4,7 +4,7 @@ clc;
 load('../ABC_results/abc18_5e5.mat');
 
 percentholdon = 1;
-threshold = 16.25;
+threshold = 7.25;
 fit_dist_plot = 'yes'; % using percentholdon for distribution fits
 titles_on = 'no';
 
@@ -33,10 +33,9 @@ param_names_words = {'Adhesion constant','APC base prolif rate',...
     'Hyaloid half-max value'};
 
 %% quantile plot - total error vs. percent accepted
-[errorlevels,percentaccepted] = plot_quantile(N,err_original);
+[errorlevels,percentaccepted] = plot_quantile(N,err_original,1);
 
 %% remove errors that were set to 10^4
-
 ind_hold = (err_original(:,4) < 10^4);
 err_new = err_original(ind_hold,:);
 param_new = param_original(ind_hold,:);
@@ -56,7 +55,6 @@ save(strcat('distributions',num2str(num_param),'.mat'),'bestfitdist',...
     'bestfitdist_param')
 
 %% histograms of parameters
-
 pos_tiled = [1:5,7:19];
 pos_tiled_ylabel = [1,6,10,15];
 
@@ -65,11 +63,9 @@ plot_histograms(pos_tiled,pos_tiled_ylabel,num_param,percentholdon,num_hold,...
     param_names_words)
 
 %% corner plot
-
 plot_cornerplot(num_param,param_names,param_sort_hold)
 
 %% correlation
-
 corrmatrix = zeros(num_param,num_param);
 for i=1:num_param
     for j=1:num_param

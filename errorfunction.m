@@ -118,7 +118,7 @@ for i=2:numdays
     err_APC(i) = 1 - jaccard(comp_APClarger(i,:),nodes_APC(i,:));
     err_IPA(i) = 1 - jaccard(comp_IPAlarger(i,:),nodes_IPA(i,:));
 end
-err_dens = sum(err_APC) + sum(err_IPA);
+err_dens = 1/6*(sum(err_APC) + sum(err_IPA));
 
 %%% total error
 err_tot = err_time + 2*err_rad + err_dens;

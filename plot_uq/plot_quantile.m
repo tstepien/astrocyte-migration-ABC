@@ -1,12 +1,15 @@
-function [errorlevels,percentaccepted,levelp1] = plot_quantile(N,err_original)
-% [num_hold,param_sort_hold,levelp1] = sortparameters(N,err_original)
+function [errorlevels,percentaccepted,levelp1] = plot_quantile(N,...
+    err_original,num_subplot)
+% [num_hold,param_sort_hold,levelp1] = sortparameters(N,...
+%   err_original,num_subplot)
 %
 % Sort and determine the percent of accepted parameters based on various
 % error levels
 %
 % inputs:
-%   N              = number of ABC parameter sets
-%   err_original   = corresponding error of the ABC parameter sets
+%   N            = number of ABC parameter sets
+%   err_original = corresponding error of the ABC parameter sets
+%   num_subplot  = number of subplot (corresponds to letter label)
 %
 % outputs:
 %   errorlevels     = levels of error thresholds
@@ -39,25 +42,51 @@ for i=1:EL
         / num_parametersets;
 end
 
-ind1 = find(percentaccepted<0.1,1,'last');
-ind2 = find(percentaccepted>=0.1,1,'first');
+percentcutoff = 0.01;
+percentplotupperbound = 0.2;
+
+ind1 = find(percentaccepted<percentcutoff,1,'last');
+ind2 = find(percentaccepted>=percentcutoff,1,'first');
 levelp1 = interp1([percentaccepted(ind1),percentaccepted(ind2)],...
-    [errorlevels(ind1),errorlevels(ind2)],0.1);
+    [errorlevels(ind1),errorlevels(ind2)],percentcutoff);
+
+ind3 = find(percentaccepted>=percentplotupperbound,1,'first');
 
 fig = figure;
 set(gca,'FontSize',18)
 hold on
-plot(percentaccepted,errorlevels,'-o','Color','k','LineWidth',1.5)
-plot(percentaccepted,levelp1*ones(size(percentaccepted)),'--','Color',...
-    [0.5 0.5 0.5],'LineWidth',1.5)
+plot(percentaccepted(1:ind3),errorlevels(1:ind3),'-o','Color','k',...
+    'LineWidth',1.5)
+plot(percentaccepted(1:ind3),levelp1*ones(size(percentaccepted(1:ind3))),...
+    '--','Color',[0.5 0.5 0.5],'LineWidth',1.5)
 ylimval = get(gca,'YLim');
-line([0.1,0.1],ylimval,'LineStyle','--','Color',[0.5 0.5 0.5],'LineWidth',1.5)
+line([percentcutoff,percentcutoff],ylimval,'LineStyle','--','Color',[0.5 0.5 0.5],'LineWidth',1.5)
 hold off
 box on
+
+if num_subplot==1
+    title('A','FontSize',24);
+    yannoteloc = levelp1/ylimval(2) + 0.1;
+elseif num_subplot==2
+    title('B','FontSize',24);
+    yannoteloc = levelp1/ylimval(2) + 0.1;
+elseif num_subplot==3
+    title('C','FontSize',24);
+    yannoteloc = levelp1/ylimval(2) - 0.01;
+elseif num_subplot==4
+    title('D','FontSize',24);
+    yannoteloc = levelp1/ylimval(2) - 0.01;
+elseif num_subplot==5
+    title('E','FontSize',24);
+    yannoteloc = levelp1/ylimval(2) - 0.01;
+end
+ax = gca;
+ax.TitleHorizontalAlignment = 'left';
+
 annotation(fig,'textbox',...
-    [0.65 0.28 0.2 0.05],...
+    [0.65 yannoteloc 0.2 0.05],...
     'String',['$\mathcal{E}$=',num2str(levelp1)],'EdgeColor','none',...
     'Interpreter','latex','FontSize',24);
 xlabel('Percent of parameter sets accepted','Interpreter','latex','FontSize',24)
 ylabel('Error $\mathcal{E}$','Interpreter','latex','FontSize',24)
-set(gca,'XLim',[0,0.5])
+set(gca,'XLim',[0,percentplotupperbound])

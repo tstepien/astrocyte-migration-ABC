@@ -26,11 +26,11 @@ function [bestfitdist,bestfitdist_param] = fitdistEMD(num_param,...
 %% fit the data to different probability distributions
 
 dist_type = {'Normal';'Lognormal';'Gamma';'Exponential';'Weibull';...
-    'Logistic';'Uniform'};
+    'Uniform'};
 %%% didn't use these distributions:
 %%% 'beta';'birnbaumsaunders';'burr';'negative binomial';'extreme value';'kernel';
 %%% 'generalized extreme value';'generalized pareto';'inversegaussian';
-%%% 'nakagami';'loglogistic';'poisson';'rayleigh';'rician';'tlocationscale';
+%%% 'nakagami';'logistic';'loglogistic';'poisson';'rayleigh';'rician';'tlocationscale';
 num_dist = length(dist_type);
 
 dist_param = cell(num_dist,num_param);

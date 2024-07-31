@@ -1,9 +1,10 @@
 clear variables global;
 clc;
 
-load('../ABC_results/modelselect_allresults.mat');
+load('../ABC_results/modelselect_setup.mat');
+load('../ABC_results/modelselect_all.mat');
 
-threshold = 16.25;
+threshold = 10^5;%15;%10^4;
 
 err_original = [err_dens err_rad err_time err_tot];
 err_names = {'Density Error','Radius Error','Time Error','Total Error'};
@@ -29,7 +30,7 @@ param_names_words = {'Adhesion constant','APC base prolif rate',...
     'APC apoptosis rate','IPA apoptosis rate','Hyaloid max',...
     'Hyaloid half-max value'};
 
-ind_hold = (err_original(:,4) < threshold);
+ind_hold = (err_original(:,4) < threshold & err_original(:,4)>0);
 err_new = err_original(ind_hold,:);
 param_new = param_original(ind_hold,:);
 modelnumber_new = modelnumber(ind_hold);
@@ -43,3 +44,12 @@ percent4 = sum(modelnumber_new==4)/N;
 percent5 = sum(modelnumber_new==5)/N;
 
 [percent1 percent2 percent3 percent4 percent5]
+
+p12 = percent1/percent2;
+p13 = percent1/percent3;
+p14 = percent1/percent4;
+p23 = percent2/percent3;
+p24 = percent2/percent4;
+p34 = percent3/percent4;
+
+[p12 p13 p14 p23 p24 p34]

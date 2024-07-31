@@ -1,17 +1,12 @@
 clear variables global;
 clc;
 
-% num_param = 13;
+load('../ABC_results/abc13_5e5.mat');
 
 percentholdon = 1;
-threshold = 16.25;
+threshold = 5.25;
 fit_dist_plot = 'yes'; % using percentholdon for distribution fits
-titles_on = 'yes';
-
-% load(strcat('../ABC_results/abc',num2str(num_param),'_',...
-%     num2str(multiplier),'e',num2str(power),'.mat'))
-load('../ABC_results/abc13_5e5.mat');
-% load('../ABC_results/july2024/abc13_allresults.mat');
+titles_on = 'no';
 
 err_original = [err_dens err_rad err_time err_tot];
 err_names = {'Density Error','Radius Error','Time Error','Total Error'};
@@ -35,38 +30,17 @@ param_names_words = {'Adhesion constant','APC base prolif rate',...
     'Mass action rate','APC apoptosis rate','IPA apoptosis rate'};
 
 %% quantile plot - total error vs. percent accepted
-[errorlevels,percentaccepted] = plot_quantile(N,err_original);
+[errorlevels,percentaccepted] = plot_quantile(N,err_original,2);
 
 %% remove errors that were set to 10^4
-
 ind_hold = (err_original(:,4) < 10^4);
 err_new = err_original(ind_hold,:);
 param_new = param_original(ind_hold,:);
-
-%%% remove time errors larger than 5
-ind_hold2 = (err_new(:,3)<5);
-err_new2 = err_new(ind_hold2,:);
-param_new2 = param_new(ind_hold2,:);
-err_new = err_new2;
-param_new = param_new2;
-
-numberlessthan10000 = length(err_new);
-
-%%% keep first 1e5 parameter sets (had run extra)
-if numberlessthan10000 > 1e5
-    err_new = err_new(1:1e5,:);
-    param_new = param_new(1:1e5,:);
-end
-
 
 %% sort and hold onto parameter sets with smallest error
 %%% by threshold value
 [num_hold,param_sort_hold] = sortparameters_threshold(param_new,...
     err_new,threshold);
-
-%%% by percent
-% [num_hold,param_sort_hold] = sortparameters_percent(num_param,N,...
-%     param_original,err_original,err_names,percentholdon);
 
 %% fit the data to probability distributions, calculate Earth mover's
 % distance, and report best fitting distribution
@@ -74,11 +48,10 @@ end
     param_sort_hold,bound);
 
 % export distribution information
-% save(strcat('distributions',num2str(num_param),'.mat'),'bestfitdist',...
-%     'bestfitdist_param')
+save(strcat('distributions',num2str(num_param),'.mat'),'bestfitdist',...
+    'bestfitdist_param')
 
 %% histograms of parameters
-
 pos_tiled = [1:4,7:9,11:13,15:17];
 pos_tiled_ylabel = [1,5,8,12];
 
@@ -87,11 +60,9 @@ plot_histograms(pos_tiled,pos_tiled_ylabel,num_param,percentholdon,num_hold,...
     param_names_words)
 
 %% corner plot
-
 plot_cornerplot(num_param,param_names,param_sort_hold)
 
 %% correlation
-
 corrmatrix = zeros(num_param,num_param);
 for i=1:num_param
     for j=1:num_param

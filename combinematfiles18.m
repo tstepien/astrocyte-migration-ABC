@@ -1,6 +1,7 @@
-multiplier = 3;
-power = 5;
-N = (multiplier)*10^(power);
+% multiplier = 3;
+% power = 5;
+% N = (multiplier)*10^(power);
+N = 3*10^5;
 
 mu = zeros(N,1);
 alpha10 = zeros(N,1);
@@ -27,7 +28,7 @@ err_dens = zeros(N,1);
 err_flag = cell(N,1);
 
 parfor i = 1:N
-    filename = sprintf(strcat(pwd,'/ABC_results/july2024/abc18/output%d.mat'),i);
+    filename = sprintf(strcat(pwd,'/ABC_results/modelselect/output%d.mat'),i);
     if isfile(filename)==1
     [params,errors] = par_load18(filename);
         mu(i) = params(1);
